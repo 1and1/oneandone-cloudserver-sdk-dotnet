@@ -35,6 +35,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Endpoints\EndpointsBase.cs" />
+    <Compile Include="OneAndOneClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Endpoints\Servers.cs" />
     <Compile Include="RESTHelpers\JsonSerializer.cs" />

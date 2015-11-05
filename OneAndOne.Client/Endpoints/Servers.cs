@@ -31,7 +31,7 @@ namespace OneAndOne.Client
             }
             if (perPage != null)
             {
-                requestUrl += string.Format("&perPage={0}", perPage);
+                requestUrl += string.Format("&per_page={0}", perPage);
             }
             if (!string.IsNullOrEmpty(sort))
             {

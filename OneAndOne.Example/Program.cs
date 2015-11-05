@@ -9,6 +9,7 @@ namespace OneAndOne.Example
 {
     public class Program
     {
+        static OneAndOneClient client = new OneAndOneClient();
         static void Main(string[] args)
         {
             GetServers();
@@ -17,8 +18,7 @@ namespace OneAndOne.Example
 
         static void GetServers()
         {
-            Servers server = new Servers();
-            var serversResult = server.GetServers();
+            var serversResult = client.Servers.GetServers(2, 3);
         }
     }
 }
