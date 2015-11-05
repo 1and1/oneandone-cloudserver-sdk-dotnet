@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using OneAndOne.Client.RESTAuth;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,15 @@ namespace OneAndOne.Client.Endpoints
 {
     public class EndpointsBase
     {
-        RestClient restclient;
+        public RestClient restclient;
         string APIKEY = "f6df680ed41db7940fd0b2a42bddbf98";
         public EndpointsBase()
         {
 
-            restclient = new RestClient("Endoiunt");
+            restclient = new RestClient("https://cloudpanel-api.1and1.com/v1")
+                {
+                    Authenticator = new OneAndOneAuthenticator(APIKEY)
+                };
         }
     }
 }
