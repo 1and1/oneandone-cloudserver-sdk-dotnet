@@ -6,9 +6,21 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.POCO.Respones.Servers
 {
-    public class Ip
+    public class IpAddress
     {
-        public string id { get; set; }
-        public string ip { get; set; }
+        private string id;
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        private string ip;
+
+        public string Ip
+        {
+            get { return ip; }
+            set { ip = value; }
+        }
     }
 }

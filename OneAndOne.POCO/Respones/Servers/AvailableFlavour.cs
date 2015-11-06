@@ -8,24 +8,90 @@ namespace OneAndOne.POCO.Respones.Servers
 {
     public class InstaceHdd
     {
-        public int size { get; set; }
-        public string unit { get; set; }
-        public bool is_main { get; set; }
+        private int size;
+
+        public int Size
+        {
+            get { return size; }
+            set { size = value; }
+        }
+        private string unit;
+
+        public string Unit
+        {
+            get { return unit; }
+            set { unit = value; }
+        }
+        private bool is_main;
+
+        public bool IsMain
+        {
+            get { return is_main; }
+            set { is_main = value; }
+        }
     }
 
     public class InstaceHardware
     {
-        public int vcore { get; set; }
-        public int cores_per_processor { get; set; }
-        public int ram { get; set; }
-        public string unit { get; set; }
-        public List<InstaceHdd> hdds { get; set; }
+        private int vcore;
+
+        public int Vcore
+        {
+            get { return vcore; }
+            set { vcore = value; }
+        }
+        private int cores_per_processor;
+
+        public int CoresPerProcessor
+        {
+            get { return cores_per_processor; }
+            set { cores_per_processor = value; }
+        }
+        private int ram;
+
+        public int Ram
+        {
+            get { return ram; }
+            set { ram = value; }
+        }
+        private string unit;
+
+        public string Unit
+        {
+            get { return unit; }
+            set { unit = value; }
+        }
+        private List<InstaceHdd> hdds;
+
+        public List<InstaceHdd> Hdds
+        {
+            get { return hdds; }
+            set { hdds = value; }
+        }
     }
 
     public class AvailableHardwareFlavour
     {
-        public string name { get; set; }
-        public string id { get; set; }
-        public InstaceHardware hardware { get; set; }
+        private string name;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        private string id;
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        private InstaceHardware hardware;
+
+        public InstaceHardware Hardware
+        {
+            get { return hardware; }
+            set { hardware = value; }
+        }
     }
 }

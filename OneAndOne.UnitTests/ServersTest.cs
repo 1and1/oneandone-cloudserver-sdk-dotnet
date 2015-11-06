@@ -11,10 +11,45 @@ namespace OneAndOne.UnitTests
     public class ServersTest
     {
         static OneAndOneClient client = new OneAndOneClient();
+
+        [TestMethod]
+        public void CreateServer()
+        {
+            Random random = new Random();
+            string randomName = "ServerTest" + random.Next(9999);
+            int vcore = new Random().Next(1, 16);
+            int CoresPerProcessor = new Random().Next(1, vcore);
+            var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
+            {
+                ApplianceId = "B5F778B85C041347BCDCFC3172AB3F3C",
+                Name = randomName,
+                Description = "Example" + randomName,
+                Hardware = new POCO.Requests.Servers.HardwareReqeust()
+                {
+                    CoresPerProcessor = CoresPerProcessor,
+                    Hdds = new List<POCO.Requests.Servers.HddRequest>()
+                        {
+                            {new POCO.Requests.Servers.HddRequest()
+                            {
+                                IsMain=true,
+                                Size=20,
+                            }}
+                        },
+                    Ram = new Random().Next(1, 128),
+                    Vcore = vcore
+                },
+                PowerOn = true
+            });
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Name);
+            Assert.IsNotNull(result.Hardware);
+            Assert.IsNotNull(result.FirstPassword);
+        }
         [TestMethod]
         public void GetServers()
         {
-            var servers = client.Servers.GetServers();
+            var servers = client.Servers.Get();
 
             Assert.IsNotNull(servers);
             Assert.IsTrue(servers.Count > 0);
@@ -22,7 +57,7 @@ namespace OneAndOne.UnitTests
         [TestMethod]
         public void GetServersWithPaging()
         {
-            var servers = client.Servers.GetServers(1, 3, "name");
+            var servers = client.Servers.Get(1, 3, "name");
 
             Assert.IsNotNull(servers);
             Assert.IsTrue(servers.Count > 0);
@@ -41,54 +76,23 @@ namespace OneAndOne.UnitTests
         public void GetSingleFixedServerFalvours()
         {
             var all = client.Servers.GetAvailableFixedServers().FirstOrDefault();
-            var result = client.Servers.GetFlavorInformation(all.id);
+            var result = client.Servers.GetFlavorInformation(all.Id);
 
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.id);
+            Assert.IsNotNull(result.Id);
         }
 
         [TestMethod]
         public void GetSingleServerData()
         {
-            var servers = client.Servers.GetServers().FirstOrDefault();
-            var result = client.Servers.GetSingleServer(servers.id);
+            var servers = client.Servers.Get().FirstOrDefault();
+            var result = client.Servers.GetSingle(servers.Id);
 
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.id);
+            Assert.IsNotNull(result.Id);
         }
 
-        [TestMethod]
-        public void CreateServer()
-        {
-            Random random = new Random();
-            string randomName = "ServerTest" + random.Next(9999);
-            var result = client.Servers.CreateServer(new POCO.Requests.Servers.CreateServerRequest()
-            {
-                appliance_id = "B5F778B85C041347BCDCFC3172AB3F3C",
-                name = randomName,
-                description = "Example" + randomName,
-                hardware = new POCO.Requests.Servers.HardwareReqeust()
-                {
-                    cores_per_processor = new Random().Next(1, 16),
-                    hdds = new List<POCO.Requests.Servers.HddRequest>()
-                        {
-                            {new POCO.Requests.Servers.HddRequest()
-                            {
-                                is_main=true,
-                                size=20,
-                            }}
-                        },
-                    ram = new Random().Next(1, 128),
-                    vcore = new Random().Next(1, 16)
-                },
-                power_on = true
-            });
 
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.name);
-            Assert.IsNotNull(result.hardware);
-            Assert.IsNotNull(result.first_password);
-        }
 
         [TestMethod]
         public void CreateServerWithFixedHardwareImage()
@@ -97,30 +101,30 @@ namespace OneAndOne.UnitTests
             string randomName = "ServerTest" + random.Next(9999);
             var availabeFixedImage = client.Servers.GetAvailableFixedServers().FirstOrDefault();
 
-            var result = client.Servers.CreateServer(new POCO.Requests.Servers.CreateServerRequest()
+            var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
-                appliance_id = "B5F778B85C041347BCDCFC3172AB3F3C",
-                name = randomName,
-                description = "Example" + randomName,
-                hardware = new POCO.Requests.Servers.HardwareReqeust()
+                ApplianceId = "B5F778B85C041347BCDCFC3172AB3F3C",
+                Name = randomName,
+                Description = "Example" + randomName,
+                Hardware = new POCO.Requests.Servers.HardwareReqeust()
                 {
-                    cores_per_processor = availabeFixedImage.hardware.cores_per_processor,
-                    hdds = availabeFixedImage.hardware.hdds.Select(itm => new HddRequest()
+                    CoresPerProcessor = availabeFixedImage.Hardware.CoresPerProcessor,
+                    Hdds = availabeFixedImage.Hardware.Hdds.Select(itm => new HddRequest()
                     {
-                        is_main = itm.is_main,
-                        size = itm.size
+                        IsMain = itm.IsMain,
+                        Size = itm.Size
 
                     }).ToList(),
-                    ram = availabeFixedImage.hardware.ram,
-                    vcore = availabeFixedImage.hardware.vcore,
+                    Ram = availabeFixedImage.Hardware.Ram,
+                    Vcore = availabeFixedImage.Hardware.Vcore,
                 },
-                power_on = true
+                PowerOn = true
             });
 
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.name);
-            Assert.IsNotNull(result.hardware);
-            Assert.IsNotNull(result.first_password);
+            Assert.IsNotNull(result.Name);
+            Assert.IsNotNull(result.Hardware);
+            Assert.IsNotNull(result.FirstPassword);
         }
 
 

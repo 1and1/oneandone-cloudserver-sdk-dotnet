@@ -19,30 +19,30 @@ namespace OneAndOne.Example
 
         static void GetServers()
         {
-            var serversResult = client.Servers.GetServers(2, 3);
+            var serversResult = client.Servers.Get(2, 3);
         }
 
         static void CreateServers()
         {
 
-            var result = client.Servers.CreateServer(new POCO.Requests.Servers.CreateServerRequest()
+            var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
                 {
-                    appliance_id = "B5F778B85C041347BCDCFC3172AB3F3C",
-                    name = "ServerTest001",
-                    description = "Example server",
-                    hardware = new POCO.Requests.Servers.HardwareReqeust()
+                    ApplianceId = "B5F778B85C041347BCDCFC3172AB3F3C",
+                    Name = "ServerTest001",
+                    Description = "Example server",
+                    Hardware = new POCO.Requests.Servers.HardwareReqeust()
                     {
-                        cores_per_processor = 1,
-                        hdds = new List<POCO.Requests.Servers.HddRequest>()
+                        CoresPerProcessor = 1,
+                        Hdds = new List<POCO.Requests.Servers.HddRequest>()
                         {
                             {new POCO.Requests.Servers.HddRequest()
                             {
-                                is_main=true,
-                                size=20,
+                                IsMain=true,
+                                Size=20,
                             }}
                         },
-                        ram = 2,
-                        vcore = 1
+                        Ram = 2,
+                        Vcore = 1
 
                     }
                 });

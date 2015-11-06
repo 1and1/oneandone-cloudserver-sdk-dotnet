@@ -1,4 +1,5 @@
-﻿using RestSharp.Serializers;
+﻿using Newtonsoft.Json;
+using RestSharp.Serializers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace OneAndOne.Client.RESTHelpers
 
         public string Serialize(object obj)
         {
-            string retVal = new JsonSerializer().Serialize(obj);
+            string retVal = JsonConvert.SerializeObject(obj);
             return retVal;
         }
 

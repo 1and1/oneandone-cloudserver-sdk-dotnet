@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.Client.Endpoints
 {
-    public class EndpointsBase
+    public class ResourceBase
     {
         public RestClient restclient;
         string APIKEY = ConfigurationManager.AppSettings["APIToken"];
-        public EndpointsBase()
+        public ResourceBase()
         {
 
             restclient = new RestClient("https://cloudpanel-api.1and1.com/v1")

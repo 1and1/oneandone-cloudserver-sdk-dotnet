@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.Client
 {
-    public class Servers : EndpointsBase
+    public class Servers : ResourceBase
     {
         /// <summary>
         /// Returns a list of your servers.
@@ -22,7 +22,7 @@ namespace OneAndOne.Client
         /// <param name="sort">Allows to sort the result by priority:sort=name retrieves a list of elements ordered by their names.sort=-creation_date retrieves a list of elements ordered according to their creation date in descending order of priority.</param>
         /// <param name="query">Allows to search one string in the response and return the elements that contain it. In order to specify the string use parameter q:    q=My server</param>
         /// <param name="fields">Returns only the parameters requested: fields=id,name,description,hardware.ram</param>
-        public List<ServerResponse> GetServers(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
+        public List<ServerResponse> Get(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
         {
             try
             {
@@ -59,20 +59,21 @@ namespace OneAndOne.Client
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 
         /// <summary>
         /// Adds a new server.
         /// </summary>
-        public CreateServerResponse CreateServer(CreateServerRequest server)
+        public CreateServerResponse Create(CreateServerRequest server)
         {
             try
             {
                 var request = new RestRequest("/servers", Method.POST)
                 {
-                    RequestFormat = DataFormat.Json
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
                 };
                 request.AddBody(server);
                 var result = restclient.Execute<CreateServerResponse>(request);
@@ -84,7 +85,7 @@ namespace OneAndOne.Client
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
 
         }
@@ -106,7 +107,7 @@ namespace OneAndOne.Client
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -130,7 +131,7 @@ namespace OneAndOne.Client
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -139,7 +140,7 @@ namespace OneAndOne.Client
         /// </summary>
         /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
         /// 
-        public ServerResponse GetSingleServer(string server_id)
+        public ServerResponse GetSingle(string server_id)
         {
             try
             {

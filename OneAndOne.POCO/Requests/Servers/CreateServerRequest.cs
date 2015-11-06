@@ -3,56 +3,141 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace OneAndOne.POCO.Requests.Servers
 {
     /// <summary>
     /// Adds a new server.
     /// </summary>
+    /// 
+
     public class CreateServerRequest
     {
         /// <summary>
         /// Required: Name of the server.
         /// </summary>
-        public string name { get; set; }
+        /// 
+
+        private string name;
+        [JsonProperty(PropertyName = "name")]
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        //public string name { get; set; }
         /// <summary>
         /// Required: description of your servers.
         /// </summary>
-        public string description { get; set; }
+        /// 
+        private string description;
+        [JsonProperty(PropertyName = "description")]
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
+        }
+
         /// <summary>
         /// Required: Hardware features of the server. Choose your resources using fixed_instance_size_id or customizing your hardware.
         /// </summary>
-        public HardwareReqeust hardware { get; set; }
+        /// 
+        private HardwareReqeust hardware;
+        [JsonProperty(PropertyName = "hardware")]
+        public HardwareReqeust Hardware
+        {
+            get { return hardware; }
+            set { hardware = value; }
+        }
+
         /// <summary>
         /// Required: Image will be installed on server
         /// </summary>
-        public string appliance_id { get; set; }
+        /// 
+        private string appliance_id;
+        [JsonProperty(PropertyName = "appliance_id")]
+        public string ApplianceId
+        {
+            get { return appliance_id; }
+            set { appliance_id = value; }
+        }
 
         /// <summary>
         /// Password of the server. Password must contain more than 8 characters using uppercase letters, numbers and other special symbols. minLength: 8,maxLength: 64.
         /// </summary>
-        public string password { get; set; }
+        /// 
+        private string password;
+        [JsonProperty(PropertyName = "password")]
+        public string Password
+        {
+            get { return password; }
+            set { password = value; }
+        }
+
         /// <summary>
         /// Power on server after creation
         /// </summary>
-        public bool power_on { get; set; }
+        /// 
+        private bool power_on;
+        [JsonProperty(PropertyName = "power_on")]
+        public bool PowerOn
+        {
+            get { return power_on; }
+            set { power_on = value; }
+        }
+
         /// <summary>
         /// Firewall policy's ID
         /// </summary>
-        public string firewall_policy_id { get; set; }
+        /// 
+        private string firewall_policy_id;
+        [JsonProperty(PropertyName = "firewall_policy_id")]
+        public string FirewallPolicyId
+        {
+            get { return firewall_policy_id; }
+            set { firewall_policy_id = value; }
+        }
+
         /// <summary>
         /// IP's ID
         /// </summary>
-        public string ip_id { get; set; }
+        /// 
+        private string ip_id;
+        [JsonProperty(PropertyName = "ip_id")]
+        public string IpId
+        {
+            get { return ip_id; }
+            set { ip_id = value; }
+        }
+
         /// <summary>
         /// Load balancer's ID
         /// </summary>
-        public string load_balancer_id { get; set; }
+        /// 
+        private string loadr_balancer_id;
+        [JsonProperty(PropertyName = "loadr_balancer_id")]
+        public string LoadrBalancerId
+        {
+            get { return loadr_balancer_id; }
+            set { loadr_balancer_id = value; }
+        }
+
         /// <summary>
         /// Monitoring policy's ID
         /// </summary>
-        public string monitoring_policy_id { get; set; }
+        /// 
+        private string monitoring_policy_id;
+        [JsonProperty(PropertyName = "monitoring_policy_id")]
+        public string MonitoringPolicyId
+        {
+            get { return monitoring_policy_id; }
+            set { monitoring_policy_id = value; }
+        }
+
 
 
     }

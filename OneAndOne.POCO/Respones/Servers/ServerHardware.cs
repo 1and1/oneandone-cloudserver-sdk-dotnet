@@ -8,10 +8,40 @@ namespace OneAndOne.POCO.Respones.Servers
 {
     public class Hardware
     {
-        public string fixed_instance_size_id { get; set; }
-        public int vcore { get; set; }
-        public int cores_per_processor { get; set; }
-        public int ram { get; set; }
-        public List<Hdd> hdds { get; set; }
+        private string fixed_instance_size_id;
+
+        public string FixedInstanceSizeId
+        {
+            get { return fixed_instance_size_id; }
+            set { fixed_instance_size_id = value; }
+        }
+        private int vcore;
+
+        public int Vcore
+        {
+            get { return vcore; }
+            set { vcore = value; }
+        }
+        private int cores_per_processor;
+
+        public int CoresPerProcessor
+        {
+            get { return cores_per_processor; }
+            set { cores_per_processor = value; }
+        }
+        private int ram;
+
+        public int Ram
+        {
+            get { return ram; }
+            set { ram = value; }
+        }
+        private List<Hdd> hdds;
+
+        public List<Hdd> Hdds
+        {
+            get { return hdds; }
+            set { hdds = value; }
+        }
     }
 }
