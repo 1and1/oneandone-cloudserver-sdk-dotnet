@@ -1,10 +1,12 @@
 ﻿using OneAndOne.Client.Endpoints;
 using OneAndOne.Client.RESTHelpers;
+using OneAndOne.POCO.Requests.Servers;
 using OneAndOne.POCO.Respones.Servers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,30 +25,69 @@ namespace OneAndOne.Client
         /// <param name="fields">Returns only the parameters requested: fields=id,name,description,hardware.ram</param>
         public List<ServersListResponse> GetServers(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
         {
-            string requestUrl = "/servers?";
+            try
+            {
 
-            if (page != null)
-            {
-                requestUrl += string.Format("&page={0}", page);
+                string requestUrl = "/servers?";
+
+                if (page != null)
+                {
+                    requestUrl += string.Format("&page={0}", page);
+                }
+                if (perPage != null)
+                {
+                    requestUrl += string.Format("&per_page={0}", perPage);
+                }
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    requestUrl += string.Format("&sort={0}", sort);
+                }
+                if (!string.IsNullOrEmpty(query))
+                {
+                    requestUrl += string.Format("&query={0}", query);
+                }
+                if (!string.IsNullOrEmpty(fields))
+                {
+                    requestUrl += string.Format("&fields={0}", fields);
+                }
+                var request = new RestRequest(requestUrl, Method.GET);
+                var result = restclient.Execute<List<ServersListResponse>>(request);
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
             }
-            if (perPage != null)
+            catch (Exception ex)
             {
-                requestUrl += string.Format("&per_page={0}", perPage);
+                throw ex;
             }
-            if (!string.IsNullOrEmpty(sort))
+        }
+
+        /// <summary>
+        /// Adds a new server.
+        /// </summary>
+        public CreateServerResponse CreateServer(CreateServerRequest server)
+        {
+            try
             {
-                requestUrl += string.Format("&sort={0}", sort);
+                var request = new RestRequest("/servers", Method.POST)
+                {
+                    RequestFormat = DataFormat.Json
+                };
+                request.AddBody(server);
+                var result = restclient.Execute<CreateServerResponse>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
             }
-            if (!string.IsNullOrEmpty(query))
+            catch (Exception ex)
             {
-                requestUrl += string.Format("&query={0}", query);
+                throw ex;
             }
-            if (!string.IsNullOrEmpty(fields))
-            {
-                requestUrl += string.Format("&fields={0}", fields);
-            }
-            var request = new RestRequest(requestUrl, Method.GET);
-            return restclient.Execute<List<ServersListResponse>>(request).Data;
+
         }
     }
 }
