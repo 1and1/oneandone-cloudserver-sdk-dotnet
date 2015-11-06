@@ -140,7 +140,7 @@ namespace OneAndOne.Client
         /// </summary>
         /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
         /// 
-        public ServerResponse GetSingle(string server_id)
+        public ServerResponse Show(string server_id)
         {
             try
             {

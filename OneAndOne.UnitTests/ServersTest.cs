@@ -86,7 +86,7 @@ namespace OneAndOne.UnitTests
         public void GetSingleServerData()
         {
             var servers = client.Servers.Get().FirstOrDefault();
-            var result = client.Servers.GetSingle(servers.Id);
+            var result = client.Servers.Show(servers.Id);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
