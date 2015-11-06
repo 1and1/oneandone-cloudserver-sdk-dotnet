@@ -10,7 +10,7 @@ namespace OneAndOne.POCO.Respones.Servers
     /// <summary>
     /// Server Main data 
     /// </summary>
-    public class ServersResponse
+    public class ServerResponse
     {
         public string id { get; set; }
         public string name { get; set; }

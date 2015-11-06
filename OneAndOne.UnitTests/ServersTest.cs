@@ -48,6 +48,16 @@ namespace OneAndOne.UnitTests
         }
 
         [TestMethod]
+        public void GetSingleServerData()
+        {
+            var servers = client.Servers.GetServers().FirstOrDefault();
+            var result = client.Servers.GetSingleServer(servers.id);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.id);
+        }
+
+        [TestMethod]
         public void CreateServer()
         {
             Random random = new Random();
