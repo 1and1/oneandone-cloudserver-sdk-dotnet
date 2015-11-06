@@ -29,12 +29,22 @@ namespace OneAndOne.UnitTests
         }
 
         [TestMethod]
-        public void GetAvailableFixedServers()
+        public void GetAvailableServerFalvours()
         {
             var servers = client.Servers.GetAvailableFixedServers();
 
             Assert.IsNotNull(servers);
             Assert.IsTrue(servers.Count > 0);
+        }
+
+        [TestMethod]
+        public void GetSingleFixedServerFalvours()
+        {
+            var all = client.Servers.GetAvailableFixedServers().FirstOrDefault();
+            var result = client.Servers.GetFlavorInformation(all.id);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.id);
         }
 
         [TestMethod]

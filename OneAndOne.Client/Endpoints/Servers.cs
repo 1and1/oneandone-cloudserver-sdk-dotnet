@@ -22,7 +22,7 @@ namespace OneAndOne.Client
         /// <param name="sort">Allows to sort the result by priority:sort=name retrieves a list of elements ordered by their names.sort=-creation_date retrieves a list of elements ordered according to their creation date in descending order of priority.</param>
         /// <param name="query">Allows to search one string in the response and return the elements that contain it. In order to specify the string use parameter q:    q=My server</param>
         /// <param name="fields">Returns only the parameters requested: fields=id,name,description,hardware.ram</param>
-        public List<ServersListResponse> GetServers(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
+        public List<ServersResponse> GetServers(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace OneAndOne.Client
                     requestUrl += string.Format("&fields={0}", fields);
                 }
                 var request = new RestRequest(requestUrl, Method.GET);
-                var result = restclient.Execute<List<ServersListResponse>>(request);
+                var result = restclient.Execute<List<ServersResponse>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -92,12 +92,36 @@ namespace OneAndOne.Client
         /// <summary>
         /// Returns available flavours for fixed servers.
         /// </summary>
-        public List<ServersListResponse> GetAvailableFixedServers()
+        public List<AvailableHardwareFlavour> GetAvailableFixedServers()
         {
             try
             {
                 var request = new RestRequest("/servers/fixed_instance_sizes", Method.GET);
-                var result = restclient.Execute<List<ServersListResponse>>(request);
+                var result = restclient.Execute<List<AvailableHardwareFlavour>>(request);
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Returns information about one flavour.
+        /// </summary>
+        /// <param name="fixedinstaceId">    fixed_instance_size_id: required (string ).</param>
+        /// 
+        public AvailableHardwareFlavour GetFlavorInformation(string fixedinstaceId)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/fixed_instance_sizes/{fixed_instance_size_id}", Method.GET);
+                request.AddUrlSegment("fixed_instance_size_id", fixedinstaceId);
+                var result = restclient.Execute<AvailableHardwareFlavour>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);

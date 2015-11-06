@@ -43,6 +43,7 @@
     <Compile Include="Requests\Servers\CreateServerRequest.cs" />
     <Compile Include="Requests\Servers\HardDiskDrivesRequest.cs" />
     <Compile Include="Requests\Servers\HardwareReqeust.cs" />
+    <Compile Include="Respones\Servers\AvailableFlavour.cs" />
     <Compile Include="Respones\Servers\CreateServerResponse.cs" />
     <Compile Include="Respones\Servers\HardDiskDrives.cs" />
     <Compile Include="Respones\Servers\ServerHardware.cs" />
