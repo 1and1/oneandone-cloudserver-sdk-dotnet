@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
 using System.Collections.Generic;
+using OneAndOne.POCO.Requests.Servers;
 
 namespace OneAndOne.UnitTests
 {
@@ -20,7 +22,16 @@ namespace OneAndOne.UnitTests
         [TestMethod]
         public void GetServersWithPaging()
         {
-            var servers = client.Servers.GetServers(1, 3, "creation_date");
+            var servers = client.Servers.GetServers(1, 3, "name");
+
+            Assert.IsNotNull(servers);
+            Assert.IsTrue(servers.Count > 0);
+        }
+
+        [TestMethod]
+        public void GetAvailableFixedServers()
+        {
+            var servers = client.Servers.GetAvailableFixedServers();
 
             Assert.IsNotNull(servers);
             Assert.IsTrue(servers.Count > 0);
@@ -49,8 +60,41 @@ namespace OneAndOne.UnitTests
                         },
                     ram = new Random().Next(1, 128),
                     vcore = new Random().Next(1, 16)
+                },
+                power_on = true
+            });
 
-                }
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.name);
+            Assert.IsNotNull(result.hardware);
+            Assert.IsNotNull(result.first_password);
+        }
+
+        [TestMethod]
+        public void CreateServerWithFixedHardwareImage()
+        {
+            Random random = new Random();
+            string randomName = "ServerTest" + random.Next(9999);
+            var availabeFixedImage = client.Servers.GetAvailableFixedServers().FirstOrDefault();
+
+            var result = client.Servers.CreateServer(new POCO.Requests.Servers.CreateServerRequest()
+            {
+                appliance_id = "B5F778B85C041347BCDCFC3172AB3F3C",
+                name = randomName,
+                description = "Example" + randomName,
+                hardware = new POCO.Requests.Servers.HardwareReqeust()
+                {
+                    cores_per_processor = availabeFixedImage.hardware.cores_per_processor,
+                    hdds = availabeFixedImage.hardware.hdds.Select(itm => new HddRequest()
+                    {
+                        is_main = itm.is_main,
+                        size = itm.size
+
+                    }).ToList(),
+                    ram = availabeFixedImage.hardware.ram,
+                    vcore = availabeFixedImage.hardware.vcore,
+                },
+                power_on = true
             });
 
             Assert.IsNotNull(result);

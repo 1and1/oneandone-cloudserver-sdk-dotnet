@@ -15,15 +15,15 @@ namespace OneAndOne.POCO.Requests.Servers
         /// <summary>
         /// Required: Total amount of processors minimum: "1",maximum: "16",multipleOf: "1",.
         /// </summary>
-        public int vcore { get; set; }
+        public int? vcore { get; set; }
         /// <summary>
         /// Required: Number of cores per processor minimum: "1",maximum: "16",multipleOf: "1",
         /// </summary>
-        public int cores_per_processor { get; set; }
+        public int? cores_per_processor { get; set; }
         /// <summary>
         /// Required: RAM memory size minimum: "1",maximum: "128",multipleOf: "0.5",.
         /// </summary>
-        public int ram { get; set; }
+        public int? ram { get; set; }
         /// <summary>
         /// Required: Hard disks
         /// </summary>

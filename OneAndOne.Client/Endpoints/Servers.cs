@@ -14,7 +14,6 @@ namespace OneAndOne.Client
 {
     public class Servers : EndpointsBase
     {
-
         /// <summary>
         /// Returns a list of your servers.
         /// </summary>
@@ -89,5 +88,27 @@ namespace OneAndOne.Client
             }
 
         }
+
+        /// <summary>
+        /// Returns available flavours for fixed servers.
+        /// </summary>
+        public List<ServersListResponse> GetAvailableFixedServers()
+        {
+            try
+            {
+                var request = new RestRequest("/servers/fixed_instance_sizes", Method.GET);
+                var result = restclient.Execute<List<ServersListResponse>>(request);
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

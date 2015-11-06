@@ -11,10 +11,10 @@ namespace OneAndOne.POCO.Requests.Servers
         /// <summary>
         /// Required: Size of the hard disk minimum: "20",maximum: "2000",multipleOf: "20",
         /// </summary>
-        public int size { get; set; }
+        public int? size { get; set; }
         /// <summary>
         /// Required: Set true if it's main
         /// </summary>
-        public bool is_main { get; set; }
+        public bool? is_main { get; set; }
     }
 }
