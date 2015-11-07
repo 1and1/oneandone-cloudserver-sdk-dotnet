@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OneAndOne.Client.Endpoints.Servers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,6 +48,17 @@ namespace OneAndOne.Client
             get
             {
                 return new Servers();
+            }
+        }
+
+        /// <summary>
+        /// Servers hardware client
+        /// </summary>
+        public ServerHardware ServersHardware
+        {
+            get
+            {
+                return new ServerHardware();
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using OneAndOne.POCO.Requests.Servers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,12 +42,12 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return status; }
             set { status = value; }
         }
-        private Image imarge;
+        private Image image;
 
-        public Image Imarge
+        public Image Image
         {
-            get { return imarge; }
-            set { imarge = value; }
+            get { return image; }
+            set { image = value; }
         }
         private Hardware hardware;
 
@@ -54,12 +56,28 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return hardware; }
             set { hardware = value; }
         }
+
+        private Snapshots snapshot;
+
+        public Snapshots Snapshot
+        {
+            get { return snapshot; }
+            set { snapshot = value; }
+        }
         private List<IpAddress> ips;
 
         public List<IpAddress> Ips
         {
             get { return ips; }
             set { ips = value; }
+        }
+
+        private List<Dvd> dvd;
+
+        public List<Dvd> Dvd
+        {
+            get { return dvd; }
+            set { dvd = value; }
         }
         private List<Alert> alerts;
 
@@ -68,20 +86,34 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return alerts; }
             set { alerts = value; }
         }
+
+        private string monitoring_policy_id;
+        public string MonitoringPolicyId
+        {
+            get { return monitoring_policy_id; }
+            set { monitoring_policy_id = value; }
+        }
+
+        private List<PrivateNetworks> private_networks;
+        public List<PrivateNetworks> PrivateNetworks
+        {
+            get { return private_networks; }
+            set { private_networks = value; }
+        }
     }
 
     public class Status
     {
         private string state;
-
+        [JsonProperty(PropertyName = "state")]
         public string State
         {
             get { return state; }
             set { state = value; }
         }
-        private object percent;
-
-        public object Percent
+        private int percent;
+        [JsonProperty(PropertyName = "percent")]
+        public int Percent
         {
             get { return percent; }
             set { percent = value; }
@@ -90,19 +122,38 @@ namespace OneAndOne.POCO.Respones.Servers
 
     public class Alert
     {
-        private string type;
 
+        private List<Warning> warning;
+        [JsonProperty(PropertyName = "warning")]
+        public List<Warning> Warning
+        {
+            get { return warning; }
+            set { warning = value; }
+        }
+    }
+
+    public class Warning
+    {
+        private string type;
+        [JsonProperty(PropertyName = "type")]
         public string Type
         {
             get { return type; }
             set { type = value; }
         }
-        private int count;
-
-        public int Count
+        private string description;
+        [JsonProperty(PropertyName = "description")]
+        public string Description
         {
-            get { return count; }
-            set { count = value; }
+            get { return description; }
+            set { description = value; }
+        }
+        private string date;
+
+        public string Date
+        {
+            get { return date; }
+            set { date = value; }
         }
     }
 

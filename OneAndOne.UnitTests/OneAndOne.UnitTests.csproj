@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ServersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerHardwareTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

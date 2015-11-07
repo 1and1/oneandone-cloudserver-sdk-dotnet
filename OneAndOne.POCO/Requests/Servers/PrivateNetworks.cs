@@ -1,23 +1,22 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneAndOne.POCO.Respones.Servers
+namespace OneAndOne.POCO.Requests.Servers
 {
-    public class Image
+    public class PrivateNetworks
     {
         private string id;
-        [JsonProperty(PropertyName = "id")]
+
         public string Id
         {
             get { return id; }
             set { id = value; }
         }
         private string name;
-        [JsonProperty(PropertyName = "name")]
+
         public string Name
         {
             get { return name; }
