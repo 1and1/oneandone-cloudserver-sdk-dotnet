@@ -75,21 +75,25 @@ namespace OneAndOne.UnitTests
         [TestMethod]
         public void AddServerHardDrives()
         {
-            var server = client.Servers.Get().FirstOrDefault();
-            var result = client.ServerHdds.Create(new POCO.Requests.Servers.AddHddRequest()
-                {
-                    Hdds = new System.Collections.Generic.List<POCO.Requests.Servers.HddRequest>()
+            var random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count - 1)];
+            if (server.Hardware.Hdds.Count < 8)
+            {
+                var result = client.ServerHdds.Create(new POCO.Requests.Servers.AddHddRequest()
+                    {
+                        Hdds = new System.Collections.Generic.List<POCO.Requests.Servers.HddRequest>()
                     {
                         { new POCO.Requests.Servers.HddRequest()
                         {Size=20,IsMain=false}},
                         {new POCO.Requests.Servers.HddRequest()
                         {Size=30,IsMain=false}
                     }}
-                }, server.Id);
+                    }, server.Id);
 
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Hardware.Hdds.Count > 0);
-
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.Hardware.Hdds.Count > 0);
+            }
         }
 
         [TestMethod]
@@ -146,15 +150,13 @@ namespace OneAndOne.UnitTests
                 randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count - 1)];
                 ++hddTries;
             }
-            if (server.Hardware.Hdds.Count > 1)
+            if (server.Hardware.Hdds.Count > 1 && !randomHdd.IsMain)
             {
                 int previousHddCount = server.Hardware.Hdds.Count;
                 var result = client.ServerHdds.Delete(server.Id, randomHdd.Id);
 
                 Thread.Sleep(10000);
                 Assert.IsNotNull(result);
-                server = client.Servers.Show(server.Id);
-                Assert.IsTrue(server.Hardware.Hdds.Count >= previousHddCount);
             }
 
         }
