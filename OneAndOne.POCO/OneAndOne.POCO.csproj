@@ -49,6 +49,7 @@
     <Compile Include="Requests\Servers\HardDiskDrivesRequest.cs" />
     <Compile Include="Requests\Servers\HardwareReqeust.cs" />
     <Compile Include="Requests\Servers\PrivateNetworks.cs" />
+    <Compile Include="Requests\Servers\UpdateHardwareRequest.cs" />
     <Compile Include="Requests\Servers\UpdateServerRequest.cs" />
     <Compile Include="Respones\Servers\AvailableFlavour.cs" />
     <Compile Include="Respones\Servers\CreateServerResponse.cs" />
@@ -59,7 +60,7 @@
     <Compile Include="Respones\Servers\ServerHardware.cs" />
     <Compile Include="Respones\Servers\ServerImage.cs" />
     <Compile Include="Respones\Servers\ServerIPS.cs" />
-    <Compile Include="Respones\Servers\ServersListResponse.cs" />
+    <Compile Include="Respones\Servers\ServerResponse.cs" />
     <Compile Include="Respones\Servers\Snapshots.cs" />
     <Compile Include="Respones\Servers\UpdateServerResponse.cs" />
   </ItemGroup>

@@ -19,5 +19,32 @@ namespace OneAndOne.UnitTests
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.CoresPerProcessor);
         }
+
+        [TestMethod]
+        public void UpdateServerHardWare()
+        {
+            var random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count)];
+            int CoresPerProcessor = 4;
+            int Ram = 4;
+            int Vcore = 4;
+            if (server.Hardware.CoresPerProcessor > CoresPerProcessor && server.Hardware.Ram > Ram && server.Hardware.Vcore > Vcore)
+            {
+
+                var result = client.ServersHardware.Update(new POCO.Requests.Servers.UpdateHardwareRequest()
+                    {
+                        CoresPerProcessor = CoresPerProcessor,
+                        Ram = 4,
+                        Vcore = 8
+                    }, server.Id);
+
+                Assert.IsNotNull(result);
+                Assert.IsNotNull(result.Hardware.CoresPerProcessor);
+                Assert.AreEqual(result.Hardware.CoresPerProcessor, 3);
+                Assert.AreEqual(result.Hardware.Ram, 4);
+                Assert.AreEqual(result.Hardware.Vcore, 5);
+            }
+        }
     }
 }
