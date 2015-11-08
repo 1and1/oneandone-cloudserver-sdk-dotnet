@@ -10,6 +10,7 @@ namespace OneAndOne.UnitTests
     {
 
         static OneAndOneClient client = new OneAndOneClient();
+
         [TestMethod]
         public void GetServerHardWare()
         {
@@ -45,6 +46,36 @@ namespace OneAndOne.UnitTests
                 Assert.AreEqual(result.Hardware.Ram, 4);
                 Assert.AreEqual(result.Hardware.Vcore, 5);
             }
+        }
+
+        [TestMethod]
+        public void GetServerHardDrives()
+        {
+            var server = client.Servers.Get().FirstOrDefault();
+            var result = client.ServerHardwareHdd.Show(server.Id);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Count > 0);
+        }
+
+        [TestMethod]
+        public void AddServerHardDrives()
+        {
+            var server = client.Servers.Get().FirstOrDefault();
+            var result = client.ServerHardwareHdd.Update(new POCO.Requests.Servers.AddHddRequest()
+                {
+                    Hdds = new System.Collections.Generic.List<POCO.Requests.Servers.HddRequest>()
+                    {
+                        { new POCO.Requests.Servers.HddRequest()
+                        {Size=20,IsMain=false}},
+                        {new POCO.Requests.Servers.HddRequest()
+                        {Size=30,IsMain=false}
+                    }}
+                }, server.Id);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Hardware.Hdds.Count > 0);
+
         }
     }
 }

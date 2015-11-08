@@ -61,5 +61,13 @@ namespace OneAndOne.Client
                 return new ServerHardware();
             }
         }
+
+        public ServerHardwareHdd ServerHardwareHdd
+        {
+            get
+            {
+                return new ServerHardwareHdd();
+            }
+        }
     }
 }

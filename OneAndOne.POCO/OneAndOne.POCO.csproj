@@ -48,6 +48,7 @@
     <Compile Include="Requests\Servers\Dvd.cs" />
     <Compile Include="Requests\Servers\HardDiskDrivesRequest.cs" />
     <Compile Include="Requests\Servers\HardwareReqeust.cs" />
+    <Compile Include="Requests\Servers\AddHddRequest.cs" />
     <Compile Include="Requests\Servers\PrivateNetworks.cs" />
     <Compile Include="Requests\Servers\UpdateHardwareRequest.cs" />
     <Compile Include="Requests\Servers\UpdateServerRequest.cs" />
