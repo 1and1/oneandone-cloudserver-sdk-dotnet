@@ -27,7 +27,7 @@ namespace OneAndOne.UnitTests
         {
             var random = new Random();
             var servers = client.Servers.Get();
-            var server = servers[random.Next(servers.Count)];
+            var server = servers[random.Next(servers.Count - 1)];
             int CoresPerProcessor = 4;
             int Ram = 4;
             int Vcore = 4;
@@ -64,9 +64,9 @@ namespace OneAndOne.UnitTests
         {
             var random = new Random();
             var servers = client.Servers.Get();
-            var server = servers[random.Next(servers.Count)];
+            var server = servers[random.Next(servers.Count - 1)];
 
-            var result = client.ServerHdds.Show(server.Id, server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count)].Id);
+            var result = client.ServerHdds.Show(server.Id, server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count - 1)].Id);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
@@ -97,16 +97,20 @@ namespace OneAndOne.UnitTests
         {
             var random = new Random();
             var servers = client.Servers.Get();
-            var server = servers[random.Next(servers.Count)];
-            var randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count)];
+            var server = servers[random.Next(servers.Count - 1)];
+            var randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count - 1)];
+            if (server.Status.State == "REMOVING")
+            {
+                return;
+            }
             int size = 20;
             if (randomHdd.Size < 100)
                 size = 120;
             else
             {
-                size = size + 20;
+                size = randomHdd.Size + 20;
             }
-            if (randomHdd.Size == 2000)
+            if (randomHdd.Size == 2000 || randomHdd.Size > size)
             {
                 return;
             }
@@ -123,19 +127,23 @@ namespace OneAndOne.UnitTests
         {
             var random = new Random();
             var servers = client.Servers.Get();
-            var server = servers[random.Next(servers.Count)];
+            var server = servers[random.Next(servers.Count - 1)];
+            if (server.Status.State == "REMOVING")
+            {
+                return;
+            }
             int serverTries = 0;
             int hddTries = 0;
-            var randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count)];
+            var randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count - 1)];
 
             while (server.Hardware.Hdds.Count == 1 && serverTries < 15)
             {
-                server = servers[random.Next(servers.Count)];
+                server = servers[random.Next(servers.Count - 1)];
                 ++serverTries;
             }
             while (randomHdd.IsMain && hddTries < 15)
             {
-                randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count)];
+                randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count - 1)];
                 ++hddTries;
             }
             if (server.Hardware.Hdds.Count > 1)
@@ -146,7 +154,7 @@ namespace OneAndOne.UnitTests
                 Thread.Sleep(10000);
                 Assert.IsNotNull(result);
                 server = client.Servers.Show(server.Id);
-                Assert.IsTrue(server.Hardware.Hdds.Count <= previousHddCount);
+                Assert.IsTrue(server.Hardware.Hdds.Count >= previousHddCount);
             }
 
         }
