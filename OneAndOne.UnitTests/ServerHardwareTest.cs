@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
+using System.Threading;
 
 namespace OneAndOne.UnitTests
 {
@@ -75,7 +76,7 @@ namespace OneAndOne.UnitTests
         public void AddServerHardDrives()
         {
             var server = client.Servers.Get().FirstOrDefault();
-            var result = client.ServerHdds.Update(new POCO.Requests.Servers.AddHddRequest()
+            var result = client.ServerHdds.Create(new POCO.Requests.Servers.AddHddRequest()
                 {
                     Hdds = new System.Collections.Generic.List<POCO.Requests.Servers.HddRequest>()
                     {
@@ -88,6 +89,65 @@ namespace OneAndOne.UnitTests
 
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Hardware.Hdds.Count > 0);
+
+        }
+
+        [TestMethod]
+        public void UpdateHardDrives()
+        {
+            var random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count)];
+            var randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count)];
+            int size = 20;
+            if (randomHdd.Size < 100)
+                size = 120;
+            else
+            {
+                size = size + 20;
+            }
+            if (randomHdd.Size == 2000)
+            {
+                return;
+            }
+            var result = client.ServerHdds.Update(new POCO.Requests.Servers.UpdateHddRequest()
+                {
+                    Size = size
+                }, server.Id, randomHdd.Id);
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void DeleteHardDrive()
+        {
+            var random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count)];
+            int serverTries = 0;
+            int hddTries = 0;
+            var randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count)];
+
+            while (server.Hardware.Hdds.Count == 1 && serverTries < 15)
+            {
+                server = servers[random.Next(servers.Count)];
+                ++serverTries;
+            }
+            while (randomHdd.IsMain && hddTries < 15)
+            {
+                randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count)];
+                ++hddTries;
+            }
+            if (server.Hardware.Hdds.Count > 1)
+            {
+                int previousHddCount = server.Hardware.Hdds.Count;
+                var result = client.ServerHdds.Delete(server.Id, randomHdd.Id);
+
+                Thread.Sleep(10000);
+                Assert.IsNotNull(result);
+                server = client.Servers.Show(server.Id);
+                Assert.IsTrue(server.Hardware.Hdds.Count <= previousHddCount);
+            }
 
         }
     }
