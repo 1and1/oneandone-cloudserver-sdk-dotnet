@@ -62,7 +62,7 @@ namespace OneAndOne.Client
             }
         }
 
-        public ServerHardwareHdd ServerHardwareHdd
+        public ServerHardwareHdd ServerHdds
         {
             get
             {

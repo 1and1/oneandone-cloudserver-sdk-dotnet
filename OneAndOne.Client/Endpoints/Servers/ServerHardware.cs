@@ -80,11 +80,42 @@ namespace OneAndOne.Client.Endpoints.Servers
     {
 
         /// <summary>
+        /// Returns information about a server's hard disk.
+        /// </summary>
+        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="hdd_id">hdd_id: Unique hard disk's identifier.</param>
+        /// Unique hard disk's identifier.
+        /// 
+        public Hdd Show(string server_id, string hdd_id)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/hardware/hdds/{hdd_id}", Method.GET);
+                request.AddUrlSegment("server_id", server_id);
+                request.AddUrlSegment("hdd_id", hdd_id);
+                var result = restclient.Execute<Hdd>(request);
+                if (result.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Returns a list of the server's hard disks.
         /// </summary>
         /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
         /// 
-        public List<Hdd> Show(string server_id)
+        public List<Hdd> Get(string server_id)
         {
             try
             {

@@ -52,17 +52,30 @@ namespace OneAndOne.UnitTests
         public void GetServerHardDrives()
         {
             var server = client.Servers.Get().FirstOrDefault();
-            var result = client.ServerHardwareHdd.Show(server.Id);
+            var result = client.ServerHdds.Get(server.Id);
 
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
         }
 
         [TestMethod]
+        public void ShowHardDrives()
+        {
+            var random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count)];
+
+            var result = client.ServerHdds.Show(server.Id, server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count)].Id);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
+        }
+
+        [TestMethod]
         public void AddServerHardDrives()
         {
             var server = client.Servers.Get().FirstOrDefault();
-            var result = client.ServerHardwareHdd.Update(new POCO.Requests.Servers.AddHddRequest()
+            var result = client.ServerHdds.Update(new POCO.Requests.Servers.AddHddRequest()
                 {
                     Hdds = new System.Collections.Generic.List<POCO.Requests.Servers.HddRequest>()
                     {
