@@ -2,6 +2,7 @@
 using OneAndOne.POCO.Requests.Servers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -106,10 +107,13 @@ namespace OneAndOne.POCO.Respones.Servers
     {
         private string state;
         [JsonProperty(PropertyName = "state")]
-        public string State
+        public ServerState State
         {
-            get { return state; }
-            set { state = value; }
+            get { return (ServerState)Enum.Parse(typeof(ServerState), state); }
+            set
+            {
+                state = ((ServerState)value).ToString();
+            }
         }
         private int percent;
         [JsonProperty(PropertyName = "percent")]
@@ -118,6 +122,14 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return percent; }
             set { percent = value; }
         }
+    }
+    public enum ServerState
+    {
+        POWERED_ON,
+        POWERED_OFF,
+        DEPLOYING,
+        REMOVING,
+
     }
 
     public class Alert

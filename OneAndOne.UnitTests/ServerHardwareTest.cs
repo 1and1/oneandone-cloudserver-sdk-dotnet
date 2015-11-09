@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
 using System.Threading;
+using OneAndOne.POCO.Respones.Servers;
 
 namespace OneAndOne.UnitTests
 {
@@ -103,7 +104,7 @@ namespace OneAndOne.UnitTests
             var servers = client.Servers.Get();
             var server = servers[random.Next(servers.Count - 1)];
             var randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count - 1)];
-            if (server.Status.State == "REMOVING")
+            if (server.Status.State == ServerState.REMOVING)
             {
                 return;
             }
@@ -132,7 +133,7 @@ namespace OneAndOne.UnitTests
             var random = new Random();
             var servers = client.Servers.Get();
             var server = servers[random.Next(servers.Count - 1)];
-            if (server.Status.State == "REMOVING")
+            if (server.Status.State == ServerState.REMOVING)
             {
                 return;
             }

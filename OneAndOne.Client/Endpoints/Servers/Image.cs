@@ -11,25 +11,21 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.Client.Endpoints.Servers
 {
-    public class Hardware : ResourceBase
+    public class Image : ResourceBase
     {
-
         /// <summary>
-        /// Returns information about the server's hardware.
-        /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// Returns information about a server's image.
         /// 
-        public OneAndOne.POCO.Respones.Servers.Hardware Show(string server_id)
+        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// </summary>
+        public OneAndOne.POCO.Respones.Servers.Image Get(string server_id)
         {
             try
             {
-                var request = new RestRequest("/servers/{server_id}/hardware", Method.GET);
+                var request = new RestRequest("/servers/{server_id}/image", Method.GET);
                 request.AddUrlSegment("server_id", server_id);
-                var result = restclient.Execute<OneAndOne.POCO.Respones.Servers.Hardware>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
+
+                var result = restclient.Execute<OneAndOne.POCO.Respones.Servers.Image>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -43,21 +39,21 @@ namespace OneAndOne.Client.Endpoints.Servers
         }
 
         /// <summary>
-        /// Modifies the server's hardware.
+        /// Reinstalls a new image into a server.
         /// </summary>
         /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
         /// 
-        public ServerResponse Update(UpdateHardwareRequest hardware, string server_id)
+        public ServerResponse Update(UpdateServerImageRequest image, string server_id)
         {
             try
             {
-                var request = new RestRequest("/servers/{server_id}/hardware", Method.PUT)
-                    {
-                        RequestFormat = DataFormat.Json,
-                        JsonSerializer = new CustomSerializer()
-                    };
+                var request = new RestRequest("/servers/{server_id}/image", Method.PUT)
+                {
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
                 request.AddUrlSegment("server_id", server_id);
-                request.AddBody(hardware);
+                request.AddBody(image);
                 var result = restclient.Execute<ServerResponse>(request);
                 if (result.StatusCode == HttpStatusCode.NotFound)
                 {

@@ -25,6 +25,11 @@ namespace OneAndOne.UnitTests
         {
             int vcore = 6;
             int CoresPerProcessor = 3;
+            var servers = client.Servers.Get();
+            if (servers.Any(ser => ser.Name == randomName))
+            {
+                return;
+            }
 
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
@@ -61,8 +66,8 @@ namespace OneAndOne.UnitTests
             var server = client.Servers.Show(randomName);
             foreach (var item in client.Servers.Get())
             {
-                if (item.Name.Contains("ServerTest") && (item.Status.State != "POWERED_OFF"
-                    && item.Status.State == "POWERED_ON"))
+                if (item.Name.Contains("ServerTest") && (item.Status.State != ServerState.POWERED_OFF
+                    && item.Status.State == ServerState.POWERED_OFF))
                 {
                     server = item;
                     break;
@@ -170,8 +175,8 @@ namespace OneAndOne.UnitTests
             ServerResponse serverToDelete = null;
             foreach (var item in client.Servers.Get())
             {
-                if (item.Name.Contains("ServerTest") && (item.Status.State != "POWERED_OFF"
-                    && item.Status.State == "POWERED_ON"))
+                if (item.Name.Contains("ServerTest") && (item.Status.State != ServerState.POWERED_OFF
+                    && item.Status.State == ServerState.POWERED_ON))
                 {
                     serverToDelete = item;
                     break;

@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Endpoints\ResourceBase .cs" />
+    <Compile Include="Endpoints\Servers\HardDiskDrives.cs" />
+    <Compile Include="Endpoints\Servers\Image.cs" />
     <Compile Include="Endpoints\Servers\ServerHardware.cs" />
     <Compile Include="OneAndOneClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

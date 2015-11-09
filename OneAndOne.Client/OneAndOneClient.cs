@@ -54,19 +54,27 @@ namespace OneAndOne.Client
         /// <summary>
         /// Servers hardware client
         /// </summary>
-        public ServerHardware ServersHardware
+        public Hardware ServersHardware
         {
             get
             {
-                return new ServerHardware();
+                return new Hardware();
             }
         }
 
-        public ServerHardwareHdd ServerHdds
+        public HardDiskDrives ServerHdds
         {
             get
             {
-                return new ServerHardwareHdd();
+                return new HardDiskDrives();
+            }
+        }
+
+        public Image ServerImage
+        {
+            get
+            {
+                return new Image();
             }
         }
     }

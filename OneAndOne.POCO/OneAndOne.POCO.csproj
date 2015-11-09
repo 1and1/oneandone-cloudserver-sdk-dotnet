@@ -52,6 +52,7 @@
     <Compile Include="Requests\Servers\PrivateNetworks.cs" />
     <Compile Include="Requests\Servers\UpdateHardwareRequest.cs" />
     <Compile Include="Requests\Servers\UpdateHddRequest.cs" />
+    <Compile Include="Requests\Servers\UpdateServerImageRequest.cs" />
     <Compile Include="Requests\Servers\UpdateServerRequest.cs" />
     <Compile Include="Respones\Servers\AvailableFlavour.cs" />
     <Compile Include="Respones\Servers\CreateServerResponse.cs" />
