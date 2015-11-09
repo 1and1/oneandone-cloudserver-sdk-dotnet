@@ -35,10 +35,10 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return load_balancers; }
             set { load_balancers = value; }
         }
-        private string firewall_policy;
+        private List<FirewallPolicyResponse> firewall_policy;
         [JsonProperty(PropertyName = "firewall_policy")]
 
-        public string FirewallPolicy
+        public List<FirewallPolicyResponse> FirewallPolicy
         {
             get { return firewall_policy; }
             set { firewall_policy = value; }

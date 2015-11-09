@@ -175,7 +175,7 @@ namespace OneAndOne.UnitTests
             ServerResponse serverToDelete = null;
             foreach (var item in client.Servers.Get())
             {
-                if (item.Name.Contains("ServerTest") && (item.Status.State != ServerState.POWERED_OFF
+                if ((item.Name.Contains("ServerTest") || item.Name.Contains("Updated")) && (item.Status.State != ServerState.POWERED_OFF
                     && item.Status.State == ServerState.POWERED_ON))
                 {
                     serverToDelete = item;
@@ -205,6 +205,45 @@ namespace OneAndOne.UnitTests
                 Assert.IsNotNull(result.FirstPassword);
             }
 
+
+        }
+
+        [TestMethod]
+        public void GetServerStatus()
+        {
+            Random random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count - 1)];
+
+            var result = client.Servers.GetStatus(server.Id);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.State);
+        }
+
+        [TestMethod]
+        public void UpdateServerStatus()
+        {
+            Random random = new Random();
+            var servers = client.Servers.Get();
+            string newState = "REBOOT";
+            var server = servers[random.Next(servers.Count - 1)];
+            if (server.Status.State == ServerState.POWERED_OFF)
+            {
+                newState = "POWER_ON";
+            }
+            int i = 0;
+            while (i < servers.Count && (server.Status.State == ServerState.POWERING_ON || server.Status.State == ServerState.REBOOTING))
+            {
+                server = servers[random.Next(i)];
+            }
+
+            var result = client.Servers.UpdateStatus(new UpdateStatusRequest()
+            {
+                Action = newState,
+                Method = "SOFTWARE"
+            }, server.Id);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Status);
 
         }
 

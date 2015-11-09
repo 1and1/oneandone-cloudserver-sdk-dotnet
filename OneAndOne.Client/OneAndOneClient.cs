@@ -62,6 +62,9 @@ namespace OneAndOne.Client
             }
         }
 
+        /// <summary>
+        /// Servers HDD client
+        /// </summary>
         public HardDiskDrives ServerHdds
         {
             get
@@ -70,6 +73,9 @@ namespace OneAndOne.Client
             }
         }
 
+        /// <summary>
+        /// Servers Image client
+        /// </summary>
         public Image ServerImage
         {
             get
@@ -78,11 +84,25 @@ namespace OneAndOne.Client
             }
         }
 
+        /// <summary>
+        /// Servers IP client
+        /// </summary>
         public IPs ServerIps
         {
             get
             {
                 return new IPs();
+            }
+        }
+
+        /// <summary>
+        /// Load balancer client
+        /// </summary>
+        public OneAndOne.Client.Endpoints.LoadBalancers.LoadBalancer LoadBalancers
+        {
+            get
+            {
+                return new OneAndOne.Client.Endpoints.LoadBalancers.LoadBalancer();
             }
         }
     }

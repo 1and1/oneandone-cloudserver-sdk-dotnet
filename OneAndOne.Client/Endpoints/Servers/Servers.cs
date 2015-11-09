@@ -184,8 +184,6 @@ namespace OneAndOne.Client
 
         #endregion
 
-
-
         #region Additional Operations
         /// <summary>
         /// Returns available flavours for fixed servers.
@@ -231,6 +229,65 @@ namespace OneAndOne.Client
                 throw;
             }
         }
+        #endregion
+
+        #region Status
+        /// <summary>
+        /// Returns a list of the server's IPs.
+        /// 
+        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// </summary>
+        public OneAndOne.POCO.Respones.Servers.Status GetStatus(string server_id)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/status", Method.GET);
+                request.AddUrlSegment("server_id", server_id);
+
+                var result = restclient.Execute<OneAndOne.POCO.Respones.Servers.Status>(request);
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of the server's IPs.
+        /// 
+        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// </summary>
+        public ServerResponse UpdateStatus(UpdateStatusRequest body, string server_id)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/status/action", Method.PUT)
+                {
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
+                request.AddUrlSegment("server_id", server_id);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddBody(body);
+
+                var result = restclient.Execute<ServerResponse>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         #endregion
 
     }

@@ -41,5 +41,6 @@ namespace OneAndOne.POCO.Requests.Servers
             get { return id; }
             set { id = value; }
         }
+
     }
 }

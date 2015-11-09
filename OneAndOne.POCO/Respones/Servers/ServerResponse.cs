@@ -125,9 +125,11 @@ namespace OneAndOne.POCO.Respones.Servers
     }
     public enum ServerState
     {
+        POWERING_ON,
         POWERED_ON,
         POWERED_OFF,
         DEPLOYING,
+        REBOOTING,
         REMOVING,
 
     }

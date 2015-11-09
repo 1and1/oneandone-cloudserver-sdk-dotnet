@@ -55,10 +55,13 @@
     <Compile Include="Requests\Servers\UpdateHddRequest.cs" />
     <Compile Include="Requests\Servers\UpdateServerImageRequest.cs" />
     <Compile Include="Requests\Servers\UpdateServerRequest.cs" />
+    <Compile Include="Requests\Servers\UpdateStatusRequest.cs" />
+    <Compile Include="Respones\LoadBalancers\LoadBalancerResponse.cs" />
     <Compile Include="Respones\Servers\AvailableFlavour.cs" />
     <Compile Include="Respones\Servers\CreateServerResponse.cs" />
     <Compile Include="Respones\Servers\Dvd.cs" />
     <Compile Include="Respones\Servers\DeleteServerResponse.cs" />
+    <Compile Include="Respones\Servers\FirewallPolicyResponse.cs" />
     <Compile Include="Respones\Servers\HardDiskDrives.cs" />
     <Compile Include="Respones\Servers\LoadBalancers.cs" />
     <Compile Include="Respones\Servers\ServerHardware.cs" />
