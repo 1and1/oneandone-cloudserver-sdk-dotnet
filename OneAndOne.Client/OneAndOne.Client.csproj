@@ -52,6 +52,7 @@
     <Compile Include="Endpoints\Servers\HardDiskDrives.cs" />
     <Compile Include="Endpoints\Servers\Image.cs" />
     <Compile Include="Endpoints\Servers\ServerHardware.cs" />
+    <Compile Include="Endpoints\Servers\IPs.cs" />
     <Compile Include="OneAndOneClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Endpoints\Servers\Servers.cs" />

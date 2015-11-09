@@ -77,5 +77,13 @@ namespace OneAndOne.Client
                 return new Image();
             }
         }
+
+        public IPs ServerIps
+        {
+            get
+            {
+                return new IPs();
+            }
+        }
     }
 }
