@@ -100,7 +100,7 @@ namespace OneAndOne.UnitTests
                 if (server.Ips.Any(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0))
                 {
                     var curIP = server.Ips.FirstOrDefault(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0);
-                    result = client.ServerIps.GetFirewallPolicies(item.Id, item.Ips[0].Id);
+                    result = client.ServerIps.GetFirewallPolicies(item.Id, curIP.Id);
                     Assert.IsNotNull(result);
                     Assert.IsNotNull(result.Count > 0);
                     break;
