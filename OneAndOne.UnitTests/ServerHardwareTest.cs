@@ -161,5 +161,54 @@ namespace OneAndOne.UnitTests
             }
 
         }
+
+        [TestMethod]
+        public void GetDVD()
+        {
+            var random = new Random();
+            var servers = client.Servers.Get();
+            foreach (var item in servers)
+            {
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.DVD != null)
+                {
+                    var result = client.ServersHardware.ShowDVD(server.Id);
+
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Id);
+                    break;
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UpdateDVD()
+        {
+            var random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count - 1)];
+            var dvd = client.DVDs.Get();
+            var result = client.ServersHardware.UpdateDVD(server.Id, dvd[0].id);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
+        }
+
+        [TestMethod]
+        public void DeleteDVD()
+        {
+            var random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count - 1)];
+            if (server.Status.State == ServerState.REMOVING)
+            {
+                return;
+            }
+
+            var result = client.ServersHardware.DeleteDVD(server.Id);
+            Assert.IsNotNull(result);
+
+        }
     }
 }

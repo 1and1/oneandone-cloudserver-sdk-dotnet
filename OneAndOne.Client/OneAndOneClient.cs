@@ -105,5 +105,16 @@ namespace OneAndOne.Client
                 return new OneAndOne.Client.Endpoints.LoadBalancers.LoadBalancer();
             }
         }
+
+        /// <summary>
+        /// DVD ISO client
+        /// </summary>
+        public OneAndOne.Client.Endpoints.DVDs.DVDs DVDs
+        {
+            get
+            {
+                return new OneAndOne.Client.Endpoints.DVDs.DVDs();
+            }
+        }
     }
 }

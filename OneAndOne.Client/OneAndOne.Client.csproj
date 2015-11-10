@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\DVDs\DVDs.cs" />
     <Compile Include="Endpoints\LoadBalancers\LoadBalancer.cs" />
     <Compile Include="Endpoints\ResourceBase .cs" />
     <Compile Include="Endpoints\Servers\HardDiskDrives.cs" />

@@ -192,7 +192,7 @@ namespace OneAndOne.UnitTests
             }
         }
 
-        [TestMethod]
+        [TestCleanup]
         public void DeleteAllTestServers()
         {
             var servers = client.Servers.Get().Where(ser => ser.Name.Contains("ServerTest") || ser.Name.Contains("Updated"));

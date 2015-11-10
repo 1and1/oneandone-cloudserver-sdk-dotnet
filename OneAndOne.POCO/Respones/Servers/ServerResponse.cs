@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.POCO.Respones.Servers
 {
-
     /// <summary>
     /// Server Main data 
     /// </summary>
     public class ServerResponse
     {
         private string id;
+        [JsonProperty(PropertyName = "id")]
 
         public string Id
         {
@@ -23,34 +23,59 @@ namespace OneAndOne.POCO.Respones.Servers
             set { id = value; }
         }
         private string name;
+        [JsonProperty(PropertyName = "name")]
 
         public string Name
         {
             get { return name; }
             set { name = value; }
         }
+        private string cloudpanel_id;
+        [JsonProperty(PropertyName = "cloudpanel_id")]
+
+        public string CloudPanelId
+        {
+            get { return cloudpanel_id; }
+            set { cloudpanel_id = value; }
+        }
         private string description;
+        [JsonProperty(PropertyName = "description")]
 
         public string Description
         {
             get { return description; }
             set { description = value; }
         }
+
+        private string creation_date;
+        [JsonProperty(PropertyName = "creation_date")]
+
+        public string CreationDate
+        {
+            get { return creation_date; }
+            set { creation_date = value; }
+        }
+
+        private string first_password;
+        [JsonProperty(PropertyName = "first_password")]
+
+        public string FirstPassword
+        {
+            get { return first_password; }
+            set { first_password = value; }
+        }
+
         private Status status;
+        [JsonProperty(PropertyName = "status")]
 
         public Status Status
         {
             get { return status; }
             set { status = value; }
         }
-        private Image image;
 
-        public Image Image
-        {
-            get { return image; }
-            set { image = value; }
-        }
         private Hardware hardware;
+        [JsonProperty(PropertyName = "hardware")]
 
         public Hardware Hardware
         {
@@ -58,44 +83,59 @@ namespace OneAndOne.POCO.Respones.Servers
             set { hardware = value; }
         }
 
+        private Image image;
+        [JsonProperty(PropertyName = "image")]
+
+        public Image Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
+
+        private Dvd dvd;
+        [JsonProperty(PropertyName = "dvd")]
+
+        public Dvd DVD
+        {
+            get { return dvd; }
+            set { dvd = value; }
+        }
+
         private Snapshots snapshot;
+        [JsonProperty(PropertyName = "snapshot")]
 
         public Snapshots Snapshot
         {
             get { return snapshot; }
             set { snapshot = value; }
         }
+
         private List<IpAddress> ips;
+        [JsonProperty(PropertyName = "ips")]
 
         public List<IpAddress> Ips
         {
             get { return ips; }
             set { ips = value; }
         }
-
-        private List<Dvd> dvd;
-
-        public List<Dvd> Dvd
-        {
-            get { return dvd; }
-            set { dvd = value; }
-        }
         private List<Alert> alerts;
-
+        [JsonProperty(PropertyName = "alerts")]
         public List<Alert> Alerts
         {
             get { return alerts; }
             set { alerts = value; }
         }
 
-        private string monitoring_policy_id;
-        public string MonitoringPolicyId
+        private MonitoringPolicy monitoring_policy_id;
+        [JsonProperty(PropertyName = "monitoring_policy_id")]
+        public MonitoringPolicy MonitoringPolicyId
         {
             get { return monitoring_policy_id; }
             set { monitoring_policy_id = value; }
         }
 
         private List<PrivateNetworks> private_networks;
+        [JsonProperty(PropertyName = "private_networks")]
         public List<PrivateNetworks> PrivateNetworks
         {
             get { return private_networks; }
@@ -144,6 +184,39 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return warning; }
             set { warning = value; }
         }
+
+        private List<Critical> critical;
+        [JsonProperty(PropertyName = "critical")]
+        private List<Critical> Critical
+        {
+            get { return critical; }
+            set { critical = value; }
+        }
+    }
+
+    public class Critical
+    {
+        private string type;
+        [JsonProperty(PropertyName = "type")]
+        public string Type
+        {
+            get { return type; }
+            set { type = value; }
+        }
+        private string description;
+        [JsonProperty(PropertyName = "description")]
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
+        }
+        private string date;
+        [JsonProperty(PropertyName = "date")]
+        public string Date
+        {
+            get { return date; }
+            set { date = value; }
+        }
     }
 
     public class Warning
@@ -163,11 +236,29 @@ namespace OneAndOne.POCO.Respones.Servers
             set { description = value; }
         }
         private string date;
-
+        [JsonProperty(PropertyName = "date")]
         public string Date
         {
             get { return date; }
             set { date = value; }
+        }
+    }
+
+    public class MonitoringPolicy
+    {
+        private string id;
+        [JsonProperty(PropertyName = "id")]
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        private string name;
+        [JsonProperty(PropertyName = "name")]
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
         }
     }
 
