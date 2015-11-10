@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.Client.Endpoints.LoadBalancers
 {
+    //TODO :refactor objects 
     public class LoadBalancer : ResourceBase
     {
         /// <summary>

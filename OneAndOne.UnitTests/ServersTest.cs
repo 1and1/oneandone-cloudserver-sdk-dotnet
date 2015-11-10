@@ -18,7 +18,7 @@ namespace OneAndOne.UnitTests
         public ServersTest()
         {
             Random random = new Random();
-            randomName = "ServerTest" + random.Next(9999);
+            randomName = "ServerTest" + random.Next(1000, 9999);
         }
 
         #region SERVER MAIN OPERTAIONS
@@ -317,6 +317,93 @@ namespace OneAndOne.UnitTests
                 {
 
                     var result = client.Servers.DeletePrivateNetwork(server.Id, server.PrivateNetworks[0].Id);
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Id);
+                    break;
+                }
+            }
+        }
+
+
+        [TestMethod]
+        public void GetSnapshots()
+        {
+            Random random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count - 1)];
+
+            var result = client.Servers.GetSnapshots(server.Id);
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void UpdateSnapshots()
+        {
+            var servers = client.Servers.Get();
+            foreach (var item in servers)
+            {
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.Snapshot != null && server.Status.Percent == 0 && server.Status.State == ServerState.POWERED_OFF)
+                {
+
+                    var result = client.Servers.UpdateSnapshot(server.Id, server.Snapshot.Id);
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Id);
+                    break;
+                }
+            }
+        }
+
+        [TestMethod]
+        public void CreateSnapshots()
+        {
+            Random random = new Random();
+            var servers = client.Servers.Get();
+            foreach (var item in servers)
+            {
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.Snapshot == null)
+                {
+                    var result = client.Servers.CreateSnapshot(server.Id);
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Id);
+                    break;
+                }
+            }
+        }
+
+        [TestMethod]
+        public void DeleteSnapshot()
+        {
+            var servers = client.Servers.Get();
+            foreach (var item in servers)
+            {
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.Snapshot != null)
+                {
+                    var result = client.Servers.DeleteSnapshot(server.Id, server.Snapshot.Id);
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Id);
+                    break;
+                }
+            }
+        }
+
+        [TestMethod]
+        public void CreateClone()
+        {
+            Random random = new Random();
+            var servers = client.Servers.Get();
+            foreach (var item in servers)
+            {
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.Snapshot == null && server.Status.Percent == 0)
+                {
+                    var result = client.Servers.CreateClone(server.Id, server.Name + "Clone" + random.Next(1000, 9999));
                     Assert.IsNotNull(result);
                     Assert.IsNotNull(result.Id);
                     break;

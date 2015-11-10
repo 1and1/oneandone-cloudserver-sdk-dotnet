@@ -406,5 +406,165 @@ namespace OneAndOne.Client
 
         #endregion
 
+        #region Snapshot
+
+
+        /// <summary>
+        /// Returns a list of the server's snapshots.
+        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// </summary>
+        public List<Snapshots> GetSnapshots(string server_id)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/snapshots", Method.GET);
+                request.AddUrlSegment("server_id", server_id);
+
+                var result = restclient.Execute<List<Snapshots>>(request);
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restores a snapshot into the server.
+        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="snapshotId">private_network_id: required (string ), Unique private network's identifier.</param>
+        ///  
+        /// </summary>
+        public ServerResponse UpdateSnapshot(string server_id, string snapshotId)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/snapshots/{snapshot_id}", Method.PUT)
+                {
+                    JsonSerializer = new CustomSerializer(),
+                    RequestFormat = DataFormat.Json
+
+                };
+                request.AddUrlSegment("server_id", server_id);
+                request.AddUrlSegment("snapshot_id", snapshotId);
+
+                request.AddHeader("Content-Type", "application/json");
+
+
+                var result = restclient.Execute<ServerResponse>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new snapshot of the server.
+        /// </summary>
+        public ServerResponse CreateSnapshot(string server_id)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/snapshots", Method.POST)
+                {
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
+                request.AddUrlSegment("server_id", server_id);
+                request.AddHeader("Content-Type", "application/json");
+
+
+                var result = restclient.Execute<ServerResponse>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// Removes a snapshot
+        /// </summary>
+        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="snapshot_id">server_id: required (string ), Unique snapshot's identifier.</param>
+        /// 
+        public ServerResponse DeleteSnapshot(string server_id, string snapshotId)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/snapshots/{snapshot_id}", Method.DELETE)
+                {
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
+                request.AddHeader("Content-Type", "application/json");
+                request.AddUrlSegment("server_id", server_id);
+                request.AddUrlSegment("snapshot_id", snapshotId);
+
+                var result = restclient.Execute<ServerResponse>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Clones a server.
+        /// </summary>
+        public ServerResponse CreateClone(string server_id, string cloneName)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/clone", Method.POST)
+                {
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
+                request.AddUrlSegment("server_id", server_id);
+                request.AddHeader("Content-Type", "application/json");
+                string name = cloneName;
+                request.AddBody(new { name });
+
+
+                var result = restclient.Execute<ServerResponse>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
+
+
+        #endregion
+
     }
 }

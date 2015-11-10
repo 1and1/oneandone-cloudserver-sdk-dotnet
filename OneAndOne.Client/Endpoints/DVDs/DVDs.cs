@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OneAndOne.Client.Endpoints.DVDs
-{
+{//TODO :refactor objects 
     public class DVDs : ResourceBase
     {
 
