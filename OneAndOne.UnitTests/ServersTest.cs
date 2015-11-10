@@ -195,14 +195,13 @@ namespace OneAndOne.UnitTests
         [TestMethod]
         public void DeleteAllTestServers()
         {
-            var servers = client.Servers.Get().Where(ser => ser.Name.Contains("ServerTest"));
+            var servers = client.Servers.Get().Where(ser => ser.Name.Contains("ServerTest") || ser.Name.Contains("Updated"));
             foreach (var item in servers)
             {
                 var result = client.Servers.Delete(item.Id, false);
                 Assert.IsNotNull(result);
                 Assert.IsNotNull(result.Name);
                 Assert.IsNotNull(result.Hardware);
-                Assert.IsNotNull(result.FirstPassword);
             }
 
 
