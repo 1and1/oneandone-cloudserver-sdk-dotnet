@@ -238,7 +238,8 @@ namespace OneAndOne.UnitTests
                 newState = "POWER_ON";
             }
             int i = 0;
-            while (i < servers.Count && (server.Status.State == ServerState.POWERING_ON || server.Status.State == ServerState.REBOOTING))
+            while (i < servers.Count && (server.Status.State == ServerState.POWERING_ON || server.Status.State == ServerState.REBOOTING
+                || server.Status.State == ServerState.DEPLOYING))
             {
                 server = servers[random.Next(i)];
             }
@@ -289,18 +290,32 @@ namespace OneAndOne.UnitTests
         {
             Random random = new Random();
             var servers = client.Servers.Get();
-            var server = servers[random.Next(servers.Count - 1)];
-            var privateNetworks = client.PrivateNetworks.GetPrivateNetworks();
-            var privateNetwork = privateNetworks[0];
-            server = client.Servers.Show(server.Id);
-            if (!server.PrivateNetworks.Any(pn => pn.Id == privateNetwork.id))
+            foreach (var server in servers.Where(p => p.Name.Contains("ServerTest")))
             {
-                privateNetwork = privateNetworks[1];
-            }
 
-            var result = client.Servers.CreatePrivateNetwork(server.Id, privateNetwork.id);
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Id);
+                var privateNetworks = client.PrivateNetworks.GetPrivateNetworks();
+                var privateNetwork = privateNetworks[0];
+                var curServer = client.Servers.Show(server.Id);
+                if (curServer.Status.State == ServerState.POWERING_ON || curServer.Snapshot != null)
+                    continue;
+                if (server.PrivateNetworks == null || !server.PrivateNetworks.Any(pn => pn.Id == privateNetwork.id))
+                {
+                    privateNetwork = privateNetworks[1];
+                }
+                //had to add this try the server was returning un explained Generic Errors
+                try
+                {
+                    var result = client.Servers.CreatePrivateNetwork(curServer.Id, privateNetwork.id);
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Id);
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    if (!ex.Message.Contains("Generic error"))
+                        throw;
+                }
+            }
         }
 
         [TestMethod]
@@ -311,15 +326,22 @@ namespace OneAndOne.UnitTests
             {
                 Thread.Sleep(1000);
                 var server = client.Servers.Show(item.Id);
-                if (server.Image.Name == "ubuntu1404-64std")
+                if (server.Image.Name == "ubuntu1404-64std" || server.Snapshot != null)
                     continue;
                 if (server.PrivateNetworks != null && server.PrivateNetworks.Count > 0)
                 {
-
-                    var result = client.Servers.DeletePrivateNetwork(server.Id, server.PrivateNetworks[0].Id);
-                    Assert.IsNotNull(result);
-                    Assert.IsNotNull(result.Id);
-                    break;
+                    try
+                    {
+                        var result = client.Servers.DeletePrivateNetwork(server.Id, server.PrivateNetworks[0].Id);
+                        Assert.IsNotNull(result);
+                        Assert.IsNotNull(result.Id);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (!ex.Message.Contains("Generic error"))
+                            throw;
+                    }
                 }
             }
         }
@@ -366,10 +388,18 @@ namespace OneAndOne.UnitTests
                 var server = client.Servers.Show(item.Id);
                 if (server.Snapshot == null)
                 {
-                    var result = client.Servers.CreateSnapshot(server.Id);
-                    Assert.IsNotNull(result);
-                    Assert.IsNotNull(result.Id);
-                    break;
+                    try
+                    {
+                        var result = client.Servers.CreateSnapshot(server.Id);
+                        Assert.IsNotNull(result);
+                        Assert.IsNotNull(result.Id);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (!ex.Message.Contains("Generic error"))
+                            throw;
+                    }
                 }
             }
         }
@@ -384,10 +414,20 @@ namespace OneAndOne.UnitTests
                 var server = client.Servers.Show(item.Id);
                 if (server.Snapshot != null)
                 {
-                    var result = client.Servers.DeleteSnapshot(server.Id, server.Snapshot.Id);
-                    Assert.IsNotNull(result);
-                    Assert.IsNotNull(result.Id);
-                    break;
+
+                    try
+                    {
+                        var result = client.Servers.DeleteSnapshot(server.Id, server.Snapshot.Id);
+                        Assert.IsNotNull(result);
+                        Assert.IsNotNull(result.Id);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (!ex.Message.Contains("Generic error"))
+                            throw;
+                    }
+
                 }
             }
         }

@@ -346,7 +346,7 @@ namespace OneAndOne.Client
         /// <summary>
         /// Assigns a private network to the server.
         /// </summary>
-        public UpdatedOperationServerResponse CreatePrivateNetwork(string server_id, string privateNetworkId)
+        public ServerResponse CreatePrivateNetwork(string server_id, string privateNetworkId)
         {
             try
             {
@@ -359,7 +359,7 @@ namespace OneAndOne.Client
                 string id = privateNetworkId;
                 request.AddBody(new { id });
 
-                var result = restclient.Execute<UpdatedOperationServerResponse>(request);
+                var result = restclient.Execute<ServerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);
@@ -543,10 +543,8 @@ namespace OneAndOne.Client
                     JsonSerializer = new CustomSerializer()
                 };
                 request.AddUrlSegment("server_id", server_id);
-                request.AddHeader("Content-Type", "application/json");
                 string name = cloneName;
                 request.AddBody(new { name });
-
 
                 var result = restclient.Execute<ServerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
@@ -559,12 +557,7 @@ namespace OneAndOne.Client
             {
                 throw;
             }
-
         }
-
-
-
         #endregion
-
     }
 }
