@@ -58,6 +58,7 @@
     <Compile Include="Requests\Servers\UpdateStatusRequest.cs" />
     <Compile Include="Respones\DVDS\DVDResponse.cs" />
     <Compile Include="Respones\LoadBalancers\LoadBalancerResponse.cs" />
+    <Compile Include="Respones\PrivateNetworks\PrivateNetworksResponse.cs" />
     <Compile Include="Respones\Servers\AvailableFlavour.cs" />
     <Compile Include="Respones\Servers\CreateServerResponse.cs" />
     <Compile Include="Respones\Servers\Dvd.cs" />

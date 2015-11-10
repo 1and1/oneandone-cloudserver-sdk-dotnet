@@ -116,5 +116,16 @@ namespace OneAndOne.Client
                 return new OneAndOne.Client.Endpoints.DVDs.DVDs();
             }
         }
+
+        /// <summary>
+        /// DVD ISO client
+        /// </summary>
+        public OneAndOne.Client.Endpoints.PrivateNetworks.PrivateNetworks PrivateNetworks
+        {
+            get
+            {
+                return new OneAndOne.Client.Endpoints.PrivateNetworks.PrivateNetworks();
+            }
+        }
     }
 }

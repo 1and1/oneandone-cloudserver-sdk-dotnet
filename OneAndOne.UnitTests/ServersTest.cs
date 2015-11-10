@@ -5,6 +5,7 @@ using OneAndOne.Client;
 using System.Collections.Generic;
 using OneAndOne.POCO.Requests.Servers;
 using OneAndOne.POCO.Respones.Servers;
+using System.Threading;
 
 namespace OneAndOne.UnitTests
 {
@@ -19,6 +20,8 @@ namespace OneAndOne.UnitTests
             Random random = new Random();
             randomName = "ServerTest" + random.Next(9999);
         }
+
+        #region SERVER MAIN OPERTAIONS
 
         [TestMethod]
         public void CreateServer()
@@ -192,7 +195,7 @@ namespace OneAndOne.UnitTests
             }
         }
 
-        [TestCleanup]
+        [TestMethod]
         public void DeleteAllTestServers()
         {
             var servers = client.Servers.Get().Where(ser => ser.Name.Contains("ServerTest") || ser.Name.Contains("Updated"));
@@ -206,6 +209,10 @@ namespace OneAndOne.UnitTests
 
 
         }
+
+        #endregion
+
+        #region Secondary Operations
 
         [TestMethod]
         public void GetServerStatus()
@@ -245,6 +252,80 @@ namespace OneAndOne.UnitTests
             Assert.IsNotNull(result.Status);
 
         }
+
+        [TestMethod]
+        public void GetPrivateNetworks()
+        {
+            Random random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count - 1)];
+
+            var result = client.Servers.GetPrivateNetworks(server.Id);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Count > 0);
+        }
+
+        [TestMethod]
+        public void ShowPrivateNetworks()
+        {
+            var servers = client.Servers.Get();
+            foreach (var item in servers)
+            {
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.PrivateNetworks != null && server.PrivateNetworks.Count > 0)
+                {
+
+                    var result = client.Servers.ShowPrivateNetworks(server.Id, server.PrivateNetworks[0].Id);
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Id);
+                    break;
+                }
+            }
+        }
+
+        [TestMethod]
+        public void CreatePrivateNetwork()
+        {
+            Random random = new Random();
+            var servers = client.Servers.Get();
+            var server = servers[random.Next(servers.Count - 1)];
+            var privateNetworks = client.PrivateNetworks.GetPrivateNetworks();
+            var privateNetwork = privateNetworks[0];
+            server = client.Servers.Show(server.Id);
+            if (!server.PrivateNetworks.Any(pn => pn.Id == privateNetwork.id))
+            {
+                privateNetwork = privateNetworks[1];
+            }
+
+            var result = client.Servers.CreatePrivateNetwork(server.Id, privateNetwork.id);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
+        }
+
+        [TestMethod]
+        public void DeletePrivateNetwork()
+        {
+            var servers = client.Servers.Get();
+            foreach (var item in servers)
+            {
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.Image.Name == "ubuntu1404-64std")
+                    continue;
+                if (server.PrivateNetworks != null && server.PrivateNetworks.Count > 0)
+                {
+
+                    var result = client.Servers.DeletePrivateNetwork(server.Id, server.PrivateNetworks[0].Id);
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Id);
+                    break;
+                }
+            }
+        }
+
+
+        #endregion
 
 
     }

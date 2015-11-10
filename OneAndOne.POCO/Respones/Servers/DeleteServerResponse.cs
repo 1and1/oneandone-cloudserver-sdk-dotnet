@@ -107,9 +107,9 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return monitoringr_policy; }
             set { monitoringr_policy = value; }
         }
-        private List<PrivateNetworks> private_networks;
+        private List<OneAndOne.POCO.Requests.Servers.PrivateNetworks> private_networks;
 
-        public List<PrivateNetworks> PrivateNetworks
+        public List<OneAndOne.POCO.Requests.Servers.PrivateNetworks> PrivateNetworks
         {
             get { return private_networks; }
             set { private_networks = value; }

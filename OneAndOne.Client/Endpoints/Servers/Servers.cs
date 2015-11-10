@@ -290,5 +290,121 @@ namespace OneAndOne.Client
 
         #endregion
 
+        #region Private Networks
+
+        /// <summary>
+        /// Returns a list of the server's private networks.
+        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// </summary>
+        public List<PrivateNetworks> GetPrivateNetworks(string server_id)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/private_networks", Method.GET);
+                request.AddUrlSegment("server_id", server_id);
+
+                var result = restclient.Execute<List<PrivateNetworks>>(request);
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns information about a server's private network.
+        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="privateNetworkId">private_network_id: required (string ), Unique private network's identifier.</param>
+        ///  
+        /// </summary>
+        public PrivateNetworks ShowPrivateNetworks(string server_id, string privateNetworkId)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/private_networks/{private_network_id}", Method.GET);
+                request.AddUrlSegment("server_id", server_id);
+                request.AddUrlSegment("private_network_id", privateNetworkId);
+
+                var result = restclient.Execute<PrivateNetworks>(request);
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Assigns a private network to the server.
+        /// </summary>
+        public UpdatedOperationServerResponse CreatePrivateNetwork(string server_id, string privateNetworkId)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/private_networks", Method.POST)
+                {
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
+                request.AddUrlSegment("server_id", server_id);
+                string id = privateNetworkId;
+                request.AddBody(new { id });
+
+                var result = restclient.Execute<UpdatedOperationServerResponse>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// Unassigns a private network from the server.
+        /// </summary>
+        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// 
+        public ServerResponse DeletePrivateNetwork(string server_id, string privateNetworkId)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/{server_id}/private_networks/{private_network_id}", Method.DELETE)
+                {
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
+                request.AddHeader("Content-Type", "application/json");
+                request.AddUrlSegment("server_id", server_id);
+                request.AddUrlSegment("private_network_id", privateNetworkId);
+
+                var result = restclient.Execute<ServerResponse>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        #endregion
+
     }
 }
