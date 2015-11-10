@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OneAndOne.UnitTests
@@ -78,7 +79,7 @@ namespace OneAndOne.UnitTests
             {
                 return;
             }
-            var result = client.ServerIps.Delete(server.Id, server.Ips[1].Id, false);
+            var result = client.ServerIps.Delete(server.Id, server.Ips[0].Id, false);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
@@ -91,95 +92,62 @@ namespace OneAndOne.UnitTests
         {
 
             var servers = client.Servers.Get();
-            bool breakAll = false;
             List<OneAndOne.POCO.Respones.Servers.FirewallPolicyResponse> result = null;
             foreach (var item in servers)
             {
-                foreach (var ip in item.Ips)
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.Ips.Any(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0))
                 {
-                    try
-                    {
-                        result = client.ServerIps.GetFirewallPolicies(item.Id, item.Ips[0].Id);
-                        if (result != null)
-                        {
-                            breakAll = true;
-                            break;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
-                }
-                if (breakAll)
+                    var curIP = server.Ips.FirstOrDefault(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0);
+                    result = client.ServerIps.GetFirewallPolicies(item.Id, item.Ips[0].Id);
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Count > 0);
                     break;
+
+                }
             }
 
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Count > 0);
+
         }
 
         [TestMethod]
         public void DeleteFirewallPolicy()
         {
             var servers = client.Servers.Get();
-            bool breakAll = false;
-            List<OneAndOne.POCO.Respones.Servers.FirewallPolicyResponse> firewall = null;
             foreach (var item in servers)
             {
-                foreach (var ip in item.Ips)
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.Ips.Any(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0))
                 {
-                    try
-                    {
-                        firewall = client.ServerIps.GetFirewallPolicies(item.Id, item.Ips[0].Id);
-                        if (firewall != null)
-                        {
-                            var result = client.ServerIps.DeleteFirewallPolicy(item.Id, ip.Id);
-                            Assert.IsNotNull(result);
-                            breakAll = true;
-                            break;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
+                    var curIP = server.Ips.FirstOrDefault(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0);
 
-                    }
-                }
-                if (breakAll)
+                    var result = client.ServerIps.DeleteFirewallPolicy(item.Id, curIP.Id);
+                    Assert.IsNotNull(result);
                     break;
+                }
             }
-
         }
 
         [TestMethod]
         public void UpdateFirewallPolicy()
         {
             var servers = client.Servers.Get();
-            bool breakAll = false;
-
-            List<OneAndOne.POCO.Respones.Servers.FirewallPolicyResponse> firewall = null;
             foreach (var item in servers)
             {
-                foreach (var ip in item.Ips)
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.Ips.Any(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0))
                 {
-                    try
+                    var curIP = server.Ips.FirstOrDefault(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0);
                     {
-                        firewall = client.ServerIps.GetFirewallPolicies(item.Id, item.Ips[0].Id);
-                        if (firewall != null)
-                        {
-                            var result = client.ServerIps.UpdateFirewallPolicy(item.Id, ip.Id, firewall[0].Id);
-                            Assert.IsNotNull(result);
-                            breakAll = true;
-                            break;
-                        }
+                        Thread.Sleep(1000);
+                        var result = client.ServerIps.UpdateFirewallPolicy(item.Id, curIP.Id, curIP.FirewallPolicy[0].Id);
+                        Assert.IsNotNull(result);
                     }
-                    catch (Exception ex)
-                    {
-
-                    }
-                }
-                if (breakAll)
                     break;
+                }
             }
         }
 
@@ -190,7 +158,6 @@ namespace OneAndOne.UnitTests
         public void CreateLoadBalancer()
         {
             var servers = client.Servers.Get();
-
             foreach (var item in servers)
             {
                 try
@@ -209,58 +176,38 @@ namespace OneAndOne.UnitTests
         public void GetLoadBalancer()
         {
             var servers = client.Servers.Get();
-            bool breakAll = false;
             List<OneAndOne.POCO.Respones.Servers.LoadBalancers> loadbalancer = null;
             foreach (var item in servers)
             {
-                foreach (var ip in item.Ips)
+                Thread.Sleep(1000);
+                var server = client.Servers.Show(item.Id);
+                if (server.Ips.Any(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0))
                 {
-                    try
-                    {
-                        loadbalancer = client.ServerIps.GetLoadBalancer(item.Id, item.Ips[0].Id);
-                        if (loadbalancer != null && loadbalancer.Count > 0)
-                        {
-                            breakAll = true;
-                            break;
-                        }
-                    }
-                    catch (Exception ex) { }
-                }
-                if (breakAll)
+                    var curIP = server.Ips.FirstOrDefault(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0);
+                    loadbalancer = client.ServerIps.GetLoadBalancer(item.Id, curIP.Id);
+                    Assert.IsNotNull(loadbalancer);
+                    Assert.IsNotNull(loadbalancer.Count > 0);
                     break;
+                }
             }
 
-            Assert.IsNotNull(loadbalancer);
-            Assert.IsNotNull(loadbalancer.Count > 0);
+
         }
 
         [TestMethod]
         public void DeleteLoadBalancer()
         {
             var servers = client.Servers.Get();
-            bool breakAll = false;
-            List<OneAndOne.POCO.Respones.Servers.LoadBalancers> loadbalancer = null;
             foreach (var item in servers)
             {
-                foreach (var ip in item.Ips)
+                var server = client.Servers.Show(item.Id);
+                Thread.Sleep(1000);
+                if (server.Ips.Any(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0))
                 {
-                    try
-                    {
-                        loadbalancer = client.ServerIps.GetLoadBalancer(item.Id, item.Ips[0].Id);
-                        if (loadbalancer != null && loadbalancer.Count > 0)
-                        {
-                            var result = client.ServerIps.DeleteLoadBalancer(item.Id, ip.Id, loadbalancer[0].Id);
-
-                            Assert.IsNotNull(result);
-                            breakAll = true;
-
-                            break;
-                        }
-                    }
-                    catch (Exception ex) { }
+                    var curIP = server.Ips.FirstOrDefault(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0);
+                    var result = client.ServerIps.DeleteLoadBalancer(item.Id, curIP.Id, curIP.LoadBalancers[0].Id);
+                    Assert.IsNotNull(result);
                 }
-                if (breakAll)
-                    break;
             }
 
         }

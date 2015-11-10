@@ -112,9 +112,9 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// </summary>
         /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
         /// <param name="ip_id">ip_id: required (string ) Unique IP's identifier.</param>
-        /// <param name="keep_id">Set true for releasing the IP without removing it</param>
+        /// <param name="Keep">Set true for releasing the IP without removing it</param>
         /// 
-        public ServerResponse Delete(string server_id, string ip_id, bool keep_id)
+        public ServerResponse Delete(string server_id, string ip_id, bool Keep)
         {
             try
             {
@@ -123,9 +123,11 @@ namespace OneAndOne.Client.Endpoints.Servers
                     RequestFormat = DataFormat.Json,
                     JsonSerializer = new CustomSerializer()
                 };
+                request.AddHeader("Content-Type", "application/json");
                 request.AddUrlSegment("server_id", server_id);
                 request.AddUrlSegment("ip_id", ip_id);
-                request.AddBody(new { keep_id });
+                string keep_ip = Keep.ToString().ToLower();
+                request.AddBody(new { keep_ip });
 
                 var result = restclient.Execute<ServerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
@@ -229,6 +231,7 @@ namespace OneAndOne.Client.Endpoints.Servers
                 };
                 request.AddUrlSegment("server_id", server_id);
                 request.AddUrlSegment("ip_id", ip_id);
+                request.AddHeader("Content-Type", "application/json");
 
                 var result = restclient.Execute<ServerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
