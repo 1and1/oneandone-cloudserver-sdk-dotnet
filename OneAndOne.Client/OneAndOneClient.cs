@@ -127,5 +127,16 @@ namespace OneAndOne.Client
                 return new OneAndOne.Client.Endpoints.PrivateNetworks.PrivateNetworks();
             }
         }
+
+        /// <summary>
+        /// Images client
+        /// </summary>
+        public OneAndOne.Client.Endpoints.Images.Images Images
+        {
+            get
+            {
+                return new OneAndOne.Client.Endpoints.Images.Images();
+            }
+        }
     }
 }

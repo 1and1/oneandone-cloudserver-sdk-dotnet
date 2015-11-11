@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Converters\SingleValueArrayConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\Images\CreateImageRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerIPRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerRequest.cs" />
     <Compile Include="Requests\Servers\Dvd.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Requests\Servers\UpdateServerRequest.cs" />
     <Compile Include="Requests\Servers\UpdateStatusRequest.cs" />
     <Compile Include="Respones\DVDS\DVDResponse.cs" />
+    <Compile Include="Respones\Images\ImagesResponse.cs" />
     <Compile Include="Respones\LoadBalancers\LoadBalancerResponse.cs" />
     <Compile Include="Respones\PrivateNetworks\PrivateNetworksResponse.cs" />
     <Compile Include="Respones\Servers\AvailableFlavour.cs" />
