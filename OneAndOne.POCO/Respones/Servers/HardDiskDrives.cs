@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,26 @@ namespace OneAndOne.POCO.Respones.Servers
 {
     public class Hdd
     {
-        public string id { get; set; }
-        public int size { get; set; }
-        public bool is_main { get; set; }
+        private string id;
+        [JsonProperty(PropertyName = "id")]
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        private int size;
+        [JsonProperty(PropertyName = "size")]
+        public int Size
+        {
+            get { return size; }
+            set { size = value; }
+        }
+        private bool is_main;
+        [JsonProperty(PropertyName = "is_main")]
+        public bool IsMain
+        {
+            get { return is_main; }
+            set { is_main = value; }
+        }
     }
 }

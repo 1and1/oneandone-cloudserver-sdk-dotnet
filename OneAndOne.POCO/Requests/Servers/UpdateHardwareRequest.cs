@@ -5,17 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneAndOne.POCO.Respones.Servers
+namespace OneAndOne.POCO.Requests.Servers
 {
-    public class Hardware
+    public class UpdateHardwareRequest
     {
-        private string fixed_instance_size_id;
-        [JsonProperty(PropertyName = "fixed_instance_size_id")]
-        public string FixedInstanceSizeId
-        {
-            get { return fixed_instance_size_id; }
-            set { fixed_instance_size_id = value; }
-        }
+        /// <summary>
+        /// Required: Total amount of processors minimum: "1",maximum: "16",multipleOf: "1",.
+        /// </summary>
+        /// 
         private int vcore;
         [JsonProperty(PropertyName = "vcore")]
         public int Vcore
@@ -23,6 +20,11 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return vcore; }
             set { vcore = value; }
         }
+
+        /// <summary>
+        /// Required: Number of cores per processor minimum: "1",maximum: "16",multipleOf: "1",
+        /// </summary>
+        /// 
         private int cores_per_processor;
         [JsonProperty(PropertyName = "cores_per_processor")]
         public int CoresPerProcessor
@@ -30,19 +32,16 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return cores_per_processor; }
             set { cores_per_processor = value; }
         }
-        private decimal ram;
+
+        /// <summary>
+        /// Required: RAM memory size minimum: "1",maximum: "128",multipleOf: "0.5",.
+        /// </summary>
+        private int ram;
         [JsonProperty(PropertyName = "ram")]
-        public decimal Ram
+        public int Ram
         {
             get { return ram; }
             set { ram = value; }
-        }
-        private List<Hdd> hdds;
-        [JsonProperty(PropertyName = "hdds")]
-        public List<Hdd> Hdds
-        {
-            get { return hdds; }
-            set { hdds = value; }
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.POCO.Respones.Servers
 {
-    public class Image
+    public class FirewallPolicyResponse
     {
         private string id;
         [JsonProperty(PropertyName = "id")]
@@ -16,6 +16,7 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return id; }
             set { id = value; }
         }
+
         private string name;
         [JsonProperty(PropertyName = "name")]
         public string Name

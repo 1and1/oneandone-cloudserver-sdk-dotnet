@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.POCO.Respones.Servers
 {
-    public class Image
+    public class LoadBalancers
     {
         private string id;
         [JsonProperty(PropertyName = "id")]

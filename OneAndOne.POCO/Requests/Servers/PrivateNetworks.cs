@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneAndOne.POCO.Respones.Servers
+namespace OneAndOne.POCO.Requests.Servers
 {
-    public class Image
+    public class PrivateNetworks
     {
         private string id;
         [JsonProperty(PropertyName = "id")]
@@ -22,6 +22,14 @@ namespace OneAndOne.POCO.Respones.Servers
         {
             get { return name; }
             set { name = value; }
+        }
+
+        private string public_name;
+        [JsonProperty(PropertyName = "public_name")]
+        public string PublicName
+        {
+            get { return public_name; }
+            set { public_name = value; }
         }
     }
 }
