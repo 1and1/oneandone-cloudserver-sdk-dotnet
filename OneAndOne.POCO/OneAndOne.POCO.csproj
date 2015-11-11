@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\DVDConverter.cs" />
+    <Compile Include="Converters\SingleValueArrayConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\Servers\CreateServerIPRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerRequest.cs" />
@@ -72,7 +72,6 @@
     <Compile Include="Respones\Servers\ServerIPS.cs" />
     <Compile Include="Respones\Servers\ServerResponse.cs" />
     <Compile Include="Respones\Servers\Snapshots.cs" />
-    <Compile Include="Respones\Servers\UpdatedOperationServerResponse.cs" />
     <Compile Include="Respones\Servers\UpdateServerResponse.cs" />
   </ItemGroup>
   <ItemGroup>

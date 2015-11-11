@@ -61,6 +61,7 @@
     <Compile Include="Endpoints\Servers\Servers.cs" />
     <Compile Include="RESTHelpers\JsonSerializer.cs" />
     <Compile Include="RESTHelpers\OneAndOneAuthenticator.cs" />
+    <Compile Include="RESTHelpers\SingleValueArrayConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

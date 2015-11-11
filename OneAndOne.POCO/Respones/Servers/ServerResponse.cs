@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OneAndOne.POCO.Converters;
 using OneAndOne.POCO.Requests.Servers;
 using System;
 using System.Collections.Generic;
@@ -112,13 +113,14 @@ namespace OneAndOne.POCO.Respones.Servers
 
         private List<IpAddress> ips;
         [JsonProperty(PropertyName = "ips")]
-
+        [JsonConverter(typeof(SingleValueArrayConverter<IpAddress>))]
         public List<IpAddress> Ips
         {
             get { return ips; }
             set { ips = value; }
         }
         private List<Alert> alerts;
+        [JsonConverter(typeof(SingleValueArrayConverter<Alert>))]
         [JsonProperty(PropertyName = "alerts")]
         public List<Alert> Alerts
         {
@@ -136,6 +138,7 @@ namespace OneAndOne.POCO.Respones.Servers
 
         private List<OneAndOne.POCO.Requests.Servers.PrivateNetworks> private_networks;
         [JsonProperty(PropertyName = "private_networks")]
+        [JsonConverter(typeof(SingleValueArrayConverter<OneAndOne.POCO.Requests.Servers.PrivateNetworks>))]
         public List<OneAndOne.POCO.Requests.Servers.PrivateNetworks> PrivateNetworks
         {
             get { return private_networks; }
@@ -171,14 +174,16 @@ namespace OneAndOne.POCO.Respones.Servers
         DEPLOYING,
         REBOOTING,
         REMOVING,
+        CONFIGURING
 
     }
-
+    [JsonArrayAttribute]
     public class Alert
     {
 
         private List<Warning> warning;
         [JsonProperty(PropertyName = "warning")]
+        [JsonConverter(typeof(SingleValueArrayConverter<Warning>))]
         public List<Warning> Warning
         {
             get { return warning; }
@@ -187,6 +192,7 @@ namespace OneAndOne.POCO.Respones.Servers
 
         private List<Critical> critical;
         [JsonProperty(PropertyName = "critical")]
+        [JsonConverter(typeof(SingleValueArrayConverter<Critical>))]
         private List<Critical> Critical
         {
             get { return critical; }

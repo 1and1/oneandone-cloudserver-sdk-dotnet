@@ -337,6 +337,7 @@ namespace OneAndOne.UnitTests
                         Assert.IsNotNull(result.Id);
                         break;
                     }
+                    //had to add this try the server was returning un explained Generic Errors
                     catch (Exception ex)
                     {
                         if (!ex.Message.Contains("Generic error"))
@@ -368,11 +369,18 @@ namespace OneAndOne.UnitTests
                 var server = client.Servers.Show(item.Id);
                 if (server.Snapshot != null && server.Status.Percent == 0 && server.Status.State == ServerState.POWERED_OFF)
                 {
-
-                    var result = client.Servers.UpdateSnapshot(server.Id, server.Snapshot.Id);
-                    Assert.IsNotNull(result);
-                    Assert.IsNotNull(result.Id);
-                    break;
+                    try
+                    {
+                        var result = client.Servers.UpdateSnapshot(server.Id, server.Snapshot.Id);
+                        Assert.IsNotNull(result);
+                        Assert.IsNotNull(result.Id);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (!ex.Message.Contains("Generic error"))
+                            throw;
+                    }
                 }
             }
         }

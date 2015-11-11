@@ -189,10 +189,12 @@ namespace OneAndOne.UnitTests
             var servers = client.Servers.Get();
             var server = servers[random.Next(servers.Count - 1)];
             var dvd = client.DVDs.Get();
+            while (server.Status.State == ServerState.REMOVING || server.Status.State == ServerState.CONFIGURING)
+            {
+                server = servers[random.Next(servers.Count - 1)];
+            }
             var result = client.ServersHardware.UpdateDVD(server.Id, dvd[0].id);
-            //TODO::check why json is different each time
-            //Assert.IsNotNull(result);
-            //Assert.IsNotNull(result.Id);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
@@ -201,15 +203,13 @@ namespace OneAndOne.UnitTests
             var random = new Random();
             var servers = client.Servers.Get();
             var server = servers[random.Next(servers.Count - 1)];
-            if (server.Status.State == ServerState.REMOVING)
+            while (server.Status.State == ServerState.REMOVING || server.Status.State == ServerState.CONFIGURING)
             {
-                return;
+                server = servers[random.Next(servers.Count - 1)];
             }
-
             var result = client.ServersHardware.DeleteDVD(server.Id);
-            //TODO::check why json is different each time
-            //Assert.IsNotNull(result);
-            //Assert.IsNotNull(result.Id);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
 
         }
     }

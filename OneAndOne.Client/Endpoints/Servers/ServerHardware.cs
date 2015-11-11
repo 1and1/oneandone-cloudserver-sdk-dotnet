@@ -110,7 +110,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// </summary>
         /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
         /// 
-        public UpdatedOperationServerResponse UpdateDVD(string server_id, string dvd_id)
+        public ServerResponse UpdateDVD(string server_id, string dvd_id)
         {
             try
             {
@@ -124,7 +124,7 @@ namespace OneAndOne.Client.Endpoints.Servers
 
                 string id = dvd_id;
                 request.AddBody(new { id });
-                var result = restclient.Execute<UpdatedOperationServerResponse>(request);
+                var result = restclient.Execute<ServerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);
@@ -143,7 +143,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// </summary>
         /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
         /// 
-        public UpdatedOperationServerResponse DeleteDVD(string server_id)
+        public ServerResponse DeleteDVD(string server_id)
         {
             try
             {
@@ -155,12 +155,13 @@ namespace OneAndOne.Client.Endpoints.Servers
                 request.AddHeader("Content-Type", "application/json");
                 request.AddUrlSegment("server_id", server_id);
 
-                var result = restclient.Execute<UpdatedOperationServerResponse>(request);
+                var result = restclient.Execute<ServerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);
                 }
                 return result.Data;
+
             }
             catch (Exception ex)
             {

@@ -47,9 +47,9 @@ namespace OneAndOne.POCO.Requests.Servers
         /// <summary>
         /// Required: RAM memory size minimum: "1",maximum: "128",multipleOf: "0.5",.
         /// </summary>
-        private int ram;
+        private decimal ram;
         [JsonProperty(PropertyName = "ram")]
-        public int Ram
+        public decimal Ram
         {
             get { return ram; }
             set { ram = value; }

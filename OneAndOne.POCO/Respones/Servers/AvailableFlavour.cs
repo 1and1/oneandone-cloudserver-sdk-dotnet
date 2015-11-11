@@ -47,9 +47,9 @@ namespace OneAndOne.POCO.Respones.Servers
             get { return cores_per_processor; }
             set { cores_per_processor = value; }
         }
-        private int ram;
+        private decimal ram;
 
-        public int Ram
+        public decimal Ram
         {
             get { return ram; }
             set { ram = value; }

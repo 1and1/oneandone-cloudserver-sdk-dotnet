@@ -50,24 +50,30 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ServerImagesTest.cs" />
-    <Compile Include="ServerIpsTest.cs" />
-    <Compile Include="ServersTest.cs" />
+    <Compile Include="Servers\ServerImagesTest.cs" />
+    <Compile Include="Servers\ServerIpsTest.cs" />
+    <Compile Include="Servers\ServersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerHardwareTest.cs" />
+    <Compile Include="Servers\ServerHardwareTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="AdditionalServerOrdered.orderedtest">
+    <None Include="Servers\DVD.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ServerIPOrdered.orderedtest">
+    <None Include="Servers\Snapshots.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ServerHardwareOrdered.orderedtest">
+    <None Include="Servers\PrivateNetworks.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ServersOrderedTest.orderedtest">
+    <None Include="Servers\ServerIPs.orderedtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Servers\ServerHardware.orderedtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Servers\Servers.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
