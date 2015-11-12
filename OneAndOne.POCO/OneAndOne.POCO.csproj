@@ -46,6 +46,7 @@
     <Compile Include="Converters\SingleValueArrayConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\Images\CreateImageRequest.cs" />
+    <Compile Include="Requests\Images\UpdateImageRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerIPRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerRequest.cs" />
     <Compile Include="Requests\Servers\Dvd.cs" />
