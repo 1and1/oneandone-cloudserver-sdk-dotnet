@@ -54,11 +54,8 @@ namespace OneAndOne.Client.Endpoints.Servers
                 };
                 request.AddUrlSegment("server_id", server_id);
                 request.AddBody(image);
+
                 var result = restclient.Execute<ServerResponse>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);

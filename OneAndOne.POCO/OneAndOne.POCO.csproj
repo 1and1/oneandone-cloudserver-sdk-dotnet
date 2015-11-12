@@ -59,6 +59,7 @@
     <Compile Include="Requests\Servers\UpdateServerImageRequest.cs" />
     <Compile Include="Requests\Servers\UpdateServerRequest.cs" />
     <Compile Include="Requests\Servers\UpdateStatusRequest.cs" />
+    <Compile Include="Requests\SharedStorages\AttachSharedStorageServerRequest.cs" />
     <Compile Include="Requests\SharedStorages\CreateSharedStorage.cs" />
     <Compile Include="Requests\SharedStorages\UpdateSharedStorage.cs" />
     <Compile Include="Respones\DVDS\DVDResponse.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Respones\Servers\ServerResponse.cs" />
     <Compile Include="Respones\Servers\Snapshots.cs" />
     <Compile Include="Respones\Servers\UpdateServerResponse.cs" />
+    <Compile Include="Respones\SharedStorages\SharedStorageServerResponse.cs" />
     <Compile Include="Respones\SharedStorages\SharedStoragesResponse.cs" />
   </ItemGroup>
   <ItemGroup>

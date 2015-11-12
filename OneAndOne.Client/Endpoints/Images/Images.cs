@@ -102,10 +102,6 @@ namespace OneAndOne.Client.Endpoints.Images
                 request.AddUrlSegment("image_id", image_id);
 
                 var result = restclient.Execute<ImagesResponse>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);

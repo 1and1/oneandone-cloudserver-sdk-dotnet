@@ -133,11 +133,8 @@ namespace OneAndOne.Client
             {
                 var request = new RestRequest("/servers/{server_id}", Method.GET);
                 request.AddUrlSegment("server_id", server_id);
+
                 var result = restclient.Execute<ServerResponse>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);

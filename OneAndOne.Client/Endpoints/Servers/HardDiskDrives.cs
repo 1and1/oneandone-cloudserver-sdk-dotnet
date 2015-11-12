@@ -28,11 +28,8 @@ namespace OneAndOne.Client.Endpoints.Servers
                 var request = new RestRequest("/servers/{server_id}/hardware/hdds/{hdd_id}", Method.GET);
                 request.AddUrlSegment("server_id", server_id);
                 request.AddUrlSegment("hdd_id", hdd_id);
+
                 var result = restclient.Execute<Hdd>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -56,11 +53,8 @@ namespace OneAndOne.Client.Endpoints.Servers
             {
                 var request = new RestRequest("/servers/{server_id}/hardware/hdds", Method.GET);
                 request.AddUrlSegment("server_id", server_id);
+
                 var result = restclient.Execute<List<Hdd>>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -89,11 +83,8 @@ namespace OneAndOne.Client.Endpoints.Servers
                 };
                 request.AddUrlSegment("server_id", server_id);
                 request.AddBody(hdds);
+
                 var result = restclient.Execute<ServerResponse>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);
@@ -123,11 +114,8 @@ namespace OneAndOne.Client.Endpoints.Servers
                 request.AddUrlSegment("server_id", server_id);
                 request.AddUrlSegment("hdd_id", hdd_id);
                 request.AddBody(hdds);
+
                 var result = restclient.Execute<ServerResponse>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);
@@ -160,10 +148,6 @@ namespace OneAndOne.Client.Endpoints.Servers
                 request.AddHeader("Content-Type", "application/json");
 
                 var result = restclient.Execute<ServerResponse>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);

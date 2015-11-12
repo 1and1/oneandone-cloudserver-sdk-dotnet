@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.Client.Endpoints.SharedStorages
 {
-    public class SharedStorages : ResourceBase
+    public partial class SharedStorages : ResourceBase
     {
         #region Basic Operations
         /// <summary>
@@ -102,10 +102,6 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
                 request.AddUrlSegment("shared_storage_id", shared_storage_id);
 
                 var result = restclient.Execute<SharedStoragesResponse>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
