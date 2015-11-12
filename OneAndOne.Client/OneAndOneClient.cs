@@ -138,5 +138,16 @@ namespace OneAndOne.Client
                 return new OneAndOne.Client.Endpoints.Images.Images();
             }
         }
+
+        /// <summary>
+        /// ImaSharedStoragesges client
+        /// </summary>
+        public OneAndOne.Client.Endpoints.SharedStorages.SharedStorages SharedStorages
+        {
+            get
+            {
+                return new OneAndOne.Client.Endpoints.SharedStorages.SharedStorages();
+            }
+        }
     }
 }

@@ -15,7 +15,6 @@ namespace OneAndOne.UnitTests.Images
         [TestMethod]
         public void GetImages()
         {
-            //TODO: the API fails to work here
             var images = client.Images.Get();
 
             Assert.IsNotNull(images);
