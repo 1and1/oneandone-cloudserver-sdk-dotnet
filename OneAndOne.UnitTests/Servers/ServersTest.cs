@@ -203,10 +203,13 @@ namespace OneAndOne.UnitTests
             var servers = client.Servers.Get().Where(ser => ser.Name.Contains("ServerTest") || ser.Name.Contains("Updated"));
             foreach (var item in servers)
             {
-                var result = client.Servers.Delete(item.Id, false);
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Name);
-                Assert.IsNotNull(result.Hardware);
+                if (item.Status.State == ServerState.POWERED_ON || item.Status.State == ServerState.POWERED_OFF)
+                {
+                    var result = client.Servers.Delete(item.Id, false);
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Name);
+                    Assert.IsNotNull(result.Hardware);
+                }
             }
 
 
