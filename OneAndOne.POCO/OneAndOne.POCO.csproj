@@ -81,6 +81,7 @@
     <Compile Include="Respones\Servers\UpdateServerResponse.cs" />
     <Compile Include="Respones\SharedStorages\SharedStorageServerResponse.cs" />
     <Compile Include="Respones\SharedStorages\SharedStoragesResponse.cs" />
+    <Compile Include="Respones\SharedStorages\ShareStorageAccessResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

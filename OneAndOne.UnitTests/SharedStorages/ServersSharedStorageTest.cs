@@ -22,7 +22,7 @@ namespace OneAndOne.UnitTests.SharedStorages
         }
 
         [TestMethod]
-        public void ShowSharedStorages()
+        public void ShowSharedStoragesServers()
         {
             var sharedStorages = client.SharedStorages.Get();
             var sharedStorage = sharedStorages[0];
@@ -44,7 +44,7 @@ namespace OneAndOne.UnitTests.SharedStorages
         }
 
         [TestMethod]
-        public void CreateSharedStorages()
+        public void CreateSharedStoragesServers()
         {
             Random random = new Random();
             var servers = client.Servers.Get().Where(ser => ser.Name.Contains("ServerTest")).ToList();
@@ -70,7 +70,7 @@ namespace OneAndOne.UnitTests.SharedStorages
         }
 
         [TestMethod]
-        public void DeleteSharedStorages()
+        public void DeleteSharedStoragesServers()
         {
             Random random = new Random();
             var sharedStorages = client.SharedStorages.Get().Where(str => str.Name.Contains("TestStorage")).ToList();

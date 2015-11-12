@@ -75,5 +75,21 @@ namespace OneAndOne.UnitTests.SharedStorages
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
         }
+
+        [TestMethod]
+        public void ShowSharedStorageAccess()
+        {
+            var result = client.SharedStorages.ShowSharedStorageAccess();
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void UpdateSharedStorageAccess()
+        {
+            var result = client.SharedStorages.UpdateSharedStorageAccess("test123!");
+
+            Assert.IsNotNull(result);
+        }
     }
 }

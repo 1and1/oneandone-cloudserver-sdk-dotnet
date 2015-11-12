@@ -1,4 +1,5 @@
-﻿using OneAndOne.Client.RESTHelpers;
+﻿using Newtonsoft.Json;
+using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.SharedStorages;
 using OneAndOne.POCO.Respones.SharedStorages;
 using RestSharp;
@@ -172,6 +173,61 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
                 throw;
             }
         }
+        #endregion
+
+        #region Shared Storage Access Operations
+
+        /// <summary>
+        /// Returns the credentials for accessing the shared storages.
+        /// </summary>
+        ///// 
+        public List<ShareStorageAccessResponse> ShowSharedStorageAccess()
+        {
+            try
+            {
+                var request = new RestRequest("/shared_storages/access", Method.GET);
+
+                var result = restclient.Execute<List<ShareStorageAccessResponse>>(request);
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        ///// <summary>
+        /// Modifies a shared storage.
+        /// <param name="password">password</param>
+        /// </summary>
+        public List<ShareStorageAccessResponse> UpdateSharedStorageAccess(string password)
+        {
+            try
+            {
+                var request = new RestRequest("/shared_storages/access", Method.PUT)
+                {
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
+                request.AddBody(new { password });
+
+                var result = restclient.Execute<List<ShareStorageAccessResponse>>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         #endregion
     }
 }
