@@ -1,7 +1,6 @@
 ﻿using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.FirewallPolicies;
 using OneAndOne.POCO.Respones;
-using OneAndOne.POCO.Respones.FirewallPolicies;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -16,17 +15,17 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
     {
         #region Basic Operations
         /// <summary>
-        /// Returns a list of the servers/IPs attached to a firewall policy.
+        /// Returns a list of the rules of a firewall policy.
         /// <param name="firewall_id">Unique firewall's identifier.</param>
         /// </summary>
-        public List<FirewallPolicyServerIPsResponse> GetFirewallPolicyServerIps(string firewall_id)
+        public List<FirewallRule> GetFirewallPolicyRules(string firewall_id)
         {
             try
             {
-                var request = new RestRequest("/firewall_policies/{firewall_id}/server_ips", Method.GET);
+                var request = new RestRequest("/firewall_policies/{firewall_id}/rules", Method.GET);
                 request.AddUrlSegment("firewall_id", firewall_id);
 
-                var result = restclient.Execute<List<FirewallPolicyServerIPsResponse>>(request);
+                var result = restclient.Execute<List<FirewallRule>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -40,20 +39,20 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
         }
 
         //<summary>
-        //Assigns servers/IPs to a firewall policy.
+        //Adds new rules to a firewall policy.
         /// <param name="firewall_id">Unique firewall's identifier.</param>
         //</summary>
-        public FirewallPolicyResponse CreateFirewallPolicyServerIPs(AssignFirewallServerIPRequest serverIps, string firewall_id)
+        public FirewallPolicyResponse CreateFirewallPolicyRule(AddFirewallPolicyRuleRequest rule, string firewall_id)
         {
             try
             {
-                var request = new RestRequest("/firewall_policies/{firewall_id}/server_ips", Method.POST)
+                var request = new RestRequest("/firewall_policies/{firewall_id}/rules", Method.POST)
                 {
                     RequestFormat = DataFormat.Json,
                     JsonSerializer = new CustomSerializer()
                 };
                 request.AddUrlSegment("firewall_id", firewall_id);
-                request.AddBody(serverIps);
+                request.AddBody(rule);
 
                 var result = restclient.Execute<FirewallPolicyResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
@@ -69,20 +68,20 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
         }
 
         /// <summary>
-        /// Returns information about a server/IP assigned to a firewall policy.
+        /// Returns information about a rule of a firewall policy.
         /// </summary>
         /// <param name="firewall_id">Unique firewall's identifier.</param>
-        /// <param name="server_ip"> Unique IP's identifier.</param>
+        /// <param name="rule_id"> Unique rule's identifier.</param>
         ///// 
-        public FirewallPolicyServerIPsResponse ShowFirewallPolicyServerIp(string firewall_id, string server_ip)
+        public FirewallRule ShowFirewallPolicyRule(string firewall_id, string rule_id)
         {
             try
             {
-                var request = new RestRequest("/firewall_policies/{firewall_id}/server_ips/{server_ip}", Method.GET);
+                var request = new RestRequest("/firewall_policies/{firewall_id}/rules/{rule_id}", Method.GET);
                 request.AddUrlSegment("firewall_id", firewall_id);
-                request.AddUrlSegment("server_ip", server_ip);
+                request.AddUrlSegment("rule_id", rule_id);
 
-                var result = restclient.Execute<FirewallPolicyServerIPsResponse>(request);
+                var result = restclient.Execute<FirewallRule>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -96,22 +95,22 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
         }
 
         /// <summary>
-        /// Unassigns a server/IP from a firewall policy.
+        /// Removes a rule from a firewall policy.
         /// </summary>
         /// <param name="firewall_id">Unique firewall's identifier.</param>
-        /// <param name="server_ip"> Unique IP's identifier.</param>
+        /// <param name="rule_id">Unique rule's identifier.</param>
         /// 
-        public FirewallPolicyResponse DeleteFirewallPolicyServerIP(string firewall_id, string server_ip)
+        public FirewallPolicyResponse DeleteFirewallPolicyRules(string firewall_id, string rule_id)
         {
             try
             {
-                var request = new RestRequest("/firewall_policies/{firewall_id}/server_ips/{server_ip}", Method.DELETE)
+                var request = new RestRequest("/firewall_policies/{firewall_id}/rules/{rule_id}", Method.DELETE)
                 {
                     RequestFormat = DataFormat.Json,
                     JsonSerializer = new CustomSerializer()
                 };
                 request.AddUrlSegment("firewall_id", firewall_id);
-                request.AddUrlSegment("server_ip", server_ip);
+                request.AddUrlSegment("rule_id", rule_id);
                 request.AddHeader("Content-Type", "application/json");
 
                 var result = restclient.Execute<FirewallPolicyResponse>(request);

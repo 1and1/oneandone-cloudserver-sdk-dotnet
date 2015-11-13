@@ -52,9 +52,9 @@ namespace OneAndOne.POCO.Respones
             get { return @default; }
             set { @default = value; }
         }
-        private List<Rule> rules;
+        private List<FirewallRule> rules;
 
-        public List<Rule> Rules
+        public List<FirewallRule> Rules
         {
             get { return rules; }
             set { rules = value; }
@@ -104,7 +104,7 @@ namespace OneAndOne.POCO.Respones
     {
         TCP, UDP, ICMP, AH, ESP, GRE
     }
-    public class Rule
+    public class FirewallRule
     {
         private string id;
 

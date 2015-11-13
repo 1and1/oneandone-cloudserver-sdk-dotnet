@@ -116,7 +116,7 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
 
         ///// <summary>
         /// Modifies a firewall policy.
-        /// <param name="shared_storage_id">Unique firewall's identifier.</param>
+        /// <param name="firewall_id">Unique firewall's identifier.</param>
         /// </summary>
         public FirewallPolicyResponse Update(UpdateFirewallPolicyRequest firewallPolicy, string firewall_id)
         {
@@ -144,7 +144,7 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
         }
 
         /// <summary>
-        /// Removes a shared storage.
+        /// Removes a firewall policy.
         /// </summary>
         /// <param name="firewall_id">Unique firewall's identifier.</param>
         /// 
