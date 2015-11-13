@@ -58,11 +58,8 @@ namespace OneAndOne.Client.Endpoints.Servers
                 };
                 request.AddUrlSegment("server_id", server_id);
                 request.AddBody(ip);
+
                 var result = restclient.Execute<ServerResponse>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.Created)
                 {
                     throw new Exception(result.Content);
@@ -92,7 +89,6 @@ namespace OneAndOne.Client.Endpoints.Servers
                 };
                 request.AddUrlSegment("server_id", server_id);
                 request.AddUrlSegment("ip_id", ip_id);
-
 
                 var result = restclient.Execute<IpAddress>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
@@ -197,11 +193,8 @@ namespace OneAndOne.Client.Endpoints.Servers
                 request.AddUrlSegment("ip_id", ip_id);
                 string id = policy_id;
                 request.AddBody(new { id });
+
                 var result = restclient.Execute<ServerResponse>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);

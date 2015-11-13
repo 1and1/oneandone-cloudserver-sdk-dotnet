@@ -79,6 +79,14 @@ namespace OneAndOne.UnitTests
             var random = new Random();
             var servers = client.Servers.Get();
             var server = servers[random.Next(servers.Count - 1)];
+            foreach (var item in servers)
+            {
+                if (item.Snapshot == null)
+                {
+                    server = item;
+                    break;
+                }
+            }
             if (server.Hardware.Hdds.Count < 8)
             {
                 var result = client.ServerHdds.Create(new POCO.Requests.Servers.AddHddRequest()
@@ -137,20 +145,24 @@ namespace OneAndOne.UnitTests
             {
                 return;
             }
-            int serverTries = 0;
-            int hddTries = 0;
             var randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count - 1)];
+            foreach (var item in servers)
+            {
+                if (server.Hardware.Hdds.Count > 1)
+                {
+                    server = item;
+                    break;
+                }
+            }
+            foreach (var item in server.Hardware.Hdds)
+            {
+                if (!item.IsMain)
+                {
+                    randomHdd = item;
+                    break;
+                }
+            }
 
-            while (server.Hardware.Hdds.Count == 1 && serverTries < 15)
-            {
-                server = servers[random.Next(servers.Count - 1)];
-                ++serverTries;
-            }
-            while (randomHdd.IsMain && hddTries < 15)
-            {
-                randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count - 1)];
-                ++hddTries;
-            }
             if (server.Hardware.Hdds.Count > 1 && !randomHdd.IsMain)
             {
                 int previousHddCount = server.Hardware.Hdds.Count;

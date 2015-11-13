@@ -27,11 +27,8 @@ namespace OneAndOne.Client.Endpoints.Servers
             {
                 var request = new RestRequest("/servers/{server_id}/hardware", Method.GET);
                 request.AddUrlSegment("server_id", server_id);
+
                 var result = restclient.Execute<OneAndOne.POCO.Respones.Servers.Hardware>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -60,11 +57,8 @@ namespace OneAndOne.Client.Endpoints.Servers
                     };
                 request.AddUrlSegment("server_id", server_id);
                 request.AddBody(hardware);
+
                 var result = restclient.Execute<ServerResponse>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);

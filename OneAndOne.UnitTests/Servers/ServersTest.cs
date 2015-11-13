@@ -66,7 +66,9 @@ namespace OneAndOne.UnitTests
         [TestMethod]
         public void UpdateServer()
         {
-            var server = client.Servers.Show(randomName);
+            Random random = new Random();
+            var servers = client.Servers.Get();
+            var server = client.Servers.Show(servers[random.Next(0, servers.Count - 1)].Id);
             foreach (var item in client.Servers.Get())
             {
                 if (item.Name.Contains("ServerTest") && (item.Status.State != ServerState.POWERED_OFF
@@ -201,10 +203,13 @@ namespace OneAndOne.UnitTests
             var servers = client.Servers.Get().Where(ser => ser.Name.Contains("ServerTest") || ser.Name.Contains("Updated"));
             foreach (var item in servers)
             {
-                var result = client.Servers.Delete(item.Id, false);
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Name);
-                Assert.IsNotNull(result.Hardware);
+                if (item.Status.State == ServerState.POWERED_ON || item.Status.State == ServerState.POWERED_OFF)
+                {
+                    var result = client.Servers.Delete(item.Id, false);
+                    Assert.IsNotNull(result);
+                    Assert.IsNotNull(result.Name);
+                    Assert.IsNotNull(result.Hardware);
+                }
             }
 
 
@@ -238,7 +243,7 @@ namespace OneAndOne.UnitTests
                 newState = "POWER_ON";
             }
             int i = 0;
-            while (i < servers.Count && (server.Status.State == ServerState.POWERING_ON || server.Status.State == ServerState.REBOOTING
+            while (i < servers.Count && (server.Status.State == ServerState.POWERED_OFF || server.Status.State == ServerState.POWERING_ON || server.Status.State == ServerState.REBOOTING
                 || server.Status.State == ServerState.DEPLOYING))
             {
                 server = servers[random.Next(i)];

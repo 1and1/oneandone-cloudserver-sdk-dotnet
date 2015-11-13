@@ -71,9 +71,13 @@ namespace OneAndOne.UnitTests
         {
             var servers = client.Servers.Get();
             var server = servers[random.Next(servers.Count - 1)];
-            while (server.Ips.Count == 1)
+            foreach (var item in servers)
             {
-                server = servers[random.Next(servers.Count - 1)];
+                if (server.Ips.Count > 1)
+                {
+                    server = item;
+                    break;
+                }
             }
             if (server.Status.State == ServerState.DEPLOYING || server.Status.State == ServerState.REMOVING || server.Ips.Count == 1)
             {

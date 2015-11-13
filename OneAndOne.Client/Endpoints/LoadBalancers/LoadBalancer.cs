@@ -21,10 +21,6 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
             {
                 var request = new RestRequest("/load_balancers", Method.GET);
                 var result = restclient.Execute<List<OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse>>(request);
-                if (result.StatusCode == HttpStatusCode.NotFound)
-                {
-                    return null;
-                }
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
