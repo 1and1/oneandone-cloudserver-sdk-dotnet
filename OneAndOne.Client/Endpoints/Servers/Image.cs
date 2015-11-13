@@ -16,7 +16,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Returns information about a server's image.
         /// 
-        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="server_id">Unique server's identifier.</param>
         /// </summary>
         public OneAndOne.POCO.Respones.Servers.Image Get(string server_id)
         {
@@ -41,7 +41,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Reinstalls a new image into a server.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public ServerResponse Update(UpdateServerImageRequest image, string server_id)
         {

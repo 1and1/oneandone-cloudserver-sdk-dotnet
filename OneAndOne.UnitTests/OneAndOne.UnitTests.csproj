@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FirewallPolicies\FirewallpoliciesTest.cs" />
+    <Compile Include="FirewallPolicies\FirewallpolicyServerIpsTest.cs" />
     <Compile Include="Images\ImagesTest.cs" />
     <Compile Include="Servers\ServerImagesTest.cs" />
     <Compile Include="Servers\ServerIpsTest.cs" />

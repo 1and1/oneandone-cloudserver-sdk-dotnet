@@ -20,7 +20,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Returns a list of the server's IPs.
         /// 
-        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="server_id">Unique server's identifier.</param>
         /// </summary>
         public List<OneAndOne.POCO.Respones.Servers.IpAddress> Get(string server_id)
         {
@@ -45,7 +45,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Adds a new IP to the server.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public ServerResponse Create(CreateServerIPRequest ip, string server_id)
         {
@@ -75,7 +75,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Returns information about a server's IP.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// <param name="ip_id">ip_id: required (string ) Unique IP's identifier.</param>
         /// 
         public IpAddress Show(string server_id, string ip_id)
@@ -106,7 +106,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Releases an IP and optionally removes it
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// <param name="ip_id">ip_id: required (string ) Unique IP's identifier.</param>
         /// <param name="Keep">Set true for releasing the IP without removing it</param>
         /// 
@@ -145,8 +145,8 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Lists firewall policies assigned to the IP
         /// 
-        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
-        ///  <param name="ip_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="server_id">Unique server's identifier.</param>
+        ///  <param name="ip_id">Unique server's identifier.</param>
         /// </summary>
         public List<OneAndOne.POCO.Respones.Servers.FirewallPolicyResponse> GetFirewallPolicies(string server_id, string ip_id)
         {
@@ -176,7 +176,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Adds a new firewall policy to the IP
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// <param name="ip_id">ip:  required (string ) Unique IP's identifier.</param>
         /// <param name="policyId"> Unique policy's identifier.</param>
         /// 
@@ -210,7 +210,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Removes firewall policy from the IP
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// <param name="ip_id">ip_id: required (string ) Unique IP's identifier.</param>
         /// 
         public ServerResponse DeleteFirewallPolicy(string server_id, string ip_id)
@@ -246,8 +246,8 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Lists all load balancers assigned to the IP
         /// 
-        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
-        ///  <param name="ip_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="server_id">Unique server's identifier.</param>
+        ///  <param name="ip_id">Unique server's identifier.</param>
         /// </summary>
         public List<OneAndOne.POCO.Respones.Servers.LoadBalancers> GetLoadBalancer(string server_id, string ip_id)
         {
@@ -273,8 +273,8 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Adds a new IP to the server.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
-        ///  <param name="ip_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
+        ///  <param name="ip_id">Unique server's identifier.</param>
         /// 
         public ServerResponse CreateLoadBalancer(string server_id, string ip_id, string loadBalancerId)
         {
@@ -305,7 +305,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Releases an IP and optionally removes it
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// <param name="ip_id">ip_id: required (string ) Unique IP's identifier.</param>
         /// <param name="keep_id">Set true for releasing the IP without removing it</param>
         /// 

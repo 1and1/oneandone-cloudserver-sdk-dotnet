@@ -50,6 +50,9 @@
   <ItemGroup>
     <Compile Include="Endpoints\DVDs\DVDs.cs" />
     <Compile Include="Endpoints\FirewallPolicies\FirewallPolicies.cs" />
+    <Compile Include="Endpoints\FirewallPolicies\FirewallPoliciesServerIps.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Endpoints\Images\Images.cs" />
     <Compile Include="Endpoints\LoadBalancers\LoadBalancer.cs" />
     <Compile Include="Endpoints\PrivateNetworks\PrivateNetworks.cs" />

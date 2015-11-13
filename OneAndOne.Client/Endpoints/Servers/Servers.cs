@@ -125,7 +125,7 @@ namespace OneAndOne.Client
         /// <summary>
         /// Returns information about one flavour.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public ServerResponse Show(string server_id)
         {
@@ -232,7 +232,7 @@ namespace OneAndOne.Client
         /// <summary>
         /// Returns a list of the server's IPs.
         /// 
-        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="server_id">Unique server's identifier.</param>
         /// </summary>
         public OneAndOne.POCO.Respones.Servers.Status GetStatus(string server_id)
         {
@@ -257,7 +257,7 @@ namespace OneAndOne.Client
         /// <summary>
         /// Returns a list of the server's IPs.
         /// 
-        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="server_id">Unique server's identifier.</param>
         /// </summary>
         public ServerResponse UpdateStatus(UpdateStatusRequest body, string server_id)
         {
@@ -291,7 +291,7 @@ namespace OneAndOne.Client
 
         /// <summary>
         /// Returns a list of the server's private networks.
-        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="server_id">Unique server's identifier.</param>
         /// </summary>
         public List<PrivateNetworks> GetPrivateNetworks(string server_id)
         {
@@ -315,7 +315,7 @@ namespace OneAndOne.Client
 
         /// <summary>
         /// Returns information about a server's private network.
-        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="server_id">Unique server's identifier.</param>
         ///  <param name="privateNetworkId">private_network_id: required (string ), Unique private network's identifier.</param>
         ///  
         /// </summary>
@@ -373,7 +373,7 @@ namespace OneAndOne.Client
         /// <summary>
         /// Unassigns a private network from the server.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public ServerResponse DeletePrivateNetwork(string server_id, string privateNetworkId)
         {
@@ -408,7 +408,7 @@ namespace OneAndOne.Client
 
         /// <summary>
         /// Returns a list of the server's snapshots.
-        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="server_id">Unique server's identifier.</param>
         /// </summary>
         public List<Snapshots> GetSnapshots(string server_id)
         {
@@ -432,7 +432,7 @@ namespace OneAndOne.Client
 
         /// <summary>
         /// Restores a snapshot into the server.
-        ///  <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///  <param name="server_id">Unique server's identifier.</param>
         ///  <param name="snapshotId">private_network_id: required (string ), Unique private network's identifier.</param>
         ///  
         /// </summary>
@@ -498,8 +498,8 @@ namespace OneAndOne.Client
         /// <summary>
         /// Removes a snapshot
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
-        /// <param name="snapshot_id">server_id: required (string ), Unique snapshot's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
+        /// <param name="snapshot_id">Unique snapshot's identifier.</param>
         /// 
         public ServerResponse DeleteSnapshot(string server_id, string snapshotId)
         {

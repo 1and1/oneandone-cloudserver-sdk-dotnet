@@ -18,7 +18,7 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
         #region Basic Operations
         /// <summary>
         /// Returns a list of the servers attached to a shared storage.
-        /// <param name="shared_storage_id">server_id: required (string ), Unique shared storage's identifier.</param>
+        /// <param name="shared_storage_id">Unique shared storage's identifier.</param>
         /// </summary>
         public List<SharedStorageServerResponse> GetSharedStorageServers(string shared_storage_id)
         {
@@ -42,7 +42,7 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
 
         //<summary>
         //Attaches servers to a shared storage.
-        /// <param name="shared_storage_id">server_id: required (string ), Unique shared storage's identifier.</param>
+        /// <param name="shared_storage_id">Unique shared storage's identifier.</param>
         //</summary>
         public SharedStoragesResponse CreateServerSharedStorages(AttachSharedStorageServerRequest serverSharedStorage, string shared_storage_id)
         {
@@ -72,8 +72,8 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
         /// <summary>
         /// Returns information about a shared storage.
         /// </summary>
-        /// <param name="shared_storage_id">server_id: required (string ), Unique shared storage's identifier.</param>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="shared_storage_id">Unique shared storage's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         ///// 
         public SharedStorageServerResponse ShowSharedStoragesServer(string shared_storage_id, string server_id)
         {
@@ -99,7 +99,7 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
         /// <summary>
         /// Unattaches a server from a shared storage.
         /// </summary>
-        /// <param name="shared_storage_id">server_id: required (string ), Unique shared storage's identifier.</param>
+        /// <param name="shared_storage_id">Unique shared storage's identifier.</param>
         /// 
         public SharedStoragesResponse DeleteSharedStoragesServer(string shared_storage_id, string server_id)
         {

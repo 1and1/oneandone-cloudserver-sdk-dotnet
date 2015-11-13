@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.Client.Endpoints.FirewallPolicies
 {
-    public class FirewallPolicies : ResourceBase
+    public partial class FirewallPolicies : ResourceBase
     {
         #region Basic Operations
         /// <summary>
@@ -92,7 +92,7 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
         /// <summary>
         /// Returns information about a firewall policy.
         /// </summary>
-        /// <param name="firewall_id">server_id: required (string ),Unique firewall's identifier</param>
+        /// <param name="firewall_id"> ,Unique firewall's identifier</param>
         ///// 
         public FirewallPolicyResponse Show(string firewall_id)
         {
@@ -116,7 +116,7 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
 
         ///// <summary>
         /// Modifies a firewall policy.
-        /// <param name="shared_storage_id">server_id: required (string ), Unique firewall's identifier.</param>
+        /// <param name="shared_storage_id">Unique firewall's identifier.</param>
         /// </summary>
         public FirewallPolicyResponse Update(UpdateFirewallPolicyRequest firewallPolicy, string firewall_id)
         {
@@ -146,7 +146,7 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
         /// <summary>
         /// Removes a shared storage.
         /// </summary>
-        /// <param name="firewall_id">server_id: required (string ), Unique firewall's identifier.</param>
+        /// <param name="firewall_id">Unique firewall's identifier.</param>
         /// 
         public FirewallPolicyResponse Delete(string firewall_id)
         {

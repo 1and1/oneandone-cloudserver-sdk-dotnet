@@ -19,7 +19,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Returns information about the server's hardware.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public OneAndOne.POCO.Respones.Servers.Hardware Show(string server_id)
         {
@@ -44,7 +44,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Modifies the server's hardware.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public ServerResponse Update(UpdateHardwareRequest hardware, string server_id)
         {
@@ -78,7 +78,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Returns information about the DVD loaded into the virtual DVD unit of a server.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public OneAndOne.POCO.Respones.Servers.Dvd ShowDVD(string server_id)
         {
@@ -102,7 +102,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Loads a DVD into the virtual DVD unit of a server.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public ServerResponse UpdateDVD(string server_id, string dvd_id)
         {
@@ -135,7 +135,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Unloads a DVD from the virtual DVD unit of a server.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public ServerResponse DeleteDVD(string server_id)
         {

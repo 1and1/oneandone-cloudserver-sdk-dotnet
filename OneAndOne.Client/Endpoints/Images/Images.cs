@@ -92,7 +92,7 @@ namespace OneAndOne.Client.Endpoints.Images
         ///// <summary>
         ///// Returns information about one flavour.
         ///// </summary>
-        ///// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        ///// <param name="server_id">Unique server's identifier.</param>
         ///// 
         public ImagesResponse Show(string image_id)
         {

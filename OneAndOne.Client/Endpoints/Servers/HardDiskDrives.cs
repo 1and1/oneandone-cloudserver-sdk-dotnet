@@ -17,7 +17,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Returns information about a server's hard disk.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// <param name="hdd_id">hdd_id: Unique hard disk's identifier.</param>
         /// Unique hard disk's identifier.
         /// 
@@ -45,7 +45,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Returns a list of the server's hard disks.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public List<Hdd> Get(string server_id)
         {
@@ -70,7 +70,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Adds new hard disk(s) to the server.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public ServerResponse Create(AddHddRequest hdds, string server_id)
         {
@@ -100,7 +100,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Adds new hard disk(s) to the server.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// 
         public ServerResponse Update(UpdateHddRequest hdds, string server_id, string hdd_id)
         {
@@ -131,7 +131,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// <summary>
         /// Removes a server's hard disk.
         /// </summary>
-        /// <param name="server_id">server_id: required (string ), Unique server's identifier.</param>
+        /// <param name="server_id">Unique server's identifier.</param>
         /// <param name="hdd_id">hdd_id: Unique hard disk's identifier.</param>
         /// 
         public ServerResponse Delete(string server_id, string hdd_id)

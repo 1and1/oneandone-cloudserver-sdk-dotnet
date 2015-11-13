@@ -93,7 +93,7 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
         /// <summary>
         /// Returns information about a shared storage.
         /// </summary>
-        /// <param name="shared_storage_id">server_id: required (string ), Unique shared storage's identifier.</param>
+        /// <param name="shared_storage_id">Unique shared storage's identifier.</param>
         ///// 
         public SharedStoragesResponse Show(string shared_storage_id)
         {
@@ -117,7 +117,7 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
 
         ///// <summary>
         /// Modifies a shared storage.
-        /// <param name="shared_storage_id">server_id: required (string ), Unique shared storage's identifier.</param>
+        /// <param name="shared_storage_id">Unique shared storage's identifier.</param>
         /// </summary>
         public SharedStoragesResponse Update(UpdateSharedStorageRequest sharedStorage, string shared_storage_id)
         {
@@ -147,7 +147,7 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
         /// <summary>
         /// Removes a shared storage.
         /// </summary>
-        /// <param name="shared_storage_id">server_id: required (string ), Unique shared storage's identifier.</param>
+        /// <param name="shared_storage_id">Unique shared storage's identifier.</param>
         /// 
         public SharedStoragesResponse Delete(string shared_storage_id)
         {
