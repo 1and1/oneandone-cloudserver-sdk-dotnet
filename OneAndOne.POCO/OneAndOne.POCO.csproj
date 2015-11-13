@@ -51,6 +51,8 @@
     <Compile Include="Requests\FirewallPolicies\UpdateFirewallPolicyRequest.cs" />
     <Compile Include="Requests\Images\CreateImageRequest.cs" />
     <Compile Include="Requests\Images\UpdateImageRequest.cs" />
+    <Compile Include="Requests\LoadBalancer\CreateLoadBalancerRequest.cs" />
+    <Compile Include="Requests\LoadBalancer\UpdateLoadBalancerRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerIPRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerRequest.cs" />
     <Compile Include="Requests\Servers\Dvd.cs" />

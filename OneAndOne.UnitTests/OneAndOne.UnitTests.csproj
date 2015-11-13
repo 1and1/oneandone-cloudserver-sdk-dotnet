@@ -54,6 +54,7 @@
     <Compile Include="FirewallPolicies\FirewallpolicyServerIpsTest.cs" />
     <Compile Include="FirewallPolicies\FirewallPolicyRulesTest.cs" />
     <Compile Include="Images\ImagesTest.cs" />
+    <Compile Include="LoadBalancer\LoadBalancerTest.cs" />
     <Compile Include="Servers\ServerImagesTest.cs" />
     <Compile Include="Servers\ServerIpsTest.cs" />
     <Compile Include="Servers\ServersTest.cs" />
@@ -68,6 +69,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Images\Image.orderedtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LoadBalancer\LoadBalancersTest.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Ordered.playlist" />

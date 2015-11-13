@@ -167,7 +167,7 @@ namespace OneAndOne.UnitTests
                 try
                 {
                     var loadBalancer = client.LoadBalancers.Get();
-                    var result = client.ServerIps.CreateLoadBalancer(item.Id, item.Ips[0].Id, loadBalancer[0].id);
+                    var result = client.ServerIps.CreateLoadBalancer(item.Id, item.Ips[0].Id, loadBalancer[0].Id);
                     Assert.IsNotNull(result);
                     break;
                 }
