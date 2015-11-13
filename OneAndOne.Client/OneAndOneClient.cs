@@ -140,13 +140,24 @@ namespace OneAndOne.Client
         }
 
         /// <summary>
-        /// ImaSharedStoragesges client
+        /// SharedStorages client
         /// </summary>
         public OneAndOne.Client.Endpoints.SharedStorages.SharedStorages SharedStorages
         {
             get
             {
                 return new OneAndOne.Client.Endpoints.SharedStorages.SharedStorages();
+            }
+        }
+
+        /// <summary>
+        /// FirewallPolicies client
+        /// </summary>
+        public OneAndOne.Client.Endpoints.FirewallPolicies.FirewallPolicies FirewallPolicies
+        {
+            get
+            {
+                return new OneAndOne.Client.Endpoints.FirewallPolicies.FirewallPolicies();
             }
         }
     }

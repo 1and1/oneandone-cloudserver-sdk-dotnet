@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Converters\SingleValueArrayConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\FirewallPolicies\CreateFirewallPolicyRequest.cs" />
+    <Compile Include="Requests\FirewallPolicies\UpdateFirewallPolicyRequest.cs" />
     <Compile Include="Requests\Images\CreateImageRequest.cs" />
     <Compile Include="Requests\Images\UpdateImageRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerIPRequest.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="Requests\SharedStorages\CreateSharedStorage.cs" />
     <Compile Include="Requests\SharedStorages\UpdateSharedStorage.cs" />
     <Compile Include="Respones\DVDS\DVDResponse.cs" />
+    <Compile Include="Respones\FirewallPolicyResponse.cs" />
     <Compile Include="Respones\Images\ImagesResponse.cs" />
     <Compile Include="Respones\LoadBalancers\LoadBalancerResponse.cs" />
     <Compile Include="Respones\PrivateNetworks\PrivateNetworksResponse.cs" />
