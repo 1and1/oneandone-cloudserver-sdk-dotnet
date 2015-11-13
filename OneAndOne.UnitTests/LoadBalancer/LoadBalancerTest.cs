@@ -84,7 +84,7 @@ namespace OneAndOne.UnitTests.LoadBalancer
         }
 
         [TestMethod]
-        public void DeletLoadBalancer()
+        public void DeleteLoadBalancer()
         {
             Random random = new Random();
             var loadBalancers = client.LoadBalancers.Get().Where(str => str.Name.Contains("LBTest")).ToList();
