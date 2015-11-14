@@ -64,7 +64,7 @@ namespace OneAndOne.UnitTests.LoadBalancer
                 {
                     var iptoAdd = new List<string>();
                     iptoAdd.Add(ipAddress.Id);
-                    var result = client.LoadBalancers.CreateLoadBalancerServerIPs(new POCO.Requests.LoadBalancers.AssignLoadBalancerServerIpsRequest()
+                    var result = client.LoadBalancers.CreateLoadBalancerServerIPs(new POCO.Requests.LoadBalancer.AssignLoadBalancerServerIpsRequest()
                         {
                             ServerIps = iptoAdd
                         }, loadBalancer.Id);

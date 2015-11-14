@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneAndOne.POCO.Requests.LoadBalancers
+namespace OneAndOne.POCO.Requests.LoadBalancer
 {
     public class AssignLoadBalancerServerIpsRequest
     {

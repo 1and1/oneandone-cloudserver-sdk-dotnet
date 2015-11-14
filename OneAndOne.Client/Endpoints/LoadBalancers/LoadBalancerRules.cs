@@ -15,17 +15,17 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
     {
         #region Basic Operations
         /// <summary>
-        /// Returns a list of the servers/IPs attached to a load balancer.
+        /// Returns a list of the rules of a load balancer.
         /// <param name="load_balancer_id">Unique load balancer's identifier.</param>
         /// </summary>
-        public List<LoadBalancerServerIpsResponse> GetLoadBalancerServerIps(string load_balancer_id)
+        public List<LoadBalancerRulesResponse> GetLoadBalancerRules(string load_balancer_id)
         {
             try
             {
-                var request = new RestRequest("/load_balancers/{load_balancer_id}/server_ips", Method.GET);
+                var request = new RestRequest("/load_balancers/{load_balancer_id}/rules", Method.GET);
                 request.AddUrlSegment("load_balancer_id", load_balancer_id);
 
-                var result = restclient.Execute<List<LoadBalancerServerIpsResponse>>(request);
+                var result = restclient.Execute<List<LoadBalancerRulesResponse>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -39,20 +39,20 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
         }
 
         //<summary>
-        //Assigns servers/IPs to a load balancer.
+        //Adds new rules to a load balancer.
         /// <param name="load_balancer_id">Unique load balancer's identifier.</param>
         //</summary>
-        public LoadBalancerResponse CreateLoadBalancerServerIPs(AssignLoadBalancerServerIpsRequest serverIps, string load_balancer_id)
+        public LoadBalancerResponse CreateLoadBalancerRule(AddLoadBalancerRuleRequest rule, string load_balancer_id)
         {
             try
             {
-                var request = new RestRequest("/load_balancers/{load_balancer_id}/server_ips", Method.POST)
+                var request = new RestRequest("/load_balancers/{load_balancer_id}/rules", Method.POST)
                 {
                     RequestFormat = DataFormat.Json,
                     JsonSerializer = new CustomSerializer()
                 };
                 request.AddUrlSegment("load_balancer_id", load_balancer_id);
-                request.AddBody(serverIps);
+                request.AddBody(rule);
 
                 var result = restclient.Execute<LoadBalancerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
@@ -68,20 +68,20 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
         }
 
         /// <summary>
-        /// Returns information about a server/IP assigned to a load balancer.
+        /// Returns information about a rule of a load balancer.
         /// </summary>
         /// <param name="load_balancer_id">Unique load balancer's identifier.</param>
-        /// <param name="server_ip"> Unique IP's identifier.</param>
+        /// <param name="rule_id"> Unique rule's identifier.</param>
         ///// 
-        public LoadBalancerResponse ShowLoadBalancerServerIp(string load_balancer_id, string server_ip)
+        public LoadBalancerRulesResponse ShowLoadBalancerRule(string load_balancer_id, string rule_id)
         {
             try
             {
-                var request = new RestRequest("/load_balancers/{load_balancer_id}/server_ips/{server_ip}", Method.GET);
+                var request = new RestRequest("/load_balancers/{load_balancer_id}/rules/{rule_id}", Method.GET);
                 request.AddUrlSegment("load_balancer_id", load_balancer_id);
-                request.AddUrlSegment("server_ip", server_ip);
+                request.AddUrlSegment("rule_id", rule_id);
 
-                var result = restclient.Execute<LoadBalancerResponse>(request);
+                var result = restclient.Execute<LoadBalancerRulesResponse>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -95,22 +95,22 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
         }
 
         /// <summary>
-        /// Unassigns a server/IP from a load balancer.
+        /// Removes a rule from a load balancer.
         /// </summary>
-        /// <param name="load_balancer_id">Unique firewall's identifier.</param>
-        /// <param name="server_ip"> Unique IP's identifier.</param>
+        /// <param name="load_balancer_id">Unique load balancer's identifier..</param>
+        /// <param name="rule_id">Unique rule's identifier.</param>
         /// 
-        public LoadBalancerResponse DeleteLoadBalancerServerIP(string load_balancer_id, string server_ip)
+        public LoadBalancerResponse DeleteLoadBalancerRules(string load_balancer_id, string rule_id)
         {
             try
             {
-                var request = new RestRequest("/load_balancers/{load_balancer_id}/server_ips/{server_ip}", Method.DELETE)
+                var request = new RestRequest("/load_balancers/{load_balancer_id}/rules/{rule_id}", Method.DELETE)
                 {
                     RequestFormat = DataFormat.Json,
                     JsonSerializer = new CustomSerializer()
                 };
                 request.AddUrlSegment("load_balancer_id", load_balancer_id);
-                request.AddUrlSegment("server_ip", server_ip);
+                request.AddUrlSegment("rule_id", rule_id);
                 request.AddHeader("Content-Type", "application/json");
 
                 var result = restclient.Execute<LoadBalancerResponse>(request);

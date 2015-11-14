@@ -56,6 +56,7 @@
     <Compile Include="Images\ImagesTest.cs" />
     <Compile Include="LoadBalancer\LoadBalancerTest.cs" />
     <Compile Include="LoadBalancer\LoadBalancerServerIpsTest.cs" />
+    <Compile Include="LoadBalancer\LoadBalancerRulesTest.cs" />
     <Compile Include="Servers\ServerImagesTest.cs" />
     <Compile Include="Servers\ServerIpsTest.cs" />
     <Compile Include="Servers\ServersTest.cs" />
