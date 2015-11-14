@@ -81,13 +81,14 @@ namespace OneAndOne.UnitTests
             var server = servers[random.Next(servers.Count - 1)];
             foreach (var item in servers)
             {
-                if (item.Snapshot == null)
+                Thread.Sleep(1000);
+                server = client.Servers.Show(item.Id);
+                if (server.Snapshot == null)
                 {
-                    server = item;
                     break;
                 }
             }
-            if (server.Hardware.Hdds.Count < 8)
+            if (server.Hardware.Hdds.Count < 8 && server.Snapshot == null)
             {
                 var result = client.ServerHdds.Create(new POCO.Requests.Servers.AddHddRequest()
                     {
@@ -112,7 +113,8 @@ namespace OneAndOne.UnitTests
             var servers = client.Servers.Get();
             var server = servers[random.Next(servers.Count - 1)];
             var randomHdd = server.Hardware.Hdds[random.Next(server.Hardware.Hdds.Count - 1)];
-            if (server.Status.State == ServerState.REMOVING)
+            if (server.Status.State == ServerState.REMOVING || server.Status.State == ServerState.DEPLOYING
+                || server.Status.State == ServerState.CONFIGURING || server.Status.State == ServerState.CONFIGURING)
             {
                 return;
             }
@@ -201,7 +203,8 @@ namespace OneAndOne.UnitTests
             var servers = client.Servers.Get();
             var server = servers[random.Next(servers.Count - 1)];
             var dvd = client.DVDs.Get();
-            while (server.Status.State == ServerState.REMOVING || server.Status.State == ServerState.CONFIGURING)
+            while (server.Status.State == ServerState.REMOVING || server.Status.State == ServerState.DEPLOYING
+                || server.Status.State == ServerState.CONFIGURING || server.Status.State == ServerState.CONFIGURING)
             {
                 server = servers[random.Next(servers.Count - 1)];
             }
@@ -215,7 +218,8 @@ namespace OneAndOne.UnitTests
             var random = new Random();
             var servers = client.Servers.Get();
             var server = servers[random.Next(servers.Count - 1)];
-            while (server.Status.State == ServerState.REMOVING || server.Status.State == ServerState.CONFIGURING)
+            while (server.Status.State == ServerState.REMOVING || server.Status.State == ServerState.DEPLOYING
+                || server.Status.State == ServerState.CONFIGURING || server.Status.State == ServerState.CONFIGURING)
             {
                 server = servers[random.Next(servers.Count - 1)];
             }

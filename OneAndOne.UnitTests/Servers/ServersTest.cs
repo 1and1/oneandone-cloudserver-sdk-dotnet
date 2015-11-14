@@ -71,8 +71,9 @@ namespace OneAndOne.UnitTests
             var server = client.Servers.Show(servers[random.Next(0, servers.Count - 1)].Id);
             foreach (var item in client.Servers.Get())
             {
-                if (item.Name.Contains("ServerTest") && (item.Status.State != ServerState.POWERED_OFF
-                    && item.Status.State == ServerState.POWERED_OFF))
+                if (item.Name.Contains("ServerTest") && (
+                   item.Status.State != ServerState.POWERING_ON && item.Status.State != ServerState.DEPLOYING
+                   && item.Status.State != ServerState.CONFIGURING && item.Status.State != ServerState.REBOOTING))
                 {
                     server = item;
                     break;
