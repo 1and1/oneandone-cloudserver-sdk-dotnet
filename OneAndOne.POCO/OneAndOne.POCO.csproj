@@ -72,7 +72,9 @@
     <Compile Include="Respones\FirewallPolicies\FirewallPolicyResponse.cs" />
     <Compile Include="Respones\FirewallPolicies\FirewallPolicyServerIPsResponse.cs" />
     <Compile Include="Respones\Images\ImagesResponse.cs" />
+    <Compile Include="Requests\LoadBalancer\AssignLoadBalancerServerIpsRequest.cs" />
     <Compile Include="Respones\LoadBalancers\LoadBalancerResponse.cs" />
+    <Compile Include="Respones\LoadBalancers\LoadBalancerServerIpsResponse.cs" />
     <Compile Include="Respones\PrivateNetworks\PrivateNetworksResponse.cs" />
     <Compile Include="Respones\Servers\AvailableFlavour.cs" />
     <Compile Include="Respones\Servers\CreateServerResponse.cs" />
