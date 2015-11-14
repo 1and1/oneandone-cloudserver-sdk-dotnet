@@ -77,6 +77,21 @@ namespace OneAndOne.UnitTests.SharedStorages
         }
 
         [TestMethod]
+        public void DeleteAllTestSharedStorages()
+        {
+            Random random = new Random();
+            var sharedStorages = client.SharedStorages.Get().Where(str => str.Name.Contains("TestStorage")).ToList();
+            foreach (var item in sharedStorages)
+            {
+                var result = client.SharedStorages.Delete(item.Id);
+
+                Assert.IsNotNull(result);
+                Assert.IsNotNull(result.Id);
+            }
+           
+        }
+
+        [TestMethod]
         public void ShowSharedStorageAccess()
         {
             var result = client.SharedStorages.ShowSharedStorageAccess();

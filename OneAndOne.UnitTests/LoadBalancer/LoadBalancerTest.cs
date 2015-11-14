@@ -94,5 +94,18 @@ namespace OneAndOne.UnitTests.LoadBalancer
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
         }
+
+        [TestMethod]
+        public void DeleteAllTestLoadBalancer()
+        {
+            Random random = new Random();
+            var loadBalancers = client.LoadBalancers.Get().Where(str => str.Name.Contains("LBTest")).ToList();
+            foreach (var item in loadBalancers)
+            {
+                var result = client.LoadBalancers.Delete(item.Id);
+                Assert.IsNotNull(result);
+                Assert.IsNotNull(result.Id);
+            }
+        }
     }
 }
