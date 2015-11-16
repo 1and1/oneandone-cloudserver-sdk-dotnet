@@ -299,19 +299,19 @@ namespace OneAndOne.UnitTests
             foreach (var server in servers.Where(p => p.Name.Contains("ServerTest")))
             {
 
-                var privateNetworks = client.PrivateNetworks.GetPrivateNetworks();
+                var privateNetworks = client.PrivateNetworks.Get();
                 var privateNetwork = privateNetworks[0];
                 var curServer = client.Servers.Show(server.Id);
                 if (curServer.Status.State == ServerState.POWERING_ON || curServer.Snapshot != null)
                     continue;
-                if (server.PrivateNetworks == null || !server.PrivateNetworks.Any(pn => pn.Id == privateNetwork.id))
+                if (server.PrivateNetworks == null || !server.PrivateNetworks.Any(pn => pn.Id == privateNetwork.Id))
                 {
                     privateNetwork = privateNetworks[1];
                 }
                 //had to add this try the server was returning un explained Generic Errors
                 try
                 {
-                    var result = client.Servers.CreatePrivateNetwork(curServer.Id, privateNetwork.id);
+                    var result = client.Servers.CreatePrivateNetwork(curServer.Id, privateNetwork.Id);
                     Assert.IsNotNull(result);
                     Assert.IsNotNull(result.Id);
                     break;

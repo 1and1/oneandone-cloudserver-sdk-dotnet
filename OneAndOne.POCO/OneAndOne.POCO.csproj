@@ -54,6 +54,8 @@
     <Compile Include="Requests\LoadBalancer\AddLoadBalancerRuleRequest.cs" />
     <Compile Include="Requests\LoadBalancer\CreateLoadBalancerRequest.cs" />
     <Compile Include="Requests\LoadBalancer\UpdateLoadBalancerRequest.cs" />
+    <Compile Include="Requests\PrivateNetworks\CreatePrivateNetworkRequest.cs" />
+    <Compile Include="Requests\PrivateNetworks\UpdatePrivateNetworkRequest.cs" />
     <Compile Include="Requests\PublicIPs\CreatePublicIPRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerIPRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerRequest.cs" />

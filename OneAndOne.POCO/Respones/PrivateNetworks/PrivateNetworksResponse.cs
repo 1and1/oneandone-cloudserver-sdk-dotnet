@@ -8,14 +8,86 @@ namespace OneAndOne.POCO.Respones.PrivateNetworks
 {
     public class PrivateNetworksResponse
     {
-        public string id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public string network_address { get; set; }
-        public string subnet_mask { get; set; }
-        public string state { get; set; }
-        public string creation_date { get; set; }
-        public List<object> servers { get; set; }
-        public string cloudpanel_id { get; set; }
+        private string id;
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        private string name;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        private string description;
+
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
+        }
+        private string network_address;
+
+        public string NetworkAddress
+        {
+            get { return network_address; }
+            set { network_address = value; }
+        }
+        private string subnet_mask;
+
+        public string SubnetMask
+        {
+            get { return subnet_mask; }
+            set { subnet_mask = value; }
+        }
+        private string state;
+
+        public string State
+        {
+            get { return state; }
+            set { state = value; }
+        }
+        private string creation_date;
+
+        public string CreationDate
+        {
+            get { return creation_date; }
+            set { creation_date = value; }
+        }
+        private List<PrivateNetworkServerResponse> servers;
+
+        public List<PrivateNetworkServerResponse> Servers
+        {
+            get { return servers; }
+            set { servers = value; }
+        }
+        private string cloudpanel_id;
+
+        public string CloudpanelId
+        {
+            get { return cloudpanel_id; }
+            set { cloudpanel_id = value; }
+        }
+    }
+
+    public class PrivateNetworkServerResponse
+    {
+        private string id;
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        private string name;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
     }
 }
