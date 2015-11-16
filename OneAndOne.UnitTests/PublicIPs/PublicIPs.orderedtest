@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="OrderedTest1" storage="d:\work2\oneandone-cloudserver-sdk-dotnet\oneandone.unittests\publicips\orderedtest1.orderedtest" id="b8637569-45bb-4ec9-a8c8-bc5f0ff74e82" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="436e398d-8ac2-2678-980b-29e352c86244" name="CreatePublicIP" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="5d90f0a4-c5e3-942e-2bc9-253af74225b0" name="GetPublicIPs" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="3f829c72-caff-7ff5-578c-ed90b106bf33" name="ShowPublicIP" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="bf514012-4d39-9bdc-dfaf-5c30448762c0" name="UpdatePublicIP" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="36eaa4c9-16d7-233a-603c-4cd09f0f04e7" name="DeletePublicIP" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>
