@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.Client.Endpoints.PrivateNetworks
 {
-    public class PrivateNetworks : ResourceBase
+    public partial class PrivateNetworks : ResourceBase
     {
 
         #region Basic Operations

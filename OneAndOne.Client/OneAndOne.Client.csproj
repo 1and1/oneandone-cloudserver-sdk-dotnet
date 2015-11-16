@@ -59,6 +59,7 @@
     <Compile Include="Endpoints\LoadBalancers\LoadBalancerRules.cs" />
     <Compile Include="Endpoints\LoadBalancers\LoadBalancerServerIPs.cs" />
     <Compile Include="Endpoints\PrivateNetworks\PrivateNetworks.cs" />
+    <Compile Include="Endpoints\PrivateNetworks\PrivateNetworksServers.cs" />
     <Compile Include="Endpoints\PublicIPs\PublicIPs.cs" />
     <Compile Include="Endpoints\ResourceBase .cs" />
     <Compile Include="Endpoints\Servers\HardDiskDrives.cs" />

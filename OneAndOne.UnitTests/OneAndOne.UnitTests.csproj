@@ -82,7 +82,7 @@
     <None Include="CleanersOrderedTests.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="PrivateNetworks\OrderedTest1.orderedtest">
+    <None Include="PrivateNetworks\PrivateNetwork.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="PublicIPs\PublicIPs.orderedtest">
