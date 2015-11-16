@@ -160,5 +160,16 @@ namespace OneAndOne.Client
                 return new OneAndOne.Client.Endpoints.FirewallPolicies.FirewallPolicies();
             }
         }
+
+        /// <summary>
+        /// Public IPs client
+        /// </summary>
+        public OneAndOne.Client.Endpoints.PublicIPs.PublicIPs PublicIPs
+        {
+            get
+            {
+                return new OneAndOne.Client.Endpoints.PublicIPs.PublicIPs();
+            }
+        }
     }
 }
