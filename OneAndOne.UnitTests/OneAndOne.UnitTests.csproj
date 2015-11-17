@@ -57,6 +57,7 @@
     <Compile Include="LoadBalancer\LoadBalancerTest.cs" />
     <Compile Include="LoadBalancer\LoadBalancerServerIpsTest.cs" />
     <Compile Include="LoadBalancer\LoadBalancerRulesTest.cs" />
+    <Compile Include="PrivateNetworks\PrivateNetworkServerstest.cs" />
     <Compile Include="PrivateNetworks\PrivateNetworkTest.cs" />
     <Compile Include="PublicIPs\PublicIPsTest.cs" />
     <Compile Include="Servers\ServerImagesTest.cs" />
@@ -94,7 +95,7 @@
     <None Include="Servers\Snapshots.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Servers\PrivateNetworks.orderedtest">
+    <None Include="Servers\SERVERPrivateNetworks.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Servers\ServerIPs.orderedtest">

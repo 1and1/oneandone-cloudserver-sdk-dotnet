@@ -42,7 +42,7 @@ namespace OneAndOne.Client.Endpoints.PrivateNetworks
         //Attaches servers to a private network.
         /// <param name="private_network_id">Unique private network's identifier.</param>
         //</summary>
-        public PrivateNetworkServerResponse CreateServerSharedStorages(AttachPrivateNetworkServersRequest privateNetworkServers, string private_network_id)
+        public PrivateNetworkServerResponse CreatePrivateNetworkServers(AttachPrivateNetworkServersRequest privateNetworkServers, string private_network_id)
         {
             try
             {
@@ -52,6 +52,8 @@ namespace OneAndOne.Client.Endpoints.PrivateNetworks
                     JsonSerializer = new CustomSerializer()
                 };
                 request.AddUrlSegment("private_network_id", private_network_id);
+                request.AddHeader("Content-Type", "application/json");
+
                 request.AddBody(privateNetworkServers);
 
                 var result = restclient.Execute<PrivateNetworkServerResponse>(request);
@@ -73,7 +75,7 @@ namespace OneAndOne.Client.Endpoints.PrivateNetworks
         /// <param name="private_network_id">Unique private network's identifier.</param>
         /// <param name="server_id">Unique server's identifier.</param>
         ///// 
-        public PrivateNetworkServerResponse ShowSharedStoragesServer(string private_network_id, string server_id)
+        public PrivateNetworkServerResponse ShowPrivateNetworkServer(string private_network_id, string server_id)
         {
             try
             {
@@ -99,7 +101,7 @@ namespace OneAndOne.Client.Endpoints.PrivateNetworks
         /// </summary>
         /// <param name="private_network_id">Unique private network's identifier.</param>
         /// 
-        public PrivateNetworksResponse DeleteSharedStoragesServer(string private_network_id, string server_id)
+        public PrivateNetworksResponse DeletePrivateNetworksServer(string private_network_id, string server_id)
         {
             try
             {
