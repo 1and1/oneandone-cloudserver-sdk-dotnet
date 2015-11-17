@@ -136,6 +136,14 @@ namespace OneAndOne.POCO.Respones.Servers
             set { monitoring_policy_id = value; }
         }
 
+        private MonitoringPolicy monitoring_policy;
+        [JsonProperty(PropertyName = "monitoring_policy")]
+        public MonitoringPolicy MonitoringPolicy
+        {
+            get { return monitoring_policy; }
+            set { monitoring_policy = value; }
+        }
+
         private List<OneAndOne.POCO.Requests.Servers.PrivateNetworks> private_networks;
         [JsonProperty(PropertyName = "private_networks")]
         [JsonConverter(typeof(SingleValueArrayConverter<OneAndOne.POCO.Requests.Servers.PrivateNetworks>))]

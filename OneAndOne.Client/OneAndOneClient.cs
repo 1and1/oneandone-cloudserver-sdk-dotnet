@@ -171,5 +171,16 @@ namespace OneAndOne.Client
                 return new OneAndOne.Client.Endpoints.PublicIPs.PublicIPs();
             }
         }
+
+        /// <summary>
+        /// Monitoring Center client
+        /// </summary>
+        public OneAndOne.Client.Endpoints.MonitoringCenter.MonitoringCenter MonitoringCenter
+        {
+            get
+            {
+                return new OneAndOne.Client.Endpoints.MonitoringCenter.MonitoringCenter();
+            }
+        }
     }
 }

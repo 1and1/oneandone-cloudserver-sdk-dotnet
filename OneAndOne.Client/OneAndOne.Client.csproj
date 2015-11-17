@@ -58,6 +58,7 @@
     <Compile Include="Endpoints\LoadBalancers\LoadBalancer.cs" />
     <Compile Include="Endpoints\LoadBalancers\LoadBalancerRules.cs" />
     <Compile Include="Endpoints\LoadBalancers\LoadBalancerServerIPs.cs" />
+    <Compile Include="Endpoints\MonitoringCenter\MonitoringCenter.cs" />
     <Compile Include="Endpoints\PrivateNetworks\PrivateNetworks.cs" />
     <Compile Include="Endpoints\PrivateNetworks\PrivateNetworksServers.cs" />
     <Compile Include="Endpoints\PublicIPs\PublicIPs.cs" />
@@ -84,6 +85,7 @@
       <Name>OneAndOne.POCO</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

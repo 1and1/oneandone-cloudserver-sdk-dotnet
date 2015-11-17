@@ -81,6 +81,8 @@
     <Compile Include="Respones\LoadBalancers\LoadBalancerResponse.cs" />
     <Compile Include="Respones\LoadBalancers\LoadBalancerRulesResponse.cs" />
     <Compile Include="Respones\LoadBalancers\LoadBalancerServerIpsResponse.cs" />
+    <Compile Include="Respones\MonitoringCenter\MonitoringCenterResponse.cs" />
+    <Compile Include="Respones\MonitoringCenter\ServerMonitoringCenterResponse.cs" />
     <Compile Include="Respones\PrivateNetworks\PrivateNetworksResponse.cs" />
     <Compile Include="Respones\PublicIPs\PublicIPsResponse.cs" />
     <Compile Include="Respones\Servers\AvailableFlavour.cs" />
