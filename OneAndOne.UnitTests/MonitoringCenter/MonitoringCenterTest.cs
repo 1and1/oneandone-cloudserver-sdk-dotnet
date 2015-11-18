@@ -37,8 +37,8 @@ namespace OneAndOne.UnitTests.MonitoringCenter
                 }
             }
             //TODO: Add correct required date time
-            //var mCenters = client.MonitoringCenter.Show(server.Id, PeriodType.CUSTOM, DateTime.Today.AddMonths(-2), DateTime.Today);
-            var mCenters = client.MonitoringCenter.Show(server.Id, PeriodType.LAST_30D);
+            var mCenters = client.MonitoringCenter.Show(server.Id, PeriodType.CUSTOM, DateTime.Today.AddMonths(-2), DateTime.Today);
+            //var mCenters = client.MonitoringCenter.Show(server.Id, PeriodType.LAST_30D);
 
             Assert.IsNotNull(mCenters);
             Assert.IsNotNull(mCenters.Id);

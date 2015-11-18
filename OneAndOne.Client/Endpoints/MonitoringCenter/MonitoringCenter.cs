@@ -77,8 +77,8 @@ namespace OneAndOne.Client.Endpoints.MonitoringCenter
                 requestUrl += string.Format("&period={0}", period);
                 if (period ==PeriodType.CUSTOM)
                 {
-                    requestUrl += string.Format("&start_date={0}", start_date.Value.ToString("d"));
-                    requestUrl += string.Format("&end_date={0}", end_date.Value.ToString("d"));
+                    requestUrl += string.Format("&start_date={0}", start_date.Value.ToString("dd/MM/yyyy"));
+                    requestUrl += string.Format("&end_date={0}", end_date.Value.ToString("dd/MM/yyyy"));
                 }
 
                 var request = new RestRequest(requestUrl, Method.GET);
