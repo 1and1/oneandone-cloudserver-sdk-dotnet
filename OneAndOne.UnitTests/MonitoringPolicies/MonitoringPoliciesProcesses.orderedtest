@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="orderedtest1" storage="d:\work2\oneandone-cloudserver-sdk-dotnet\oneandone.unittests\monitoringpolicies\orderedtest1.orderedtest" id="b9976af6-5421-47b9-9598-c8109570ac0e" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="70e5b90d-cc45-24db-c10c-f9faf840cc72" name="AddMonitoringPolicyProcess" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="d025b5ce-fd45-b747-60fa-f5f20b64c0ba" name="GetMonitoringPolicyProcesss" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="ff19fda0-011a-7d75-1f41-054c8d64524b" name="ShowMonitoringPolicyProcess" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="b102b515-0b4f-ee17-37f9-b0830e1c1ee6" name="UpdateMonitoringPolicyProcess" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="965220cd-b0f8-a459-a247-9c97d8f74353" name="DeleteMonitoringPolicyProcess" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="OrderedTest1" storage="d:\work2\oneandone-cloudserver-sdk-dotnet\oneandone.unittests\serverappliances\orderedtest1.orderedtest" id="5710a16a-be7a-43f7-996b-88c1a0fa9e7d" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="dd3f2f69-d27e-2f0d-9a71-3962c4ff758d" name="GetServerAppliances" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="4605346d-f153-b8dc-ba95-8291f94359cc" name="GetServerAppliance" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

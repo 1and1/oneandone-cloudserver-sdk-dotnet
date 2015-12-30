@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="dvd" storage="d:\work2\oneandone-cloudserver-sdk-dotnet\oneandone.unittests\servers\dvd.orderedtest" id="b0ef3796-e331-4a1b-ab47-beca322fe136" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="c9c20384-1a43-6874-d4af-64936a5ebc44" name="GetDVD" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="64cfa7cf-5cb5-3fcd-af53-ef7df2fd8121" name="DeleteDVD" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="9f87bf86-a796-87ff-4e1a-ec0c9781a59f" name="UpdateDVD" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>
