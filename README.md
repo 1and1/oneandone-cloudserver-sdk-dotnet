@@ -3,7 +3,7 @@ This guide will show you how to programmatically perform common management tasks
 
 ## Table of Contents
 
-* [Concepts](#concepts)
+* [Overview](#overview)
 * [Getting Started](#getting-started)
   * [Installation](#installation)
   * [Configuration](#configuration)
@@ -26,7 +26,7 @@ This guide will show you how to programmatically perform common management tasks
   * [DVD ISO](#dvd-iso)
 
 
-## CONCEPTS
+## Overview
 ***
 This .NET library is a wrapper for the 1&1 REST API. All API operations are performed over SSL and authenticated using your 1&1 token key. The API can be accessed within an instance running in 1&1 or directly over the Internet from any application that can send an HTTPS request and receive an HTTPS response.
 
