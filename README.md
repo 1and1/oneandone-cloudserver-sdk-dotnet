@@ -58,7 +58,7 @@ List all Servers:
 `var servers=OneAndOneClient.Instance().Servers.Get();`
 
 
-This will list all servers under you 1&1 account.
+This will list all servers under your 1&1 account.
 #####Additional Documentation and Support
 
 You can engage with us in the community and we'll be more than happy to answer any questions you might have.
