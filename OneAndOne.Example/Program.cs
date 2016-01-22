@@ -2,6 +2,7 @@
 using OneAndOne.POCO;
 using OneAndOne.POCO.Respones;
 using OneAndOne.POCO.Respones.LoadBalancers;
+using OneAndOne.POCO.Respones.ServerAppliances;
 using OneAndOne.POCO.Respones.Servers;
 using System;
 using System.Collections.Generic;
@@ -117,12 +118,17 @@ namespace OneAndOne.Example
             //number of cores per processor
             int CoresPerProcessor = 2;
             //get server appliance with OS family type Windows
-            var appliance = client.ServerAppliances.Get().Where(app => app.OsFamily == OSFamliyType.Windows).FirstOrDefault();
+            var appliances = client.ServerAppliances.Get().Where(app => app.OsFamily == OSFamliyType.Windows);
+            ServerAppliancesResponse appliance = null;
+            if (appliances != null && appliances.Count() > 0)
+            {
+                appliance = client.ServerAppliances.Get().FirstOrDefault();
+            }
             //get an availabe public IP and assign to the server
             var publicIP = client.PublicIPs.Get().FirstOrDefault(ip => ip.State == "ACTIVE" && ip.AssignedTo == null);
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
-                ApplianceId = appliance.Id,
+                ApplianceId = appliance != null ? appliance.Id : null,
                 Name = serverName,
                 Description = "a windows server with a windows firewall policy and a loadbalancer",
                 Hardware = new POCO.Requests.Servers.HardwareReqeust()
@@ -134,7 +140,7 @@ namespace OneAndOne.Example
                             {
                                 IsMain=true,
                                 //assign a HDD size that is larger than the recommended min size for the appliance choosen.
-                                Size=appliance.MinHddSize+20,
+                                Size=appliance != null ?appliance.MinHddSize+20:40,
                             }}
                         },
                     Ram = 8,
@@ -142,7 +148,7 @@ namespace OneAndOne.Example
                 },
                 PowerOn = true,
                 Password = "Test123!",
-                IpId = publicIP.Id
+                IpId = publicIP != null ? publicIP.Id : null
             });
 
             Console.WriteLine("Server created waiting to be deployed and turned on");

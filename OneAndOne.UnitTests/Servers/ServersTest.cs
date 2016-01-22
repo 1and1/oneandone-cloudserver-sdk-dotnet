@@ -7,6 +7,7 @@ using OneAndOne.POCO.Requests.Servers;
 using OneAndOne.POCO.Respones.Servers;
 using System.Threading;
 using OneAndOne.POCO;
+using OneAndOne.POCO.Respones.ServerAppliances;
 
 namespace OneAndOne.UnitTests
 {
@@ -35,11 +36,16 @@ namespace OneAndOne.UnitTests
             {
                 return;
             }
-            var appliance = client.ServerAppliances.Get().Where(app => app.OsFamily == OSFamliyType.Windows && app.AutomaticInstallation == true).FirstOrDefault();
+            var appliances = client.ServerAppliances.Get().Where(app => app.OsFamily == OSFamliyType.Windows && app.AutomaticInstallation == true);
+            ServerAppliancesResponse appliance = null;
+            if (appliances != null && appliances.Count() > 0)
+            {
+                appliance = client.ServerAppliances.Get().FirstOrDefault();
+            }
             var publicIP = client.PublicIPs.Get().FirstOrDefault(ip => ip.State == "ACTIVE" && ip.AssignedTo == null);
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
-                ApplianceId = appliance.Id,
+                ApplianceId = appliance != null ? appliance.Id : null,
                 Name = randomName,
                 Description = "Example" + randomName,
                 Hardware = new POCO.Requests.Servers.HardwareReqeust()
@@ -58,7 +64,7 @@ namespace OneAndOne.UnitTests
                 },
                 PowerOn = true,
                 Password = "Test123!",
-                IpId = publicIP.Id
+                IpId = publicIP != null ? publicIP.Id : null
             });
 
             Assert.IsNotNull(result);
