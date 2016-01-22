@@ -38,9 +38,13 @@ namespace OneAndOne.UnitTests
             }
             var appliances = client.ServerAppliances.Get().Where(app => app.OsFamily == OSFamliyType.Windows && app.AutomaticInstallation == true);
             ServerAppliancesResponse appliance = null;
-            if (appliances != null && appliances.Count() > 0)
+            if (appliances == null || appliances.Count() == 0)
             {
                 appliance = client.ServerAppliances.Get().FirstOrDefault();
+            }
+            else
+            {
+                appliance = appliances.FirstOrDefault();
             }
             var publicIP = client.PublicIPs.Get().FirstOrDefault(ip => ip.State == "ACTIVE" && ip.AssignedTo == null);
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
