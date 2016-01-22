@@ -1,5 +1,6 @@
 ﻿using OneAndOne.Client;
 using OneAndOne.POCO;
+using OneAndOne.POCO.Requests.Servers;
 using OneAndOne.POCO.Respones;
 using OneAndOne.POCO.Respones.LoadBalancers;
 using OneAndOne.POCO.Respones.ServerAppliances;
@@ -110,7 +111,11 @@ namespace OneAndOne.Example
                         }
                     }
             });
-
+            //create a public IP and use it for the server creation
+            var publicIp = client.PublicIPs.Create(new POCO.Requests.PublicIPs.CreatePublicIPRequest()
+            {
+                Type = IPType.IPV4,
+            });
 
             Console.WriteLine("Creating Server with name 'Example Server .net'");
             //define the number of cores to give the server
@@ -120,12 +125,16 @@ namespace OneAndOne.Example
             //get server appliance with OS family type Windows
             var appliances = client.ServerAppliances.Get().Where(app => app.OsFamily == OSFamliyType.Windows);
             ServerAppliancesResponse appliance = null;
-            if (appliances != null && appliances.Count() > 0)
+            if (appliances == null || appliances.Count() == 0)
             {
                 appliance = client.ServerAppliances.Get().FirstOrDefault();
             }
+            else
+            {
+                appliance = appliances.FirstOrDefault();
+            }
             //get an availabe public IP and assign to the server
-            var publicIP = client.PublicIPs.Get().FirstOrDefault(ip => ip.State == "ACTIVE" && ip.AssignedTo == null);
+            //var publicIP = client.PublicIPs.Get().FirstOrDefault(ip => ip.State == "ACTIVE" && ip.AssignedTo == null);
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
                 ApplianceId = appliance != null ? appliance.Id : null,
@@ -148,7 +157,7 @@ namespace OneAndOne.Example
                 },
                 PowerOn = true,
                 Password = "Test123!",
-                IpId = publicIP != null ? publicIP.Id : null
+                IpId = publicIp != null ? publicIp.Id : null
             });
 
             Console.WriteLine("Server created waiting to be deployed and turned on");
@@ -176,6 +185,7 @@ namespace OneAndOne.Example
             client.Servers.Delete(testServer.Id, true);
             client.LoadBalancer.Delete(loadBalancer.Id);
             client.FirewallPolicies.Delete(firewallPolicy.Id);
+            client.PublicIPs.Delete(publicIp.Id);
             Console.ReadLine();
 
         }
