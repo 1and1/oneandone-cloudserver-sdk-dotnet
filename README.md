@@ -3,41 +3,46 @@ This guide will show you how to programmatically perform common management tasks
 
 ## Table of Contents
 
-* [Concepts](#concepts)
+* [Overview](#overview)
 * [Getting Started](#getting-started)
-* [Installation](#installation)
-* [Authenticating](#authenticating)
-* [Servers](#servers)
-* [Images](#images)
-* [Shared Storages](#shared-storages)
-* [Firewall Policies](#firewall-policies)
-* [Load Balancers](#load-balancers)
-* [Public IPs](#public-ips)
-* [Private Networks](#private-networks)
-* [Monitoring Center](#monitoring-center)
-* [Monitoring Policies](#monitoring-policies)
-* [Logs](#logs)
-* [Users](#users)
-* [Usages](#usages)
-* [Server Appliances](#server-appliances)
-* [DVD ISO](#dvd-iso)
+  * [Installation](#installation)
+  * [Configuration](#configuration)
+  * [Using the Driver](#using-the-driver)
+  * [Additional Documentation and Support](#additional-documentation-and-support)
+* [Operations](#operations)
+  * [Servers](#servers)
+  * [Images](#images)
+  * [Shared Storages](#shared-storages)
+  * [Firewall Policies](#firewall-policies)
+  * [Load Balancers](#load-balancers)
+  * [Public IPs](#public-ips)
+  * [Private Networks](#private-networks)
+  * [Monitoring Center](#monitoring-center)
+  * [Monitoring Policies](#monitoring-policies)
+  * [Logs](#logs)
+  * [Users](#users)
+  * [Usages](#usages)
+  * [Server Appliances](#server-appliances)
+  * [DVD ISO](#dvd-iso)
 
 
-## CONCEPTS
+## Overview
 ***
 This .NET library is a wrapper for the 1&1 REST API. All API operations are performed over SSL and authenticated using your 1&1 token key. The API can be accessed within an instance running in 1&1 or directly over the Internet from any application that can send an HTTPS request and receive an HTTPS response.
 
 ## Getting Started
 ***
-Before you begin you will need to have signed-up for a 1&1 account. The credentials you setup during sign-up will be used to authenticate against the API, from the management tab under the server section you can create a user and generate an API token that will be used to authenticate against the REST API.
+Before you begin you will need to have signed up for a 1&1 account. The credentials you create during sign-up will be used to authenticate against the API. 
+
+To create a user and generate an API token that will be used to authenticate against the REST API, log into your 1&1 control panel. Go to the Server section -> Management -> Users. 
 
 #####Installation
 
-The official .NET library is available from the 1&1 GitHub account found [here](https://github.com/StackPointCloud/oneandone-cloudserver-sdk-dotnet). You can install the latest stable version by cloning the repository and then adding the binaries to your project.
+The official .NET library is available from the 1&1 GitHub account found [here](https://github.com/StackPointCloud/oneandone-cloudserver-sdk-dotnet). To install the latest stable version, clone the repository, then add the binaries to your project.
 
 #####Configuration
 
-Depending on the type of project, you have the option to eaither create  an App.config or Web.config file to interact with the service before you begin or pass the required values when initializing the client through your code. This file should contain the following values:
+Depending on the type of project, you have the option to either create an App.config or Web.config file to interact with the service before you begin, or to pass the required values when initializing the client through your code. This file should contain the following values:
 
 ```<appSettings>
     <add key="APIToken" value="api token goes here"/>
@@ -53,12 +58,12 @@ List all Servers:
 `var servers=OneAndOneClient.Instance().Servers.Get();`
 
 
-This will list all servers under you 1&1 account.
+This will list all servers under your 1&1 account.
 #####Additional Documentation and Support
 
 You can engage with us in the community and we'll be more than happy to answer any questions you might have.
 
-######Operations: 
+## Operations
 
 - [Servers](#servers)
 - [Images](#images)
@@ -75,7 +80,7 @@ You can engage with us in the community and we'll be more than happy to answer a
 - [Server Appliances](#server-appliances)
 - [DVD ISO](#dvd-iso)
 
-There are two ways to initialize the 1&1 client, if you plan to have the API url and token key in your app/web config alternativly you can pass the values in the constructor of the 1&1 client.
+There are two ways to initialize the 1&1 client. You can either have the API URL and token key in your app/web config, or you can pass the values in the constructor of the 1&1 client.
 
 `OneAndOneClient client = OneAndOneClient.Instance("https://xxxxxx.1and1.com/v1", apiToken); //API values passed through code`
 
@@ -91,25 +96,27 @@ There are two ways to initialize the 1&1 client, if you plan to have the API url
 
 `var server = client.Servers.Show(serverId);`
 
-**List available server flavours:**
+**List available server flavors:**
 
 `var serverFlavours = client.Servers.GetAvailableFixedServers();`
 
-**Show a single server flavour:**
+**Show a single server flavor:**
 
 `var serverFlavour=client.Servers.GetFlavorInformation(serverFlavourId);`
 
 **Create a server:**
 
-`//get a server appliance for example here its windows and it automatically installs,
+`//get a server appliance for example here it's windows and it automatically installs,
 var appliance = client.ServerAppliances.Get().Where(app => app.OsFamily == OSFamliyType.Windows && app.AutomaticInstallation == true).FirstOrDefault();`
 
 `//get a public IP that is not assigned to any server yet
 var publicIP = client.PublicIPs.Get().FirstOrDefault(ip => ip.AssignedTo == null);`
 
- `var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
-            {
-                ApplianceId = appliance.Id,
+
+
+    var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
+                {
+            ApplianceId = appliance.Id,
                 Name = "My server",
                 Description = "Example description",
                 Hardware = new POCO.Requests.Servers.HardwareReqeust()
@@ -134,11 +141,11 @@ var publicIP = client.PublicIPs.Get().FirstOrDefault(ip => ip.AssignedTo == null
 
 **Update a server:**		
 	
-`var result = client.Servers.Update(new UpdateServerRequest()
+    var result = client.Servers.Update(new UpdateServerRequest()
 			{
 				Description = "my server updated",
 				Name = "my server updated"
-			}, serverId);`
+			}, serverId);
 			
 **Delete a server:**
 
@@ -151,7 +158,7 @@ var result = client.Servers.Delete(serverToDelete.Id, false);`
 
 **Update a server's hardware:**
 
-`var result = client.ServersHardware.Update(new POCO.Requests.Servers.UpdateHardwareRequest()
+    var result = client.ServersHardware.Update(new POCO.Requests.Servers.UpdateHardwareRequest()
                     {
                         CoresPerProcessor = 2,
                         Ram = 8,
@@ -168,7 +175,7 @@ var result = client.Servers.Delete(serverToDelete.Id, false);`
 
 **Add a hard drive to a server:**
 
-`var result = client.ServerHdds.Create(new POCO.Requests.Servers.AddHddRequest()
+    var result = client.ServerHdds.Create(new POCO.Requests.Servers.AddHddRequest()
                     {
                         Hdds = new System.Collections.Generic.List<POCO.Requests.Servers.HddRequest>()
                     {
@@ -177,16 +184,16 @@ var result = client.Servers.Delete(serverToDelete.Id, false);`
                         {new POCO.Requests.Servers.HddRequest()
                         {Size=30,IsMain=false}
                     }}
-                    }, serverId);`
+                    }, serverId);
 					
-**Update servers hard drive size:**
+**Update a server’s hard drive size:**
 
-`var result = client.ServerHdds.Update(new POCO.Requests.Servers.UpdateHddRequest()
+    var result = client.ServerHdds.Update(new POCO.Requests.Servers.UpdateHddRequest()
                 {
                     Size = updatedSize
-                }, serverId, harddriveId);`
+                }, serverId, harddriveId);
 				
-**Remove a hard drive from sever:**
+**Remove a hard drive from server:**
 
 `var result = client.ServerHdds.Delete(serverId, harddriveId);`
 
@@ -208,11 +215,11 @@ var result = client.Servers.Delete(serverToDelete.Id, false);`
 
 **Reinstall a new image into a server:**
 
-`var result = client.ServerImage.Update(new POCO.Requests.Servers.UpdateServerImageRequest()
+    var result = client.ServerImage.Update(new POCO.Requests.Servers.UpdateServerImageRequest()
                     {
                         Id = imageId,
                         Password = "Test123!"
-                    }, serverId);`	
+                    }, serverId);
 					
 **List the server's IP addresses:**
 
@@ -224,17 +231,17 @@ var result = client.Servers.Delete(serverToDelete.Id, false);`
 
 **Assign an IP to the server:**
 
-`var result = client.ServerIps.Create(new POCO.Requests.Servers.CreateServerIPRequest()
+    var result = client.ServerIps.Create(new POCO.Requests.Servers.CreateServerIPRequest()
                 {
                     Type = IPType.IPV4
-                }, serverId);`
+                }, serverId);
 				
 **Un-Assign an IP from the server:**
 
 `//the bool parameter Set true for releasing the IP without removing it
 var result = client.ServerIps.Delete(serverId, ipId, true);`
 
-**List server's firewall-policies:**
+**List server's firewall policies:**
 
 `var result = client.ServerIps.GetFirewallPolicies(serverId, ipId);`
 
@@ -243,11 +250,11 @@ var result = client.ServerIps.Delete(serverId, ipId, true);`
 `var policyresult = client.FirewallPolicies.Show(firewallPolicyId);
 var result = client.ServerIps.UpdateFirewallPolicy(serverId, ipId, policyresult.Id);`
 
-**Remove a firewall policy from server's Ip:**
+**Remove a firewall policy from server's IP:**
 
 `var result = client.ServerIps.DeleteFirewallPolicy(serverId, ipId);`
 
-**List all server's Ip address load balancers:**
+**List all server's IP address load balancers:**
 
 `var result = client.ServerIps.GetLoadBalancer(serverId, ipId);`
 
@@ -265,11 +272,11 @@ var result = client.ServerIps.UpdateFirewallPolicy(serverId, ipId, policyresult.
 
 **Change server status:**
 
-`var result = client.Servers.UpdateStatus(new UpdateStatusRequest()
+    var result = client.Servers.UpdateStatus(new UpdateStatusRequest()
             {
                 Action = ServerAction.REBOOT,
                 Method = ServerActionMethod.SOFTWARE
-            }, serverId);`
+            }, serverId);
 			
 **List server's private networks:**
 
@@ -320,24 +327,24 @@ var result = client.ServerIps.UpdateFirewallPolicy(serverId, ipId, policyresult.
 
 **Create an image:**
 
-`var image = client.Images.Create(new POCO.Requests.Images.CreateImageRequest()
+    var image = client.Images.Create(new POCO.Requests.Images.CreateImageRequest()
                 {
                     ServerId = serverId,
                     Description = "describe image",
                     Frequency = ImageFrequency.DAILY,
                     Name = "testImage",
                     NumIimages = 44// Max number of images
-                });`
+                });
 
 **Update an image:**
 
 
-`var result = client.Images.Update(new UpdateImageRequest()
+    var result = client.Images.Update(new UpdateImageRequest()
                 {
                     Description = "updated",
                     Frequency = ImageFrequency.ONCE,
                     Name = "updaeted API Image"
-                }, image.Id);`
+                }, image.Id);
 
 **Delete an image:**
 
@@ -356,21 +363,21 @@ var result = client.ServerIps.UpdateFirewallPolicy(serverId, ipId, policyresult.
 
 **Create a shared storage:**
 
-`var result = client.SharedStorages.Create(new POCO.Requests.SharedStorages.CreateSharedStorage()
+    var result = client.SharedStorages.Create(new POCO.Requests.SharedStorages.CreateSharedStorage()
                 {
                     Description = "description",
                     Name = "TestStorage",
                     Size = 50
-                });`
+                });
 				
 **Update a shared storage:**
 
-`var result = client.SharedStorages.Update(new POCO.Requests.SharedStorages.UpdateSharedStorageRequest()
+    var result = client.SharedStorages.Update(new POCO.Requests.SharedStorages.UpdateSharedStorageRequest()
             {
                 Description = "description",
                 Name = "TestStorageupdated",
                 Size = 70
-            }, sharedStorageId);`
+            }, sharedStorageId);
 			
 **Remove a shared storage:**
 
@@ -418,7 +425,7 @@ var result = client.SharedStorages.CreateServerSharedStorages(new POCO.Requests.
 
 **Create a firewall policy:**
 
-`var newRules = new System.Collections.Generic.List<POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule>();
+    var newRules = new System.Collections.Generic.List<POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule>();
             newRules.Add(new POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule()
                 {
                     PortTo = 80,
@@ -426,20 +433,20 @@ var result = client.SharedStorages.CreateServerSharedStorages(new POCO.Requests.
                     Protocol = RuleProtocol.TCP,
                     Source = "0.0.0.0"
                 });
-var result = client.FirewallPolicies.Create(new POCO.Requests.FirewallPolicies.CreateFirewallPolicyRequest()
+    var result = client.FirewallPolicies.Create(new POCO.Requests.FirewallPolicies.CreateFirewallPolicyRequest()
             {
                 Description = "TestFirewall",
                 Name = "TestFW",
                 Rules = newRules
-            });`
+            });
 			
 **Update a firewall policy:**
 
-`var result = client.FirewallPolicies.Update(new POCO.Requests.FirewallPolicies.UpdateFirewallPolicyRequest()
+    var result = client.FirewallPolicies.Update(new POCO.Requests.FirewallPolicies.UpdateFirewallPolicyRequest()
             {
                 Name = "Updated",
                 Description = "UpdDesc",
-            }, firewallId);`
+            }, firewallId);
 			
 **Delete a firewall policy:**
 
@@ -472,7 +479,7 @@ var result = client.FirewallPolicies.CreateFirewallPolicyServerIPs(new POCO.Requ
 
 **Adds new rules to a firewall policy:**
 
-`var result = client.FirewallPolicies.CreateFirewallPolicyRule(new POCO.Requests.FirewallPolicies.AddFirewallPolicyRuleRequest()
+    var result = client.FirewallPolicies.CreateFirewallPolicyRule(new POCO.Requests.FirewallPolicies.AddFirewallPolicyRuleRequest()
                 {
                     Rules = new System.Collections.Generic.List<POCO.Requests.FirewallPolicies.RuleRequest>()
                 {
@@ -484,7 +491,7 @@ var result = client.FirewallPolicies.CreateFirewallPolicyServerIPs(new POCO.Requ
 			Source = "0.0.0.0"
                     }}
                 }
-                }, firewallpolicyId);`
+                }, firewallpolicyId);
 				
 **Remove a rule from a firewall policy:**
 
@@ -503,7 +510,7 @@ var result = client.FirewallPolicies.CreateFirewallPolicyServerIPs(new POCO.Requ
 
 **Create a new load balancer:**
 
-`var result = client.LoadBalancer.Create(new POCO.Requests.LoadBalancer.CreateLoadBalancerRequest()
+    var result = client.LoadBalancer.Create(new POCO.Requests.LoadBalancer.CreateLoadBalancerRequest()
                 {
                     Name = "LBTest",
                     Description = "LBdesc",
@@ -523,11 +530,11 @@ var result = client.FirewallPolicies.CreateFirewallPolicyServerIPs(new POCO.Requ
                         }
                         }
                     }
-                });`
+                });
 				
 **Modify a load balancer:**
 
-`var result = client.LoadBalancer.Update(new POCO.Requests.LoadBalancer.UpdateLoadBalancerRequest()
+    var result = client.LoadBalancer.Update(new POCO.Requests.LoadBalancer.UpdateLoadBalancerRequest()
             {
                 HealthCheckInterval = 100,
                 HealthCheckTest = HealthCheckTestTypes.TCP,
@@ -536,7 +543,7 @@ var result = client.FirewallPolicies.CreateFirewallPolicyServerIPs(new POCO.Requ
                 Name = "UpdatedLB" + loadBalancer.Name,
                 HealthCheckPathParse = "regex",
                 HealthCheckPath = "google.com"
-            }, loadBalancerId);`	
+            }, loadBalancerId);
 
 **Removes a load balancer:**	
 
@@ -552,11 +559,11 @@ var result = client.FirewallPolicies.CreateFirewallPolicyServerIPs(new POCO.Requ
 
 **Assign servers/IPs to a load balancer:**	
 
-`// iptoAdd is a list of string contains IDs of server Ips
-var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.LoadBalancer.AssignLoadBalancerServerIpsRequest()
+    // iptoAdd is a list of string contains IDs of server Ips
+    var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.LoadBalancer.AssignLoadBalancerServerIpsRequest()
                         {
                             ServerIps = iptoAdd
-                        }, loadBalancerId);`
+                        }, loadBalancerId);
 
 **Unassign a server/IP from a load balancer:**	
 
@@ -572,7 +579,7 @@ var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.L
 
 **Add new rules to a load balancer:**	
 
-` var result = client.LoadBalancer.CreateLoadBalancerRule(new POCO.Requests.LoadBalancer.AddLoadBalancerRuleRequest()
+    var result = client.LoadBalancer.CreateLoadBalancerRule(new POCO.Requests.LoadBalancer.AddLoadBalancerRuleRequest()
             {
                 Rules = new System.Collections.Generic.List<POCO.Requests.LoadBalancer.RuleRequest>()
                 {
@@ -584,7 +591,7 @@ var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.L
                     Source = "0.0.0.0"
                     }}
                 }
-            }, loadBalancerId);`
+            }, loadBalancerId);
 
 **Removes a rule from a load balancer:**	
 
@@ -602,11 +609,11 @@ var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.L
 
 **Creates a new public IP:**
 
-`var result = client.PublicIPs.Create(new POCO.Requests.PublicIPs.CreatePublicIPRequest()
+    var result = client.PublicIPs.Create(new POCO.Requests.PublicIPs.CreatePublicIPRequest()
                 {
                     ReverseDns = "dnsNameTest",
                     Type = IPType.IPV4
-                });`
+                });
 
 **Modify the reverse DNS of a public IP:**
 
@@ -629,22 +636,22 @@ var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.L
 
 **Create a new private network:**
 
-`var result = client.PrivateNetworks.Create(new POCO.Requests.PrivateNetworks.CreatePrivateNetworkRequest()
+    var result = client.PrivateNetworks.Create(new POCO.Requests.PrivateNetworks.CreatePrivateNetworkRequest()
                 {
                     Name ="testPrivateNetwork",
                     Description = "test description",
                     NetworkAddress = "192.168.1.0",
                     SubnetMask = "255.255.255.0"
-                });`
+                });
 
 **Modify a private network:**
 
-` var result = client.PrivateNetworks.Update(new POCO.Requests.PrivateNetworks.UpdatePrivateNetworkRequest()
+    var result = client.PrivateNetworks.Update(new POCO.Requests.PrivateNetworks.UpdatePrivateNetworkRequest()
                 {
                     Name = "updated testPrivateNetwork",
                     NetworkAddress = "192.168.1.0",
                     SubnetMask = "255.255.255.0",
-                }, privateNetworkId);`
+                }, privateNetworkId);
 
 **Remove a private network:**
 
@@ -676,7 +683,7 @@ var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.L
 
 **Create a new monitoring policy:**
 
-`var ports = new List<POCO.Requests.MonitoringPolicies.Ports>();
+    var ports = new List<POCO.Requests.MonitoringPolicies.Ports>();
             ports.Add(new POCO.Requests.MonitoringPolicies.Ports()
                 {
                     EmailNotification = true,
@@ -767,11 +774,11 @@ var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.L
                         }
                     }
                 };
-            var result = client.MonitoringPolicies.Create(request);`
+            var result = client.MonitoringPolicies.Create(request);
 
 **Modifiy a monitoring policy:**
 
-` var request = new UpdateMonitoringPolicyRequest()
+    var request = new UpdateMonitoringPolicyRequest()
                 {
                     Name = "updated" + monitoringPolicy.Name,
                     Thresholds = new POCO.Requests.MonitoringPolicies.Thresholds()
@@ -843,7 +850,7 @@ var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.L
                        }
                    }
                 };
-            var result = client.MonitoringPolicies.Update(request, monitoringPolicy.Id);`
+            var result = client.MonitoringPolicies.Update(request, monitoringPolicy.Id);
 
 **Remove a monitoring policy:**
 
@@ -859,7 +866,7 @@ var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.L
 
 **Add new ports to a monitoring policy:**
 
-`var ports = new List<POCO.Requests.MonitoringPolicies.Ports>();
+    var ports = new List<POCO.Requests.MonitoringPolicies.Ports>();
             ports.Add(new POCO.Requests.MonitoringPolicies.Ports()
                 {
                     EmailNotification = true,
@@ -874,18 +881,18 @@ var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.L
                     Port = 98,
                     Protocol = ProtocolType.TCP
                 });
-var result = client.MonitoringPoliciesPorts.Create(ports, monitoringPolicyId);`
+    var result = client.MonitoringPoliciesPorts.Create(ports, monitoringPolicyId);
 
 **Modify a port from a monitoring policy:**
 
-`var request = new POCO.Requests.MonitoringPolicies.Ports()
+    var request = new POCO.Requests.MonitoringPolicies.Ports()
                 {
                     EmailNotification = true,
                     AlertIf = AlertIfType.RESPONDING,
                     Port = 23,
                     Protocol = ProtocolType.TCP
                 };
-var result = client.MonitoringPoliciesPorts.Update(request, monitoringPolicyId, portId);`
+    var result = client.MonitoringPoliciesPorts.Update(request, monitoringPolicyId, portId);`
 
 **Remove a port from a monitoring policy:**
 
@@ -901,7 +908,7 @@ var result = client.MonitoringPoliciesPorts.Update(request, monitoringPolicyId, 
 
 **Add new processes to a monitoring policy:**
 
-`var processes = new List<POCO.Requests.MonitoringPolicies.Processes>();
+    var processes = new List<POCO.Requests.MonitoringPolicies.Processes>();
             processes.Add(new POCO.Requests.MonitoringPolicies.Processes()
             {
                 EmailNotification = true,
@@ -914,16 +921,16 @@ var result = client.MonitoringPoliciesPorts.Update(request, monitoringPolicyId, 
                 AlertIf = ProcessAlertType.RUNNING,
                 Process = "test"
             });
-var result = client.MonitoringPoliciesProcesses.Create(processes, monitoringPolicyId);`
+    var result = client.MonitoringPoliciesProcesses.Create(processes, monitoringPolicyId);
 
 **Modify a process from a monitoring policy:**
 
-`var result = client.MonitoringPoliciesProcesses.Update(new POCO.Requests.MonitoringPolicies.Processes()
+    var result = client.MonitoringPoliciesProcesses.Update(new POCO.Requests.MonitoringPolicies.Processes()
                 {
                     EmailNotification = true,
                     AlertIf = ProcessAlertType.RUNNING,
                     Process = "test"
-                }, monitoringPolicyId, processId);`
+                }, monitoringPolicyId, processId);
 
 **Remove a process from a monitoring policy:**
 
@@ -964,26 +971,26 @@ var result = client.MonitoringPoliciesServers.Create(servers, monitoringPolicyId
 
 `var result = client.Users.Get();`
 
-**Return information about a user.:**
+**Return information about a user:**
 
 `var result = client.Users.Show(UserId);`
 
 **Creates a new user:**
 
-` var result = client.Users.Create(new POCO.Requests.Users.CreateUserRequest()
+    var result = client.Users.Create(new POCO.Requests.Users.CreateUserRequest()
             {
                 Name = "test user",
                 Password = "Test123!",
                 Description = "description",
-            });`
+            });
 
 **Modify user information:**
 
-` var result = client.Users.Update(new POCO.Requests.Users.UpdateUserRequest()
+    var result = client.Users.Update(new POCO.Requests.Users.UpdateUserRequest()
             {
                 Description = "description",
                 State = UserState.ACTIVE
-            }, UserId);`
+            }, UserId);
 
 **Remove a user:**
 
@@ -1005,17 +1012,17 @@ var result = client.MonitoringPoliciesServers.Create(servers, monitoringPolicyId
 
 ` var result = client.UserAPI.UpdateAPIKey(UserId);`
 
-**Return IP's from which access to API is allowed:**
+**Return IPs from which access to API is allowed:**
 
 `var result = client.UserAPI.GetUserIps(UserId);`
 
 **Allow a new IP:**
 
-`var listOfIps = new List<string>();
-listOfIps.Add("185.13.243.86");
-var result = client.UserAPI.UpdateAPIIps(listOfIps, UserId);`
+    var listOfIps = new List<string>();
+    listOfIps.Add("185.13.243.86");
+    var result = client.UserAPI.UpdateAPIIps(listOfIps, UserId);`
 
-**Delete an IP and forbides API access for it:**
+**Delete an IP and forbid API access for it:**
 
 `var result = client.UserAPI.DeleteUserIp(UserId, allowedIp);`
 
@@ -1028,7 +1035,7 @@ var result = client.UserAPI.UpdateAPIIps(listOfIps, UserId);`
 
 ## Server Appliances
 
-**Return a list of all the appliances that you can use for creating a server.:**
+**Return a list of all the appliances that you can use for creating a server:**
 
 `var result = client.ServerAppliances.Get();`
 
@@ -1039,7 +1046,7 @@ var result = client.UserAPI.UpdateAPIIps(listOfIps, UserId);`
 
 ## DVD ISO
 
-**Return a list of all the operative systems and tools that you can load into your virtual DVD unit.:**
+**Return a list of all the operative systems and tools that you can load into your virtual DVD unit:**
 
 `var result = client.DVDs.Get();`
 
@@ -1048,3 +1055,4 @@ var result = client.UserAPI.UpdateAPIIps(listOfIps, UserId);`
 `var result = client.DVDs.Show(dvdId);`
 
 Copyright (c) 2016 1&1 Internet SE
+
