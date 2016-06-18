@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
-using OneAndOne.POCO.Respones.SharedStorages;
+using OneAndOne.POCO.Response.SharedStorages;
 
 namespace OneAndOne.UnitTests.SharedStorages
 {

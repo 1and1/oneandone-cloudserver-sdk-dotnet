@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.POCO.Requests.MonitoringPolicies
 {
-    public class CreateMonitoringPolictRequest
+    public class CreateMonitoringPolicyRequest
     {
 
         private string name;

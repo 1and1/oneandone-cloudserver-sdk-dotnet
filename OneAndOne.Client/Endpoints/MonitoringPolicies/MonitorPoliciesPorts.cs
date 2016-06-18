@@ -1,5 +1,5 @@
 ﻿using OneAndOne.Client.RESTHelpers;
-using OneAndOne.POCO.Respones.MonitoringPolicies;
+using OneAndOne.POCO.Response.MonitoringPolicies;
 using RestSharp;
 using System;
 using System.Collections.Generic;

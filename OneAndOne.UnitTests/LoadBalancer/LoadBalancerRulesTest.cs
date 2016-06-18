@@ -2,8 +2,8 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
-using OneAndOne.POCO.Respones;
-using OneAndOne.POCO.Respones.LoadBalancers;
+using OneAndOne.POCO.Response;
+using OneAndOne.POCO.Response.LoadBalancers;
 
 namespace OneAndOne.UnitTests.LoadBalancer
 {
@@ -81,7 +81,7 @@ namespace OneAndOne.UnitTests.LoadBalancer
         {
             Random random = new Random();
             var loadBalancers = client.LoadBalancer.Get();
-            OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse loadBalancer = null;
+            OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse loadBalancer = null;
             foreach (var item in loadBalancers)
             {
 

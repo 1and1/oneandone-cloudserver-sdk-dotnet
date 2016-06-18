@@ -1,7 +1,7 @@
 ﻿using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.FirewallPolicies;
-using OneAndOne.POCO.Respones;
-using OneAndOne.POCO.Respones.FirewallPolicies;
+using OneAndOne.POCO.Response;
+using OneAndOne.POCO.Response.FirewallPolicies;
 using RestSharp;
 using System;
 using System.Collections.Generic;

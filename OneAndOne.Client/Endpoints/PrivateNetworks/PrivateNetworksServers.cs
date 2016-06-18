@@ -1,6 +1,6 @@
 ﻿using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.PrivateNetworks;
-using OneAndOne.POCO.Respones.PrivateNetworks;
+using OneAndOne.POCO.Response.PrivateNetworks;
 using RestSharp;
 using System;
 using System.Collections.Generic;

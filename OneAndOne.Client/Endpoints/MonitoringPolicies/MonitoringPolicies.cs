@@ -1,6 +1,6 @@
 ﻿using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.MonitoringPolicies;
-using OneAndOne.POCO.Respones.MonitoringPolicies;
+using OneAndOne.POCO.Response.MonitoringPolicies;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -68,7 +68,7 @@ namespace OneAndOne.Client.Endpoints.MonitoringPolicies
         ///<summary>
         ///Creates a new monitoring policy.
         ///</summary>
-        public MonitoringPoliciesResponse Create(CreateMonitoringPolictRequest monitoringPolicy)
+        public MonitoringPoliciesResponse Create(CreateMonitoringPolicyRequest monitoringPolicy)
         {
             try
             {

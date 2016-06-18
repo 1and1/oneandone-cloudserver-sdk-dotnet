@@ -1,4 +1,4 @@
-﻿using OneAndOne.POCO.Respones.Servers;
+﻿using OneAndOne.POCO.Response.Servers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,9 +46,9 @@ namespace OneAndOne.POCO.Requests.Servers
         /// Required: Hardware features of the server. Choose your resources using fixed_instance_size_id or customizing your hardware.
         /// </summary>
         /// 
-        private HardwareReqeust hardware;
+        private HardwareRequest hardware;
         [JsonProperty(PropertyName = "hardware")]
-        public HardwareReqeust Hardware
+        public HardwareRequest Hardware
         {
             get { return hardware; }
             set { hardware = value; }

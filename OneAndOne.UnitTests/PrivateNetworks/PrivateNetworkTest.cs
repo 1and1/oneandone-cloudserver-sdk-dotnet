@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
-using OneAndOne.POCO.Respones.Servers;
+using OneAndOne.POCO.Response.Servers;
 using OneAndOne.POCO;
 using System.Threading;
 

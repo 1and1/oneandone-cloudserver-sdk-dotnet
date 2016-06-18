@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using OneAndOne.POCO.Respones;
+using OneAndOne.POCO.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -26,7 +26,7 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
         /// <param name="query">Allows to search one string in the response and return the elements that contain it. In order to specify the string use parameter q:    q=My server</param>
         /// <param name="fields">Returns only the parameters requested: fields=id,name,description,hardware.ram</param>
 
-        public List<OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse> Get(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
+        public List<OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse> Get(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
                 }
                 var request = new RestRequest(requestUrl, Method.GET);
 
-                var result = restclient.Execute<List<OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse>>(request);
+                var result = restclient.Execute<List<OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -69,7 +69,7 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
         ///<summary>
         //Creates a new load balancer.
         //</summary>
-        public OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse Create(CreateLoadBalancerRequest loadBalancer)
+        public OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse Create(CreateLoadBalancerRequest loadBalancer)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
                 };
                 request.AddBody(loadBalancer);
 
-                var result = restclient.Execute<OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse>(request);
+                var result = restclient.Execute<OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);
@@ -98,14 +98,14 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
         /// </summary>
         /// <param name="load_balancer_id">Returns information about a load balancer.</param>
         /// 
-        public OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse Show(string load_balancer_id)
+        public OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse Show(string load_balancer_id)
         {
             try
             {
                 var request = new RestRequest("/load_balancers/{load_balancer_id}", Method.GET);
                 request.AddUrlSegment("load_balancer_id", load_balancer_id);
 
-                var result = restclient.Execute<OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse>(request);
+                var result = restclient.Execute<OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -122,7 +122,7 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
         /// Modifies a load balancer.
         /// </summary>
         /// <param name="load_balancer_id">Unique load balancer's identifier.</param>
-        public OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse Update(UpdateLoadBalancerRequest loadBalancer, string load_balancer_id)
+        public OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse Update(UpdateLoadBalancerRequest loadBalancer, string load_balancer_id)
         {
             try
             {
@@ -134,7 +134,7 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
                 request.AddUrlSegment("load_balancer_id", load_balancer_id);
                 request.AddBody(loadBalancer);
 
-                var result = restclient.Execute<OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse>(request);
+                var result = restclient.Execute<OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);
@@ -152,7 +152,7 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
         /// </summary>
         /// <param name="load_balancer_id">Unique load balancer's identifier.</param>
         /// 
-        public OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse Delete(string load_balancer_id)
+        public OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse Delete(string load_balancer_id)
         {
             try
             {
@@ -164,7 +164,7 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
                 request.AddUrlSegment("load_balancer_id", load_balancer_id);
                 request.AddHeader("Content-Type", "application/json");
 
-                var result = restclient.Execute<OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse>(request);
+                var result = restclient.Execute<OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);

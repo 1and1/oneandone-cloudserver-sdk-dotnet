@@ -1,6 +1,6 @@
 ﻿using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.Servers;
-using OneAndOne.POCO.Respones.Servers;
+using OneAndOne.POCO.Response.Servers;
 using RestSharp;
 using System;
 using System.Collections.Generic;

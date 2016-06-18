@@ -2,7 +2,7 @@
 using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Converters;
 using OneAndOne.POCO.Requests.Servers;
-using OneAndOne.POCO.Respones.Servers;
+using OneAndOne.POCO.Response.Servers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -24,14 +24,14 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// </summary>
         /// <param name="server_id">Unique server's identifier.</param>
         /// 
-        public OneAndOne.POCO.Respones.Servers.Hardware Show(string server_id)
+        public OneAndOne.POCO.Response.Servers.Hardware Show(string server_id)
         {
             try
             {
                 var request = new RestRequest("/servers/{server_id}/hardware", Method.GET);
                 request.AddUrlSegment("server_id", server_id);
 
-                var result = restclient.Execute<OneAndOne.POCO.Respones.Servers.Hardware>(request);
+                var result = restclient.Execute<OneAndOne.POCO.Response.Servers.Hardware>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -82,13 +82,13 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// Returns information about the DVD loaded into the virtual DVD unit of a server.
         /// <param name="server_id">Unique server's identifier.</param>
         /// </summary>
-        public OneAndOne.POCO.Respones.Servers.Dvd ShowDVD(string server_id)
+        public OneAndOne.POCO.Response.Servers.Dvd ShowDVD(string server_id)
         {
             try
             {
                 var request = new RestRequest("/servers/{server_id}/dvd", Method.GET);
                 request.AddUrlSegment("server_id", server_id);
-                var result = restclient.Execute<OneAndOne.POCO.Respones.Servers.Dvd>(request);
+                var result = restclient.Execute<OneAndOne.POCO.Response.Servers.Dvd>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);

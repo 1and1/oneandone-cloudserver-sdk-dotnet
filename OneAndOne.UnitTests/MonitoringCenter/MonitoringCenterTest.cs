@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
-using OneAndOne.POCO.Respones.MonitoringCenter;
+using OneAndOne.POCO.Response.MonitoringCenter;
 using System.Threading;
 using OneAndOne.POCO;
 

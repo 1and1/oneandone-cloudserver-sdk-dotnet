@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.Images;
-using OneAndOne.POCO.Respones.Images;
+using OneAndOne.POCO.Response.Images;
 using RestSharp;
 using System;
 using System.Collections.Generic;

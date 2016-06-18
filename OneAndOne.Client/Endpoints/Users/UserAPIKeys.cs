@@ -1,5 +1,5 @@
 ﻿using OneAndOne.Client.RESTHelpers;
-using OneAndOne.POCO.Respones.Users;
+using OneAndOne.POCO.Response.Users;
 using RestSharp;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OneAndOne.POCO;
-using OneAndOne.POCO.Respones.MonitoringCenter;
-using OneAndOne.POCO.Respones.Usages;
+using OneAndOne.POCO.Response.MonitoringCenter;
+using OneAndOne.POCO.Response.Usages;
 using RestSharp;
 using System;
 using System.Collections.Generic;

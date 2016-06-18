@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
-using OneAndOne.POCO.Respones.Servers;
-using OneAndOne.POCO.Respones.SharedStorages;
+using OneAndOne.POCO.Response.Servers;
+using OneAndOne.POCO.Response.SharedStorages;
 using System;
 using System.Collections.Generic;
 using System.Linq;

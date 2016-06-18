@@ -1,6 +1,6 @@
 ﻿using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.LoadBalancer;
-using OneAndOne.POCO.Respones.LoadBalancers;
+using OneAndOne.POCO.Response.LoadBalancers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
