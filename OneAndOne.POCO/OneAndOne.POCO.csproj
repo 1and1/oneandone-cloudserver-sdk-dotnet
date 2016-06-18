@@ -56,7 +56,7 @@
     <Compile Include="Requests\LoadBalancer\AddLoadBalancerRuleRequest.cs" />
     <Compile Include="Requests\LoadBalancer\CreateLoadBalancerRequest.cs" />
     <Compile Include="Requests\LoadBalancer\UpdateLoadBalancerRequest.cs" />
-    <Compile Include="Requests\MonitoringPolicies\CreateMonitoringPolictRequest.cs" />
+    <Compile Include="Requests\MonitoringPolicies\CreateMonitoringPolicyRequest.cs" />
     <Compile Include="Requests\MonitoringPolicies\UpdateMonitoringPolicyRequest.cs" />
     <Compile Include="Requests\PrivateNetworks\AttachPrivateNetworkServersRequest.cs" />
     <Compile Include="Requests\PrivateNetworks\CreatePrivateNetworkRequest.cs" />
