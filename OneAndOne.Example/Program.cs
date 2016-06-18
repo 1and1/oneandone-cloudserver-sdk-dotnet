@@ -133,8 +133,6 @@ namespace OneAndOne.Example
             {
                 appliance = appliances.FirstOrDefault();
             }
-            //get an availabe public IP and assign to the server
-            //var publicIP = client.PublicIPs.Get().FirstOrDefault(ip => ip.State == "ACTIVE" && ip.AssignedTo == null);
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
                 ApplianceId = appliance != null ? appliance.Id : null,
