@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
 using OneAndOne.POCO.Requests.Servers;
-using OneAndOne.POCO.Respones;
-using OneAndOne.POCO.Respones.Servers;
+using OneAndOne.POCO.Response;
+using OneAndOne.POCO.Response.Servers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,7 +125,7 @@ namespace OneAndOne.UnitTests
         {
 
             var servers = client.Servers.Get();
-            List<OneAndOne.POCO.Respones.Servers.FirewallPolicyResponse> result = null;
+            List<OneAndOne.POCO.Response.Servers.FirewallPolicyResponse> result = null;
             foreach (var item in servers)
             {
                 Thread.Sleep(1000);
@@ -226,7 +226,7 @@ namespace OneAndOne.UnitTests
         public void GetLoadBalancer()
         {
             var servers = client.Servers.Get();
-            List<OneAndOne.POCO.Respones.Servers.LoadBalancers> loadbalancer = null;
+            List<OneAndOne.POCO.Response.Servers.LoadBalancers> loadbalancer = null;
             foreach (var item in servers)
             {
                 Thread.Sleep(1000);

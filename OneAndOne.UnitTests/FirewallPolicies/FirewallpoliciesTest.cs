@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
-using OneAndOne.POCO.Respones;
+using OneAndOne.POCO.Response;
 
 namespace OneAndOne.UnitTests.FirewallPolicies
 {

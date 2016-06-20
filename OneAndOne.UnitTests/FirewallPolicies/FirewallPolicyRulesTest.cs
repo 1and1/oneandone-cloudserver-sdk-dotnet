@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
-using OneAndOne.POCO.Respones;
+using OneAndOne.POCO.Response;
 
 namespace OneAndOne.UnitTests.FirewallPolicies
 {
@@ -90,7 +90,7 @@ namespace OneAndOne.UnitTests.FirewallPolicies
         {
             Random random = new Random();
             var firewallpolicies = client.FirewallPolicies.Get();
-            OneAndOne.POCO.Respones.FirewallPolicyResponse firewallpolicy = null;
+            OneAndOne.POCO.Response.FirewallPolicyResponse firewallpolicy = null;
             foreach (var item in firewallpolicies)
             {
 

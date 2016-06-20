@@ -50,7 +50,7 @@ namespace OneAndOne.UnitTests.FirewallPolicies
             var servers = client.Servers.Get();
             var firewallpolicies = client.FirewallPolicies.Get();
             var firewallpolicy = firewallpolicies[random.Next(0, firewallpolicies.Count - 1)];
-            OneAndOne.POCO.Respones.Servers.IpAddress ipAddress = null;
+            OneAndOne.POCO.Response.Servers.IpAddress ipAddress = null;
             if (servers.Count > 0)
             {
                 foreach (var server in servers)
@@ -78,7 +78,7 @@ namespace OneAndOne.UnitTests.FirewallPolicies
         {
             Random random = new Random();
             var firewallpolicies = client.FirewallPolicies.Get();
-            OneAndOne.POCO.Respones.FirewallPolicyResponse firewallpolicy = null;
+            OneAndOne.POCO.Response.FirewallPolicyResponse firewallpolicy = null;
             foreach (var item in firewallpolicies)
             {
                 if (item.ServerIps != null && item.ServerIps.Count > 0)

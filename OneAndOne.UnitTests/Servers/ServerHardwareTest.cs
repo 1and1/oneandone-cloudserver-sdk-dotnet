@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
 using System.Threading;
-using OneAndOne.POCO.Respones.Servers;
+using OneAndOne.POCO.Response.Servers;
 
 namespace OneAndOne.UnitTests
 {

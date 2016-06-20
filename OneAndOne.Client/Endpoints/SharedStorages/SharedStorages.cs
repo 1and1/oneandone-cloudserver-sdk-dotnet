@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.SharedStorages;
-using OneAndOne.POCO.Respones.SharedStorages;
+using OneAndOne.POCO.Response.SharedStorages;
 using RestSharp;
 using System;
 using System.Collections.Generic;

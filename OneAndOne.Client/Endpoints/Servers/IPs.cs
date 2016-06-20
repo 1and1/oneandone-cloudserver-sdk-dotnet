@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.Servers;
-using OneAndOne.POCO.Respones;
-using OneAndOne.POCO.Respones.Servers;
+using OneAndOne.POCO.Response;
+using OneAndOne.POCO.Response.Servers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -23,14 +23,14 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// Returns a list of the server's IPs.
         /// </summary>
         ///  <param name="server_id">Unique server's identifier.</param>
-        public List<OneAndOne.POCO.Respones.Servers.IpAddress> Get(string server_id)
+        public List<OneAndOne.POCO.Response.Servers.IpAddress> Get(string server_id)
         {
             try
             {
                 var request = new RestRequest("/servers/{server_id}/ips", Method.GET);
                 request.AddUrlSegment("server_id", server_id);
 
-                var result = restclient.Execute<List<OneAndOne.POCO.Respones.Servers.IpAddress>>(request);
+                var result = restclient.Execute<List<OneAndOne.POCO.Response.Servers.IpAddress>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -148,7 +148,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// </summary>
         ///  <param name="server_id">Unique server's identifier.</param>
         ///  <param name="ip_id">Unique server's identifier.</param>
-        public List<OneAndOne.POCO.Respones.Servers.FirewallPolicyResponse> GetFirewallPolicies(string server_id, string ip_id)
+        public List<OneAndOne.POCO.Response.Servers.FirewallPolicyResponse> GetFirewallPolicies(string server_id, string ip_id)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace OneAndOne.Client.Endpoints.Servers
                 request.AddUrlSegment("server_id", server_id);
                 request.AddUrlSegment("ip_id", ip_id);
 
-                var result = restclient.Execute<List<OneAndOne.POCO.Respones.Servers.FirewallPolicyResponse>>(request);
+                var result = restclient.Execute<List<OneAndOne.POCO.Response.Servers.FirewallPolicyResponse>>(request);
                 if (result.StatusCode == HttpStatusCode.NotFound)
                 {
                     throw new Exception(result.Content);
@@ -248,7 +248,7 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// </summary>
         ///  <param name="server_id">Unique server's identifier.</param>
         ///  <param name="ip_id">Unique server's identifier.</param>
-        public List<OneAndOne.POCO.Respones.Servers.LoadBalancers> GetLoadBalancer(string server_id, string ip_id)
+        public List<OneAndOne.POCO.Response.Servers.LoadBalancers> GetLoadBalancer(string server_id, string ip_id)
         {
             try
             {
@@ -256,7 +256,7 @@ namespace OneAndOne.Client.Endpoints.Servers
                 request.AddUrlSegment("server_id", server_id);
                 request.AddUrlSegment("ip_id", ip_id);
 
-                var result = restclient.Execute<List<OneAndOne.POCO.Respones.Servers.LoadBalancers>>(request);
+                var result = restclient.Execute<List<OneAndOne.POCO.Response.Servers.LoadBalancers>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);

@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
 using System.Collections.Generic;
 using OneAndOne.POCO.Requests.Servers;
-using OneAndOne.POCO.Respones.Servers;
+using OneAndOne.POCO.Response.Servers;
 using System.Threading;
 using OneAndOne.POCO;
-using OneAndOne.POCO.Respones.ServerAppliances;
+using OneAndOne.POCO.Response.ServerAppliances;
 
 namespace OneAndOne.UnitTests
 {
@@ -52,7 +52,7 @@ namespace OneAndOne.UnitTests
                 ApplianceId = appliance != null ? appliance.Id : null,
                 Name = randomName,
                 Description = "Example" + randomName,
-                Hardware = new POCO.Requests.Servers.HardwareReqeust()
+                Hardware = new POCO.Requests.Servers.HardwareRequest()
                 {
                     CoresPerProcessor = CoresPerProcessor,
                     Hdds = new List<POCO.Requests.Servers.HddRequest>()
@@ -174,7 +174,7 @@ namespace OneAndOne.UnitTests
                 ApplianceId = "B5F778B85C041347BCDCFC3172AB3F3C",
                 Name = randomName,
                 Description = "Example" + randomName,
-                Hardware = new POCO.Requests.Servers.HardwareReqeust()
+                Hardware = new POCO.Requests.Servers.HardwareRequest()
                 {
                     CoresPerProcessor = availabeFixedImage.Hardware.CoresPerProcessor,
                     Hdds = availabeFixedImage.Hardware.Hdds.Select(itm => new HddRequest()

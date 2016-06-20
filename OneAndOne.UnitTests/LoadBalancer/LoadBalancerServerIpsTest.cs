@@ -50,7 +50,7 @@ namespace OneAndOne.UnitTests.LoadBalancer
             var servers = client.Servers.Get();
             var loadBalancers = client.LoadBalancer.Get();
             var loadBalancer = loadBalancers[random.Next(0, loadBalancers.Count - 1)];
-            OneAndOne.POCO.Respones.Servers.IpAddress ipAddress = null;
+            OneAndOne.POCO.Response.Servers.IpAddress ipAddress = null;
             if (servers.Count > 0)
             {
                 foreach (var server in servers)
@@ -85,7 +85,7 @@ namespace OneAndOne.UnitTests.LoadBalancer
         {
             Random random = new Random();
             var loadBalancers = client.LoadBalancer.Get();
-            OneAndOne.POCO.Respones.LoadBalancers.LoadBalancerResponse loadBalancer = null;
+            OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse loadBalancer = null;
             foreach (var item in loadBalancers)
             {
                 if (item.ServerIps != null && item.ServerIps.Count > 0)

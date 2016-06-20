@@ -53,7 +53,7 @@ namespace OneAndOne.UnitTests.MonitoringPolicies
                     AlertIf = ProcessAlertType.NOT_RUNNING,
                     Process = "test",
                 });
-            var request = new POCO.Requests.MonitoringPolicies.CreateMonitoringPolictRequest()
+            var request = new POCO.Requests.MonitoringPolicies.CreateMonitoringPolicyRequest()
                 {
                     Name = ".netMP" + random.Next(100, 990),
                     Description = ".net decription",

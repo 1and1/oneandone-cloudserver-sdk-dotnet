@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.POCO.Requests.Servers
 {
-    public class HardwareReqeust
+    public class HardwareRequest
     {
         /// <summary>
         /// Required: Size of the ID desired for the server

@@ -1,10 +1,10 @@
 ﻿using OneAndOne.Client;
 using OneAndOne.POCO;
 using OneAndOne.POCO.Requests.Servers;
-using OneAndOne.POCO.Respones;
-using OneAndOne.POCO.Respones.LoadBalancers;
-using OneAndOne.POCO.Respones.ServerAppliances;
-using OneAndOne.POCO.Respones.Servers;
+using OneAndOne.POCO.Response;
+using OneAndOne.POCO.Response.LoadBalancers;
+using OneAndOne.POCO.Response.ServerAppliances;
+using OneAndOne.POCO.Response.Servers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -133,14 +133,12 @@ namespace OneAndOne.Example
             {
                 appliance = appliances.FirstOrDefault();
             }
-            //get an availabe public IP and assign to the server
-            //var publicIP = client.PublicIPs.Get().FirstOrDefault(ip => ip.State == "ACTIVE" && ip.AssignedTo == null);
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
                 ApplianceId = appliance != null ? appliance.Id : null,
                 Name = serverName,
                 Description = "a windows server with a windows firewall policy and a loadbalancer",
-                Hardware = new POCO.Requests.Servers.HardwareReqeust()
+                Hardware = new POCO.Requests.Servers.HardwareRequest()
                 {
                     CoresPerProcessor = CoresPerProcessor,
                     Hdds = new List<POCO.Requests.Servers.HddRequest>()

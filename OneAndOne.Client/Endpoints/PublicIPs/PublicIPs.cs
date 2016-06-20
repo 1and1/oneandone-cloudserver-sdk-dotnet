@@ -1,6 +1,6 @@
 ﻿using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.PublicIPs;
-using OneAndOne.POCO.Respones.PublicIPs;
+using OneAndOne.POCO.Response.PublicIPs;
 using RestSharp;
 using System;
 using System.Collections.Generic;

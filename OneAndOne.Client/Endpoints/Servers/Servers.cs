@@ -1,7 +1,7 @@
 ﻿using OneAndOne.Client.Endpoints;
 using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.Servers;
-using OneAndOne.POCO.Respones.Servers;
+using OneAndOne.POCO.Response.Servers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -236,14 +236,14 @@ namespace OneAndOne.Client
         /// Returns a list of the server's IPs.
         /// </summary>
         ///  <param name="server_id">Unique server's identifier.</param>
-        public OneAndOne.POCO.Respones.Servers.Status GetStatus(string server_id)
+        public OneAndOne.POCO.Response.Servers.Status GetStatus(string server_id)
         {
             try
             {
                 var request = new RestRequest("/servers/{server_id}/status", Method.GET);
                 request.AddUrlSegment("server_id", server_id);
 
-                var result = restclient.Execute<OneAndOne.POCO.Respones.Servers.Status>(request);
+                var result = restclient.Execute<OneAndOne.POCO.Response.Servers.Status>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -320,7 +320,7 @@ namespace OneAndOne.Client
         /// </summary>
         ///  <param name="server_id">Unique server's identifier.</param>
         ///  <param name="privateNetworkId">private_network_id: required (string ), Unique private network's identifier.</param>
-        public OneAndOne.POCO.Respones.PrivateNetworks.PrivateNetworksResponse ShowPrivateNetworks(string server_id, string privateNetworkId)
+        public OneAndOne.POCO.Response.PrivateNetworks.PrivateNetworksResponse ShowPrivateNetworks(string server_id, string privateNetworkId)
         {
             try
             {
@@ -328,7 +328,7 @@ namespace OneAndOne.Client
                 request.AddUrlSegment("server_id", server_id);
                 request.AddUrlSegment("private_network_id", privateNetworkId);
 
-                var result = restclient.Execute<OneAndOne.POCO.Respones.PrivateNetworks.PrivateNetworksResponse>(request);
+                var result = restclient.Execute<OneAndOne.POCO.Response.PrivateNetworks.PrivateNetworksResponse>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);

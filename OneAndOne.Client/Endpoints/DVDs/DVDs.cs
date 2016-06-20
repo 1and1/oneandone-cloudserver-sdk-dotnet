@@ -21,7 +21,7 @@ namespace OneAndOne.Client.Endpoints.DVDs
         /// <param name="query">Allows to search one string in the response and return the elements that contain it. In order to specify the string use parameter q:    q=My server</param>
         /// <param name="fields">Returns only the parameters requested: fields=id,name,description,hardware.ram</param>
 
-        public List<OneAndOne.POCO.Respones.DVDS.DVDResponse> Get(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
+        public List<OneAndOne.POCO.Response.DVDS.DVDResponse> Get(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace OneAndOne.Client.Endpoints.DVDs
                     requestUrl += string.Format("&fields={0}", fields);
                 }
                 var request = new RestRequest(requestUrl, Method.GET);
-                var result = restclient.Execute<List<OneAndOne.POCO.Respones.DVDS.DVDResponse>>(request);
+                var result = restclient.Execute<List<OneAndOne.POCO.Response.DVDS.DVDResponse>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -66,14 +66,14 @@ namespace OneAndOne.Client.Endpoints.DVDs
         /// </summary>
         /// <param name="id">Iso's ID</param>
         /// 
-        public OneAndOne.POCO.Respones.DVDS.DVDResponse Show(string id)
+        public OneAndOne.POCO.Response.DVDS.DVDResponse Show(string id)
         {
             try
             {
                 var request = new RestRequest("/dvd_isos/{id}", Method.GET);
                 request.AddUrlSegment("id", id);
 
-                var result = restclient.Execute<OneAndOne.POCO.Respones.DVDS.DVDResponse>(request);
+                var result = restclient.Execute<OneAndOne.POCO.Response.DVDS.DVDResponse>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);

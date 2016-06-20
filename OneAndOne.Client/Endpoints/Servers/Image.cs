@@ -1,6 +1,6 @@
 ﻿using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.Servers;
-using OneAndOne.POCO.Respones.Servers;
+using OneAndOne.POCO.Response.Servers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -20,14 +20,14 @@ namespace OneAndOne.Client.Endpoints.Servers
         /// Returns information about a server's image.
         /// </summary>
         ///  <param name="server_id">Unique server's identifier.</param>
-        public OneAndOne.POCO.Respones.Servers.Image Show(string server_id)
+        public OneAndOne.POCO.Response.Servers.Image Show(string server_id)
         {
             try
             {
                 var request = new RestRequest("/servers/{server_id}/image", Method.GET);
                 request.AddUrlSegment("server_id", server_id);
 
-                var result = restclient.Execute<OneAndOne.POCO.Respones.Servers.Image>(request);
+                var result = restclient.Execute<OneAndOne.POCO.Response.Servers.Image>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);

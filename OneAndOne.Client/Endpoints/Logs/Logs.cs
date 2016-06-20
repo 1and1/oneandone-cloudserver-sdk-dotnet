@@ -1,6 +1,6 @@
 ﻿using OneAndOne.POCO;
-using OneAndOne.POCO.Respones.Logs;
-using OneAndOne.POCO.Respones.MonitoringCenter;
+using OneAndOne.POCO.Response.Logs;
+using OneAndOne.POCO.Response.MonitoringCenter;
 using RestSharp;
 using System;
 using System.Collections.Generic;
