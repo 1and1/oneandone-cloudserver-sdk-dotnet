@@ -96,6 +96,34 @@ namespace OneAndOne.Client
 
         }
 
+
+        /// <summary>
+        /// Adds a new server.
+        /// </summary>
+        public CreateServerResponse CreateServerFromFlavor(CreateServerWithFlavorRequest server)
+        {
+            try
+            {
+                var request = new RestRequest("/servers", Method.POST)
+                {
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
+                request.AddBody(server);
+                var result = restclient.Execute<CreateServerResponse>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+
         /// <summary>
         /// Adds a new server.
         /// </summary>
@@ -161,10 +189,10 @@ namespace OneAndOne.Client
             try
             {
                 var request = new RestRequest("/servers/{serverId}?keep_ips={keep_ips}", Method.DELETE)
-                    {
-                        RequestFormat = DataFormat.Json,
-                        JsonSerializer = new CustomSerializer()
-                    };
+                {
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
                 request.AddUrlSegment("serverId", serverId);
                 request.AddUrlSegment("keep_ips", keepsIps.ToString().ToLower());
                 request.AddHeader("Content-Type", "application/json");

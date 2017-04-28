@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using OneAndOne.POCO.Requests.Servers;
+using OneAndOne.POCO.Response.DataCenters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,6 +70,14 @@ namespace OneAndOne.POCO.Response.PublicIPs
         {
             get { return creation_date; }
             set { creation_date = value; }
+        }
+
+        private DataCenterResponse datacenter;
+        public DataCenterResponse Datacenter
+        {
+            get { return datacenter; }
+
+            set { datacenter = value; }
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OneAndOne.POCO.Converters;
 using OneAndOne.POCO.Requests.Servers;
+using OneAndOne.POCO.Response.DataCenters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -152,6 +153,14 @@ namespace OneAndOne.POCO.Response.Servers
             get { return private_networks; }
             set { private_networks = value; }
         }
+
+        private DataCenterResponse datacenter;
+        public DataCenterResponse Datacenter
+        {
+            get { return datacenter; }
+
+            set { datacenter = value; }
+        }
     }
 
     public class Status
@@ -179,6 +188,7 @@ namespace OneAndOne.POCO.Response.Servers
         POWERING_ON,
         POWERED_ON,
         POWERED_OFF,
+        POWERING_OFF,
         DEPLOYING,
         REBOOTING,
         REMOVING,

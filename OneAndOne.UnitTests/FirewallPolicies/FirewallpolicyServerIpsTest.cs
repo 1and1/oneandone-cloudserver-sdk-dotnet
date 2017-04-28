@@ -3,20 +3,71 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
 using System.Collections.Generic;
+using OneAndOne.POCO.Response;
+using OneAndOne.POCO.Response.Servers;
 
 namespace OneAndOne.UnitTests.FirewallPolicies
 {
     [TestClass]
     public class FirewallpolicyServerIpsTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
+        static public POCO.Response.FirewallPolicyResponse firewall = null;
+        static ServerResponse server = null;
+
+        [ClassInitialize]
+        static public void TestInit(TestContext context)
+        {
+            Random random = new Random();
+            server = Config.CreateTestServer("firewall servers test");
+
+            Config.waitServerReady(server.Id);
+            server = client.Servers.Show(server.Id);
+            //create fw policy
+            var newRules = new System.Collections.Generic.List<POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule>();
+            newRules.Add(new POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule()
+            {
+                PortTo = 80,
+                PortFrom = 80,
+                Protocol = RuleProtocol.TCP,
+                Source = "0.0.0.0"
+
+            });
+            var result = client.FirewallPolicies.Create(new POCO.Requests.FirewallPolicies.CreateFirewallPolicyRequest()
+            {
+                Description = ".netTestFirewall" + random.Next(10, 30),
+                Name = ".netFW" + random.Next(10, 30),
+                Rules = newRules
+            });
+
+            Config.waitFirewallPolicyReady(result.Id);
+            firewall = result;
+            //add server ip to a firewall policy
+            var iptoAdd = new List<string>();
+            iptoAdd.Add(server.Ips[0].Id);
+            var serverIp = client.FirewallPolicies.CreateFirewallPolicyServerIPs(new POCO.Requests.FirewallPolicies.AssignFirewallServerIPRequest() { ServerIps = iptoAdd }, firewall.Id);
+            Assert.IsNotNull(serverIp);
+            Assert.IsNotNull(serverIp.Id);
+            var updatedpolicy = client.FirewallPolicies.Show(serverIp.Id);
+            Assert.IsTrue(updatedpolicy.ServerIps.Any(ip => ip.Id == server.Ips[0].Id));
+        }
+
+        [ClassCleanup]
+        static public void TestClean()
+        {
+            if (firewall != null)
+            {
+                UnassignFirewallPolicyServerIp();
+                Config.waitFirewallPolicyReady(firewall.Id);
+                client.FirewallPolicies.Delete(firewall.Id);
+            }
+            Config.waitServerReady(server.Id);
+            client.Servers.Delete(server.Id, false);
+        }
         [TestMethod]
         public void GetFirewallPolicyServerIps()
         {
-            Random random = new Random();
-            var firewallpolicies = client.FirewallPolicies.Get();
-            var firewallpolicy = firewallpolicies[random.Next(firewallpolicies.Count - 1)];
-            var result = client.FirewallPolicies.GetFirewallPolicyServerIps(firewallpolicy.Id);
+            var result = client.FirewallPolicies.GetFirewallPolicyServerIps(firewall.Id);
 
             Assert.IsNotNull(result);
         }
@@ -24,78 +75,22 @@ namespace OneAndOne.UnitTests.FirewallPolicies
         [TestMethod]
         public void ShowFirewallPolicyServerIp()
         {
-            var firewallpolicies = client.FirewallPolicies.Get();
-            var firewallpolicy = firewallpolicies[0];
-            foreach (var item in firewallpolicies)
-            {
-                if (item.ServerIps != null && item.ServerIps.Count > 0)
-                {
-                    firewallpolicy = item;
-                    break;
-                }
-            }
-            if (firewallpolicy.ServerIps != null && firewallpolicy.ServerIps.Count > 0)
-            {
-                var result = client.FirewallPolicies.ShowFirewallPolicyServerIp(firewallpolicy.Id, firewallpolicy.ServerIps[0].Id);
+            var fw = client.FirewallPolicies.Show(firewall.Id);
+            var result = client.FirewallPolicies.ShowFirewallPolicyServerIp(firewall.Id, fw.ServerIps[0].Id);
 
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
-            }
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
         }
 
-        [TestMethod]
-        public void AssignFirewallPolicyServerIp()
+        static public void UnassignFirewallPolicyServerIp()
         {
-            Random random = new Random();
-            var servers = client.Servers.Get();
-            var firewallpolicies = client.FirewallPolicies.Get();
-            var firewallpolicy = firewallpolicies[random.Next(0, firewallpolicies.Count - 1)];
-            OneAndOne.POCO.Response.Servers.IpAddress ipAddress = null;
-            if (servers.Count > 0)
-            {
-                foreach (var server in servers)
-                {
-                    if (server.Ips != null && server.Ips.Count > 0)
-                    {
-                        ipAddress = server.Ips[0];
-                    }
-                }
-                if (ipAddress != null)
-                {
-                    var iptoAdd = new List<string>();
-                    iptoAdd.Add(ipAddress.Id);
-                    var result = client.FirewallPolicies.CreateFirewallPolicyServerIPs(new POCO.Requests.FirewallPolicies.AssignFirewallServerIPRequest() { ServerIps = iptoAdd }, firewallpolicy.Id);
-                    Assert.IsNotNull(result);
-                    Assert.IsNotNull(result.Id);
-                    var updatedpolicy = client.FirewallPolicies.Show(firewallpolicy.Id);
-                    Assert.IsTrue(updatedpolicy.ServerIps.Any(ip => ip.Id == ipAddress.Id));
-                }
-            }
-        }
+            var result = client.FirewallPolicies.DeleteFirewallPolicyServerIP(firewall.Id, server.Ips[0].Id);
 
-        [TestMethod]
-        public void UnassignFirewallPolicyServerIp()
-        {
-            Random random = new Random();
-            var firewallpolicies = client.FirewallPolicies.Get();
-            OneAndOne.POCO.Response.FirewallPolicyResponse firewallpolicy = null;
-            foreach (var item in firewallpolicies)
-            {
-                if (item.ServerIps != null && item.ServerIps.Count > 0)
-                {
-                    firewallpolicy = item;
-                    break;
-                }
-            }
-            if (firewallpolicy != null && firewallpolicy.ServerIps != null && firewallpolicy.ServerIps.Count > 0)
-            {
-                var result = client.FirewallPolicies.DeleteFirewallPolicyServerIP(firewallpolicy.Id, firewallpolicy.ServerIps[0].Id);
-
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
-                var updatedpolicy = client.FirewallPolicies.Show(firewallpolicy.Id);
-                Assert.IsTrue(!updatedpolicy.ServerIps.Any(ip => ip.Id == firewallpolicy.ServerIps[0].Id));
-            }
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
+            Config.waitFirewallPolicyReady(firewall.Id);
+            var updatedpolicy = client.FirewallPolicies.Show(firewall.Id);
+            Assert.IsTrue(!updatedpolicy.ServerIps.Any(ip => ip.Id == firewall.ServerIps[0].Id));
         }
     }
 }

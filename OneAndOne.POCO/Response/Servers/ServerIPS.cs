@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OneAndOne.POCO.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,8 @@ namespace OneAndOne.POCO.Response.Servers
         }
         private List<FirewallPolicyResponse> firewall_policy;
         [JsonProperty(PropertyName = "firewall_policy")]
+        [JsonConverter(typeof(SingleValueArrayConverter<FirewallPolicyResponse>))]
+
 
         public List<FirewallPolicyResponse> FirewallPolicy
         {

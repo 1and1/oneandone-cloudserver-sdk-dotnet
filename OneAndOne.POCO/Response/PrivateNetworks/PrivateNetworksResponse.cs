@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OneAndOne.POCO.Response.DataCenters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -70,6 +71,14 @@ namespace OneAndOne.POCO.Response.PrivateNetworks
         {
             get { return cloudpanel_id; }
             set { cloudpanel_id = value; }
+        }
+
+        private DataCenterResponse datacenter;
+        public DataCenterResponse Datacenter
+        {
+            get { return datacenter; }
+
+            set { datacenter = value; }
         }
     }
 

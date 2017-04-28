@@ -64,6 +64,7 @@
     <Compile Include="Requests\PublicIPs\CreatePublicIPRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerIPRequest.cs" />
     <Compile Include="Requests\Servers\CreateServerRequest.cs" />
+    <Compile Include="Requests\Servers\CreateServerWithFlavorRequest.cs" />
     <Compile Include="Requests\Servers\Dvd.cs" />
     <Compile Include="Requests\Servers\HardDiskDrivesRequest.cs" />
     <Compile Include="Requests\Servers\HardwareReqeust.cs" />
@@ -79,6 +80,10 @@
     <Compile Include="Requests\SharedStorages\UpdateSharedStorage.cs" />
     <Compile Include="Requests\Users\CreateUserRequest.cs" />
     <Compile Include="Requests\Users\UpdateUserRequest.cs" />
+    <Compile Include="Requests\Vpn\CreateVpnRequest.cs" />
+    <Compile Include="Requests\Vpn\UpdateVpnRequest.cs" />
+    <Compile Include="Response\Common\PricingResponse.cs" />
+    <Compile Include="Response\DataCenters\DataCenterResponse.cs" />
     <Compile Include="Response\DVDS\DVDResponse.cs" />
     <Compile Include="Response\FirewallPolicies\FirewallPolicyResponse.cs" />
     <Compile Include="Response\FirewallPolicies\FirewallPolicyServerIPsResponse.cs" />
@@ -93,6 +98,7 @@
     <Compile Include="Response\MonitoringPolicies\MonitoringPoliciesResponse.cs" />
     <Compile Include="Response\PrivateNetworks\PrivateNetworksResponse.cs" />
     <Compile Include="Response\PublicIPs\PublicIPsResponse.cs" />
+    <Compile Include="Response\Roles\RoleResponse.cs" />
     <Compile Include="Response\ServerAppliances\ServerAppliancesResponse.cs" />
     <Compile Include="Response\Servers\AvailableFlavour.cs" />
     <Compile Include="Response\Servers\CreateServerResponse.cs" />
@@ -113,6 +119,7 @@
     <Compile Include="Response\Usages\UsageResponse.cs" />
     <Compile Include="Response\Users\UserAPIKeyResponse.cs" />
     <Compile Include="Response\Users\UserResponse.cs" />
+    <Compile Include="Response\Vpn\VpnResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

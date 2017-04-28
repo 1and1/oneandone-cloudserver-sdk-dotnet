@@ -10,48 +10,40 @@ namespace OneAndOne.UnitTests.LoadBalancer
     [TestClass]
     public class LoadBalancerRulesTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
-        [TestMethod]
-        public void GetLoadBalancersRules()
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
+        static LoadBalancerResponse loadBalancer = null;
+
+        [ClassInitialize]
+        static public void TestInit(TestContext context)
         {
             Random random = new Random();
-            var loadBalancers = client.LoadBalancer.Get();
-            var loadBalancer = loadBalancers[random.Next(loadBalancers.Count - 1)];
-            var result = client.LoadBalancer.GetLoadBalancerRules(loadBalancer.Id);
-
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void ShowLoadBalancerRule()
-        {
-            var loadBalancers = client.LoadBalancer.Get();
-            var loadBalancer = loadBalancers[0];
-            foreach (var item in loadBalancers)
+            var result = client.LoadBalancer.Create(new POCO.Requests.LoadBalancer.CreateLoadBalancerRequest()
             {
-                if (item.Rules != null && item.Rules.Count > 0)
-                {
-                    loadBalancer = item;
-                    break;
-                }
-            }
-            if (loadBalancer.Rules != null && loadBalancer.Rules.Count > 0)
-            {
-                var result = client.LoadBalancer.ShowLoadBalancerRule(loadBalancer.Id, loadBalancer.Rules[0].Id);
+                Name = "LBTest" + random.Next(100, 999),
+                Description = "LBdesc",
+                HealthCheckInterval = 1,
+                Persistence = true,
+                PersistenceTime = 30,
+                HealthCheckTest = HealthCheckTestTypes.NONE,
+                Method = LoadBalancerMethod.ROUND_ROBIN,
+                Rules = new System.Collections.Generic.List<POCO.Requests.LoadBalancer.LoadBalancerRuleRequest>()
+                    {
+                        {new POCO.Requests.LoadBalancer.LoadBalancerRuleRequest()
+                        {
+                            PortBalancer=80,
+                            Protocol=LBRuleProtocol.TCP,
+                            Source="0.0.0.0",
+                            PortServer=80
+                        }
+                        }
+                    }
+            });
 
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
+            Config.waitLoadBalancerReady(result.Id);
+            loadBalancer = result;
 
-            }
-        }
-
-        [TestMethod]
-        public void AddFLoadBalancerRule()
-        {
-            Random random = new Random();
             string ruleSource = "0.0.0.0";
-            var loadBalancers = client.LoadBalancer.Get();
-            var loadBalancer = loadBalancers[random.Next(0, loadBalancers.Count - 1)];
+            //add new rule
             var randomPort = random.Next(1111, 9999);
             var request = new POCO.Requests.LoadBalancer.AddLoadBalancerRuleRequest()
             {
@@ -67,40 +59,58 @@ namespace OneAndOne.UnitTests.LoadBalancer
                 }
             };
 
-            var result = client.LoadBalancer.CreateLoadBalancerRule(request, loadBalancer.Id);
+            var newRule = client.LoadBalancer.CreateLoadBalancerRule(request, loadBalancer.Id);
 
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Id);
+            Assert.IsNotNull(newRule);
+            Assert.IsNotNull(newRule.Id);
+            Config.waitLoadBalancerReady(loadBalancer.Id);
             //check the rule is Added
             var updatedLoadBalancer = client.LoadBalancer.Show(loadBalancer.Id);
             Assert.IsTrue(updatedLoadBalancer.Rules.Any(ru => ru.PortServer == randomPort && ru.PortBalancer == randomPort && ru.Source == ruleSource));
+
         }
 
+        [ClassCleanup]
+        static public void TestClean()
+        {
+            if (loadBalancer != null)
+            {
+                RemoveLoadBalancerRule();
+                Config.waitLoadBalancerReady(loadBalancer.Id);
+                client.LoadBalancer.Delete(loadBalancer.Id);
+            }
+        }
         [TestMethod]
-        public void RemoveLoadBalancerRule()
+        public void GetLoadBalancersRules()
         {
             Random random = new Random();
             var loadBalancers = client.LoadBalancer.Get();
-            OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse loadBalancer = null;
-            foreach (var item in loadBalancers)
-            {
+            var loadBalancer = loadBalancers[random.Next(loadBalancers.Count - 1)];
+            var result = client.LoadBalancer.GetLoadBalancerRules(loadBalancer.Id);
 
-                if (item.Rules != null && item.Rules.Count > 0)
-                {
-                    loadBalancer = item;
-                    break;
-                }
-            }
-            if (loadBalancer != null && loadBalancer.Rules != null && loadBalancer.Rules.Count > 1)
-            {
-                var result = client.LoadBalancer.DeleteLoadBalancerRules(loadBalancer.Id, loadBalancer.Rules[0].Id);
+            Assert.IsNotNull(result);
+        }
 
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
-                //check the policy is Added
-                var updatedpolicy = client.LoadBalancer.Show(loadBalancer.Id);
-                Assert.IsFalse(updatedpolicy.Rules.Any(ru => ru.Id == loadBalancer.Rules[0].Id));
-            }
+        [TestMethod]
+        public void ShowLoadBalancerRule()
+        {
+            var lb = client.LoadBalancer.Show(loadBalancer.Id);
+            var result = client.LoadBalancer.ShowLoadBalancerRule(lb.Id, lb.Rules[0].Id);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
+        }
+
+        static public void RemoveLoadBalancerRule()
+        {
+            var lb = client.LoadBalancer.Show(loadBalancer.Id);
+            var result = client.LoadBalancer.DeleteLoadBalancerRules(lb.Id, lb.Rules[0].Id);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
+            //check the policy is removed
+            var updatedpolicy = client.LoadBalancer.Show(lb.Id);
+            Assert.IsFalse(updatedpolicy.Rules.Any(ru => ru.Id == lb.Rules[0].Id));
         }
     }
 }

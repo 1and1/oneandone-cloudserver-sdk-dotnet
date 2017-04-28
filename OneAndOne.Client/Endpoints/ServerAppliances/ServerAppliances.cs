@@ -49,12 +49,12 @@ namespace OneAndOne.Client.Endpoints.ServerAppliances
                 }
                 var request = new RestRequest(requestUrl, Method.GET);
 
-                var result = restclient.Execute<List<ServerAppliancesResponse>>(request);
+                var result = restclient.Execute(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
                 }
-                return result.Data;
+                return JsonConvert.DeserializeObject<List<ServerAppliancesResponse>>(result.Content);
             }
             catch
             {

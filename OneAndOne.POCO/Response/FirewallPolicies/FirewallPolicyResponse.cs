@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -102,7 +103,9 @@ namespace OneAndOne.POCO.Response
 
     public enum RuleProtocol
     {
-        TCP, UDP, ICMP, AH, ESP, GRE
+        TCP, UDP, ICMP, AH, ESP, GRE,
+        [EnumMember(Value = "TCP/UDP")]
+        TCPUDP, NULL
     }
     public class FirewallRule
     {
@@ -117,7 +120,13 @@ namespace OneAndOne.POCO.Response
         [JsonConverter(typeof(StringEnumConverter))]
         public RuleProtocol Protocol
         {
-            get { return (RuleProtocol)Enum.Parse(typeof(RuleProtocol), protocol); }
+            get
+            {
+                if (protocol != null)
+                    return (RuleProtocol)Enum.Parse(typeof(RuleProtocol), protocol);
+                else
+                    return RuleProtocol.NULL;
+            }
             set
             {
                 protocol = ((RuleProtocol)value).ToString();

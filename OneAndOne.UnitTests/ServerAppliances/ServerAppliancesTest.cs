@@ -7,7 +7,7 @@ namespace OneAndOne.UnitTests.ServerAppliances
     [TestClass]
     public class ServerAppliancesTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
         [TestMethod]
         public void GetServerAppliances()
         {

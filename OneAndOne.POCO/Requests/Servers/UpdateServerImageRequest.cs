@@ -23,24 +23,6 @@ namespace OneAndOne.POCO.Requests.Servers
             get { return password; }
             set { password = value; }
         }
-        private UpdateFirewallPolicy firewall_policy;
-        [JsonProperty(PropertyName = "firewall_policy")]
-        public UpdateFirewallPolicy Firewall_policy
-        {
-            get { return firewall_policy; }
-            set { firewall_policy = value; }
-        }
-    }
-
-    public class UpdateFirewallPolicy
-    {
-        private string id;
-        [JsonProperty(PropertyName = "id")]
-        public string Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
 
     }
 }

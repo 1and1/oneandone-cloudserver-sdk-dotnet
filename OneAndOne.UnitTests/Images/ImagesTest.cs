@@ -6,14 +6,41 @@ using OneAndOne.POCO.Requests.Images;
 using OneAndOne.POCO.Response.Images;
 using System.Threading;
 using OneAndOne.POCO.Response.Servers;
+using System.Collections.Generic;
+using OneAndOne.POCO.Response.DataCenters;
 
 namespace OneAndOne.UnitTests.Images
 {
     [TestClass]
     public class ImagesTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
         public ImagesResponse response = null;
+        static ServerResponse server = null;
+        static ImagesResponse image = null;
+        static DataCenterResponse dc = null;
+
+        [ClassInitialize]
+        static public void ServerInit(TestContext context)
+        {
+            dc = client.DataCenters.Get().FirstOrDefault();
+            server = Config.CreateTestServer("image test .net");
+            Config.waitServerReady(server.Id);
+            server = client.Servers.Show(server.Id);
+        }
+
+        [ClassCleanup]
+        static public void ServerClean()
+        {
+            if (image != null)
+            {
+                DeleteImage();
+            }
+            Config.waitServerReady(server.Id);
+            client.Servers.Delete(server.Id, false);
+        }
+
+
 
         [TestMethod]
         public void GetImages()
@@ -38,51 +65,37 @@ namespace OneAndOne.UnitTests.Images
         public void CreateImage()
         {
             var random = new Random();
-            var servers = client.Servers.Get();
-            var server = servers[0];
-            while (server.Status.State != ServerState.POWERED_OFF)
+            image = client.Images.Create(new POCO.Requests.Images.CreateImageRequest()
             {
-                server = servers[random.Next(0, servers.Count - 1)];
-                break;
-            }
-            var image = client.Images.Create(new POCO.Requests.Images.CreateImageRequest()
-                {
 
-                    ServerId = server.Id,
-                    Description = "describe image",
-                    Frequency = ImageFrequency.DAILY,
-                    Name = random.Next(100, 999) + "testImage",
-                    NumIimages = random.Next(1, 50)
+                ServerId = server.Id,
+                Description = "describe image",
+                Frequency = ImageFrequency.DAILY,
+                Name = random.Next(100, 999) + "testImage",
+                NumIimages = random.Next(1, 50),
+                DatacetnerId = dc.Id,
+                Source = ImageSource.server
+            });
 
-
-                });
             response = image;
-
             Assert.IsNotNull(image);
             Assert.IsNotNull(image.Id);
             //check if the image is added
-            var resultImage = client.Images.Show(image.Id);
-            Assert.IsNotNull(resultImage);
-            Assert.IsNotNull(resultImage.Id);
+            image = client.Images.Show(image.Id);
+            Assert.IsNotNull(image);
+            Assert.IsNotNull(image.Id);
         }
 
         [TestMethod]
         public void UpdateImage()
         {
             var random = new Random();
-            var images = client.Images.Get().Where(img => img.Name.Contains("testImage")).ToList();
-            var image = images[random.Next(images.Count - 1)];
-            while (image.State != "POWERED_ON" && image.State != "ACTIVE")
-            {
-                Thread.Sleep(1000);
-                image = client.Images.Show(image.Id);
-            }
             var result = client.Images.Update(new UpdateImageRequest()
-                {
-                    Description = "updated",
-                    Frequency = ImageFrequency.ONCE,
-                    Name = "updaeted API"
-                }, image.Id);
+            {
+                Description = "updated",
+                Frequency = ImageFrequency.ONCE,
+                Name = "updaeted API"
+            }, image.Id);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
@@ -94,36 +107,13 @@ namespace OneAndOne.UnitTests.Images
             Assert.AreEqual(resultImage.Frequency, ImageFrequency.ONCE);
         }
 
-        [TestMethod]
-        public void DeleteImage()
+        static public void DeleteImage()
         {
-            var images = client.Images.Get().Where(img => img.Name.Contains("testImage") || img.Name.Contains("updaeted API")).ToList();
-            var image = images[0];
-            foreach (var item in images)
-            {
-                if (item.State == "POWERED_ON")
-                    image = item;
-            }
             var result = client.Images.Delete(image.Id);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
         }
 
-        [TestMethod]
-        public void DeleteAllTestImages()
-        {
-            var random = new Random();
-            var images = client.Images.Get().Where(img => img.Name.Contains("testImage") || img.Name.Contains("updaeted API")).ToList();
-            foreach (var item in images)
-            {
-                if (item.State == "POWERED_ON" || item.State == "ACTIVE")
-                {
-                    var result = client.Images.Delete(item.Id);
-                    Assert.IsNotNull(result);
-                    Assert.IsNotNull(result.Id);
-                }
-            }
-        }
     }
 }

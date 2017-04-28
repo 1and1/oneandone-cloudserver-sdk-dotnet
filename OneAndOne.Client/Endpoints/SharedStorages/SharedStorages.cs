@@ -182,13 +182,13 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
         /// <summary>
         /// Returns the credentials for accessing the shared storages.
         /// </summary>
-        public List<ShareStorageAccessResponse> ShowSharedStorageAccess()
+        public List<SharedStorageAccessResponse> ShowSharedStorageAccess()
         {
             try
             {
                 var request = new RestRequest("/shared_storages/access", Method.GET);
 
-                var result = restclient.Execute<List<ShareStorageAccessResponse>>(request);
+                var result = restclient.Execute<List<SharedStorageAccessResponse>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -205,7 +205,7 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
         /// Changes the password for accessing the shared storages.
         /// </summary>
         /// <param name="password">password</param>
-        public List<ShareStorageAccessResponse> UpdateSharedStorageAccess(string password)
+        public List<SharedStorageAccessResponse> UpdateSharedStorageAccess(string password)
         {
             try
             {
@@ -216,7 +216,7 @@ namespace OneAndOne.Client.Endpoints.SharedStorages
                 };
                 request.AddBody(new { password });
 
-                var result = restclient.Execute<List<ShareStorageAccessResponse>>(request);
+                var result = restclient.Execute<List<SharedStorageAccessResponse>>(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);

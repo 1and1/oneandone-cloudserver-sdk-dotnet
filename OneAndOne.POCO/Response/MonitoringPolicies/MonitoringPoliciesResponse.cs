@@ -103,7 +103,7 @@ namespace OneAndOne.POCO.Response.MonitoringPolicies
         }
     }
 
-   
+
 
     public class Processes
     {
@@ -282,6 +282,24 @@ namespace OneAndOne.POCO.Response.MonitoringPolicies
             set { critical = value; }
         }
     }
+
+    public class Disk
+    {
+        private Warning warning;
+
+        public Warning Warning
+        {
+            get { return warning; }
+            set { warning = value; }
+        }
+        private Critical critical;
+
+        public Critical Critical
+        {
+            get { return critical; }
+            set { critical = value; }
+        }
+    }
     public class Transfer
     {
         private Warning warning;
@@ -326,6 +344,7 @@ namespace OneAndOne.POCO.Response.MonitoringPolicies
             get { return cpu; }
             set { cpu = value; }
         }
+
         private Ram ram;
 
         public Ram Ram
@@ -346,6 +365,15 @@ namespace OneAndOne.POCO.Response.MonitoringPolicies
         {
             get { return internal_ping; }
             set { internal_ping = value; }
+        }
+
+        private Disk disk;
+
+        public Disk Disk
+        {
+            get { return disk; }
+
+            set { disk = value; }
         }
     }
 

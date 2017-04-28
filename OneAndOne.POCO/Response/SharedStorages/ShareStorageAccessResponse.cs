@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.POCO.Response.SharedStorages
 {
-    public class ShareStorageAccessResponse
+    public class SharedStorageAccessResponse
     {
 
         private string site_id;

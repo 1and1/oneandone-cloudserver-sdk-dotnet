@@ -3,13 +3,47 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
 using System.Threading;
+using OneAndOne.POCO.Response.SharedStorages;
 
 namespace OneAndOne.UnitTests.SharedStorages
 {
     [TestClass]
     public class SharedStoragesTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static public SharedStoragesResponse sharedStorage = null;
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
+
+        [ClassInitialize]
+        static public void TestInit(TestContext context)
+        {
+            var datacenters = client.DataCenters.Get();
+            var dc = datacenters.FirstOrDefault();
+            sharedStorage = client.SharedStorages.Create(new POCO.Requests.SharedStorages.CreateSharedStorage()
+            {
+                Description = "description",
+                Name = "TestStorage .net",
+                Size = 50,
+                DatacenterId = dc.Id
+            });
+
+            Assert.IsNotNull(sharedStorage);
+            Assert.IsNotNull(sharedStorage.Id);
+            //check the storage is created
+            var storageresult = client.SharedStorages.Show(sharedStorage.Id);
+            Assert.IsNotNull(sharedStorage.Id);
+        }
+
+        [ClassCleanup]
+        static public void TestClean()
+        {
+            if (sharedStorage != null)
+            {
+                Config.waitSharedStorageReady(sharedStorage.Id);
+                DeleteSharedStorages();
+            }
+        }
+
+
         [TestMethod]
         public void GetSharedStorages()
         {
@@ -34,40 +68,10 @@ namespace OneAndOne.UnitTests.SharedStorages
         }
 
         [TestMethod]
-        public void CreateSharedStorages()
-        {
-            Random random = new Random();
-            var result = client.SharedStorages.Create(new POCO.Requests.SharedStorages.CreateSharedStorage()
-                {
-                    Description = "description",
-                    Name = "TestStorage" + random.Next(100, 999),
-                    Size = 50
-                });
-
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Id);
-            //check the storage is created
-            var storageresult = client.SharedStorages.Show(result.Id);
-            Assert.IsNotNull(result.Id);
-
-        }
-
-        [TestMethod]
         public void UpdateSharedStorages()
         {
             Random random = new Random();
-            var sharedStorages = client.SharedStorages.Get().Where(str => str.Name.Contains("TestStorage")).ToList();
-            var sharedStorage = sharedStorages[0];
-            foreach (var item in sharedStorages)
-            {
-                if (item.State == "CONFIGURING")
-                    continue;
-            }
-            while (sharedStorage.State == "CONFIGURING")
-            {
-                Thread.Sleep(2000);
-                sharedStorage = client.SharedStorages.Show(sharedStorage.Id);
-            }
+            Config.waitSharedStorageReady(sharedStorage.Id);
             var result = client.SharedStorages.Update(new POCO.Requests.SharedStorages.UpdateSharedStorageRequest()
             {
                 Description = "description",
@@ -83,37 +87,18 @@ namespace OneAndOne.UnitTests.SharedStorages
             Assert.AreEqual(result.Description, storageresult.Description);
             Assert.AreEqual(result.Size, storageresult.Size);
             Assert.AreEqual(result.Name, storageresult.Name);
+            Config.waitSharedStorageReady(result.Id);
 
         }
 
-        [TestMethod]
-        public void DeleteSharedStorages()
+        static public void DeleteSharedStorages()
         {
-            Random random = new Random();
-            var sharedStorages = client.SharedStorages.Get().Where(str => str.Name.Contains("TestStorage")).ToList();
-            var sharedStorage = sharedStorages[random.Next(sharedStorages.Count - 1)];
             var result = client.SharedStorages.Delete(sharedStorage.Id);
-
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
             //check the storage is being removed
             var storageresult = client.SharedStorages.Show(result.Id);
             Assert.IsTrue(storageresult.State == "REMOVING");
-        }
-
-        [TestMethod]
-        public void DeleteAllTestSharedStorages()
-        {
-            Random random = new Random();
-            var sharedStorages = client.SharedStorages.Get().Where(str => str.Name.Contains("TestStorage")).ToList();
-            foreach (var item in sharedStorages)
-            {
-                var result = client.SharedStorages.Delete(item.Id);
-
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
-            }
-
         }
 
         [TestMethod]
@@ -124,10 +109,12 @@ namespace OneAndOne.UnitTests.SharedStorages
             Assert.IsNotNull(result);
         }
 
+        [Ignore()]
         [TestMethod]
         public void UpdateSharedStorageAccess()
         {
-            var result = client.SharedStorages.UpdateSharedStorageAccess("test123!");
+            Config.waitSharedStorageReady(sharedStorage.Id);
+            var result = client.SharedStorages.UpdateSharedStorageAccess("Asdasdfgagsw32!!");
             Assert.IsNotNull(result);
         }
     }

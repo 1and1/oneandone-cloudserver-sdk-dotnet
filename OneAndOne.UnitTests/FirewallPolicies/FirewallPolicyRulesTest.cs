@@ -9,61 +9,39 @@ namespace OneAndOne.UnitTests.FirewallPolicies
     [TestClass]
     public class FirewallPolicyRulesTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
-        [TestMethod]
-        public void GetFirewallPolicyRules()
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
+        static public FirewallPolicyResponse firewall = null;
+
+        [ClassInitialize]
+        static public void TestInit(TestContext context)
         {
             Random random = new Random();
-            var firewallpolicies = client.FirewallPolicies.Get();
-            var firewallpolicy = firewallpolicies[random.Next(firewallpolicies.Count - 1)];
-            var result = client.FirewallPolicies.GetFirewallPolicyRules(firewallpolicy.Id);
-
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void ShowFirewallPolicyRule()
-        {
-            var firewallpolicies = client.FirewallPolicies.Get();
-            var firewallpolicy = firewallpolicies[0];
-            foreach (var item in firewallpolicies)
+            var newRules = new System.Collections.Generic.List<POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule>();
+            newRules.Add(new POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule()
             {
-                if (item.Rules != null && item.Rules.Count > 0)
-                {
-                    firewallpolicy = item;
-                    break;
-                }
-            }
-            if (firewallpolicy.Rules != null && firewallpolicy.Rules.Count > 0)
+                PortTo = 80,
+                PortFrom = 80,
+                Protocol = RuleProtocol.TCP,
+                Source = "0.0.0.0"
+
+            });
+            var result = client.FirewallPolicies.Create(new POCO.Requests.FirewallPolicies.CreateFirewallPolicyRequest()
             {
-                var result = client.FirewallPolicies.ShowFirewallPolicyRule(firewallpolicy.Id, firewallpolicy.Rules[0].Id);
+                Description = ".netTestFirewall" + random.Next(10, 30),
+                Name = ".netFW" + random.Next(10, 30),
+                Rules = newRules
+            });
 
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
-            }
-        }
 
-        [TestMethod]
-        public void AddFirewallPolicyRule()
-        {
-            Random random = new Random();
-            var firewallpolicies = client.FirewallPolicies.Get();
-            var firewallpolicy = firewallpolicies[0];
+            Config.waitFirewallPolicyReady(result.Id);
+            firewall = result;
+
+            //add rule to the policy
             var ruleSource = "0.0.0.0";
-            foreach (var firewall in firewallpolicies)
+            var randomPort = random.Next(1111, 9999);
+            var request = new POCO.Requests.FirewallPolicies.AddFirewallPolicyRuleRequest()
             {
-                if (firewall.Default < 1)
-                {
-                    firewallpolicy = firewall;
-                    break;
-                }
-            }
-            if (firewallpolicy.Default < 1)
-            {
-                var randomPort = random.Next(1111, 9999);
-                var request = new POCO.Requests.FirewallPolicies.AddFirewallPolicyRuleRequest()
-                {
-                    Rules = new System.Collections.Generic.List<POCO.Requests.FirewallPolicies.RuleRequest>()
+                Rules = new System.Collections.Generic.List<POCO.Requests.FirewallPolicies.RuleRequest>()
                 {
                     {new OneAndOne.POCO.Requests.FirewallPolicies.RuleRequest()
                     {
@@ -73,43 +51,50 @@ namespace OneAndOne.UnitTests.FirewallPolicies
                     Source = "0.0.0.0"
                     }}
                 }
-                };
+            };
+            firewall = client.FirewallPolicies.CreateFirewallPolicyRule(request, firewall.Id);
 
-                var result = client.FirewallPolicies.CreateFirewallPolicyRule(request, firewallpolicy.Id);
+            Assert.IsNotNull(firewall);
+            Assert.IsNotNull(firewall.Id);
+            //check the policy rule is Added
+            var updatedpolicy = client.FirewallPolicies.Show(firewall.Id);
+            Assert.IsTrue(updatedpolicy.Rules.Any(ru => ru.PortFrom == randomPort && ru.PortTo == randomPort && ru.Source == ruleSource));
+            Config.waitFirewallPolicyReady(result.Id);
+        }
 
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
-                //check the policy rule is Added
-                var updatedpolicy = client.FirewallPolicies.Show(firewallpolicy.Id);
-                Assert.IsTrue(updatedpolicy.Rules.Any(ru => ru.PortFrom == randomPort && ru.PortTo == randomPort && ru.Source == ruleSource));
+        [ClassCleanup]
+        static public void TestClean()
+        {
+            if (firewall != null)
+            {
+                RemoveFirewallPolicyRule();
+                Config.waitFirewallPolicyReady(firewall.Id);
+                client.FirewallPolicies.Delete(firewall.Id);
             }
         }
 
         [TestMethod]
-        public void RemoveFirewallPolicyRule()
+        public void GetShowFirewallPolicyRules()
         {
-            Random random = new Random();
-            var firewallpolicies = client.FirewallPolicies.Get();
-            OneAndOne.POCO.Response.FirewallPolicyResponse firewallpolicy = null;
-            foreach (var item in firewallpolicies)
-            {
+            var result = client.FirewallPolicies.GetFirewallPolicyRules(firewall.Id);
+            Assert.IsNotNull(result);
 
-                if (item.Rules != null && item.Rules.Count > 0 && item.Default < 1)
-                {
-                    firewallpolicy = item;
-                    break;
-                }
-            }
-            if (firewallpolicy != null && firewallpolicy.Rules != null && firewallpolicy.Rules.Count > 0 && firewallpolicy.Default < 1)
-            {
-                var result = client.FirewallPolicies.DeleteFirewallPolicyRules(firewallpolicy.Id, firewallpolicy.Rules[0].Id);
+            var show = client.FirewallPolicies.ShowFirewallPolicyRule(firewall.Id, firewall.Rules[0].Id);
 
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
-                //check the policy rule is removed
-                var updatedpolicy = client.FirewallPolicies.Show(firewallpolicy.Id);
-                Assert.IsTrue(!updatedpolicy.Rules.Any(ru => ru.Id == firewallpolicy.Rules[0].Id));
-            }
+            Assert.IsNotNull(show);
+            Assert.IsNotNull(show.Id);
+        }
+
+
+        static public void RemoveFirewallPolicyRule()
+        {
+            var result = client.FirewallPolicies.DeleteFirewallPolicyRules(firewall.Id, firewall.Rules[0].Id);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
+            //check the policy rule is removed
+            var updatedpolicy = client.FirewallPolicies.Show(firewall.Id);
+            Assert.IsTrue(!updatedpolicy.Rules.Any(ru => ru.Id == firewall.Rules[0].Id));
         }
     }
 }

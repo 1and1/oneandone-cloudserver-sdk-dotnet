@@ -17,13 +17,18 @@ This guide will show you how to programmatically perform common management tasks
   * [Load Balancers](#load-balancers)
   * [Public IPs](#public-ips)
   * [Private Networks](#private-networks)
+  * [VPN](#vpn)
   * [Monitoring Center](#monitoring-center)
   * [Monitoring Policies](#monitoring-policies)
   * [Logs](#logs)
   * [Users](#users)
+  * [Roles](#roles)
   * [Usages](#usages)
   * [Server Appliances](#server-appliances)
   * [DVD ISO](#dvd-iso)
+  * [Ping](#ping)
+  * [Pricing](#pricing)
+  * [Datacenters](#datacenters)
 
 
 ## Overview
@@ -36,13 +41,13 @@ Before you begin you will need to have signed up for a 1&1 account. The credenti
 
 To create a user and generate an API token that will be used to authenticate against the REST API, log into your 1&1 control panel. Go to the Server section -> Management -> Users. 
 
-#####Installation
+##### Installation
 
 The official .NET library is available from the 1&1 GitHub account found [here](https://github.com/StackPointCloud/oneandone-cloudserver-sdk-dotnet). To install the latest stable version, clone the repository, then add the binaries to your project.
 
-#####Configuration
+##### Configuration
 
-Depending on the type of project, you have the option to either create an App.config or Web.config file to interact with the service before you begin, or to pass the required values when initializing the client through your code. This file should contain the following values:
+Depending on the type of project, you have the option to either create an App.config or Web.config file to interact with the service before you begin, This file should contain the following values:
 
 ```<appSettings>
     <add key="APIToken" value="api token goes here"/>
@@ -50,7 +55,16 @@ Depending on the type of project, you have the option to either create an App.co
   </appSettings>
 ```
 
-#####Using the Driver
+Or you can pass the required values when initializing the client through your code.
+```
+OneAndOneClient client = OneAndOneClient.Instance(new Client.RESTHelpers.Configuration()
+        {
+            ApiKey="token",
+            ApiUrl="url"
+        });
+```
+
+##### Using the Driver
 Here is a simple example on how to use the library.
 
 List all Servers:
@@ -59,7 +73,7 @@ List all Servers:
 
 
 This will list all servers under your 1&1 account.
-#####Additional Documentation and Support
+##### Additional Documentation and Support
 
 You can engage with us in the community and we'll be more than happy to answer any questions you might have.
 
@@ -72,13 +86,19 @@ You can engage with us in the community and we'll be more than happy to answer a
 - [Load Balancers](#load-balancers)
 - [Public IPs](#public-ips)
 - [Private Networks](#private-networks)
+- [VPN](#vpn)
 - [Monitoring Center](#monitoring-center)
 - [Monitoring Policies](#monitoring-policies)
 - [Logs](#logs)
 - [Users](#users)
+- [Roles](#roles)
 - [Usages](#usages)
 - [Server Appliances](#server-appliances)
 - [DVD ISO](#dvd-iso)
+- [Ping](#ping)
+- [Pricing](#pricing)
+- [Datacenters](#datacenters)
+  
 
 There are two ways to initialize the 1&1 client. You can either have the API URL and token key in your app/web config, or you can pass the values in the constructor of the 1&1 client.
 
@@ -657,6 +677,45 @@ var result = client.FirewallPolicies.CreateFirewallPolicyServerIPs(new POCO.Requ
 
 `var result = client.PrivateNetworks.Delete(privateNetworkId);`
 
+## VPN
+
+**Return a list of your vpns:**
+
+`var result = client.Vpn.Get()`
+
+**Return information about a vpn:**
+
+`var result = client.Vpn.Show(vpn.Id);`
+
+**Download your VPN configuration file, a string with base64 format with the configuration for OpenVPN. It is a zip file:**
+
+`var result = client.Vpn.ShowConfiguration(vpnId);`
+
+**Create a new vpn:**
+
+```
+var result = client.Vpn.Create(new POCO.Requests.Vpn.CreateVpnRequest
+            {
+                Name = "vpn test",
+                Description = "desc",
+                Datacenterid = datacenterId
+            });
+```
+
+**Modify a vpn:**
+
+```
+var result = client.Vpn.Update(new POCO.Requests.Vpn.UpdateVpnRequest
+            {
+                Name = "updated name",
+                Description = "desc update"
+            }, vpnId);
+```
+
+**Remove a vpn:**
+
+`var result = client.Vpn.Delete(vpnId);`
+
 
 ## Monitoring Center
 
@@ -1026,6 +1085,70 @@ var result = client.MonitoringPoliciesServers.Create(servers, monitoringPolicyId
 
 `var result = client.UserAPI.DeleteUserIp(UserId, allowedIp);`
 
+## Roles
+
+**Return a list with all roles:**
+
+`var result = client.Roles.Get();`
+
+**Return information about a role:**
+
+`var result = client.Roles.Show(roleId);`
+
+**Creates a new role:**
+
+```
+var result = client.Roles.Create(roleName);
+```
+
+**Modify role information:**
+
+`var result = client.Roles.Update(roleName, description, POCO.Requests.Users.UserState.ACTIVE, role.Id);`
+
+**Remove a role:**
+
+`var result = client.Roles.Delete(roleId);`
+
+**Lists role's permissions:**
+
+`var result = client.Roles.GetPermissions(role.Id);`
+
+**Adds permissions to the role:**
+
+```
+var result = client.Roles.UpdatePermissions(new Permissions
+            {
+                Servers = new POCO.Response.Roles.Servers
+                {
+                    Show = true,
+                    SetName = false,
+                    Shutdown = true
+                }
+            }, roleId);
+```
+
+**Returns users assigned to role:**
+
+`var result = client.Roles.GetRoleUsers(roleId);`
+
+**Add users to role:**
+
+`var result=client.Roles.CreateRoleUsers(new System.Collections.Generic.List<string> { { userId } }, roleId);`
+
+**Returns information about a user:**
+
+`var userInfo = client.Roles.ShowRoleUser(roleId, userId);`
+
+**Removes user from role:**
+
+```
+var removed = client.Roles.DeleteRoleUser(roleId, userId);
+```
+
+**Clones a role:**
+
+`var clone = client.Roles.CreateRoleClone(cloneName, roleId);`
+
 ## Usages
 
 **Return a list of your usages:**
@@ -1053,6 +1176,35 @@ var result = client.MonitoringPoliciesServers.Create(servers, monitoringPolicyId
 **Information about specific ISO image:**
 
 `var result = client.DVDs.Show(dvdId);`
+
+
+## Ping
+
+**Ping the API, returns true if the API is running:**
+
+`var result = client.Common.Ping();`
+
+**Ping the API Authentication, returns true if the API token is valid**
+
+`var result = client.Common.PingAuthentication();`
+
+## Pricing
+
+**Returns prices for all available resources in Cloud Panel:**
+
+`var result = client.Common.GetPricing();`
+
+## Datacenters
+
+**Returns information about available datacenters to create your resources:**
+
+`var result = client.DataCenters.Get();`
+
+**Returns information about a datacenter:**
+
+`var result = client.DataCenters.Show(dcId);`
+
+
 
 Copyright (c) 2016 1&1 Internet SE
 

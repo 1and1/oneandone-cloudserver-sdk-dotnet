@@ -9,7 +9,7 @@ namespace OneAndOne.UnitTests.Logs
     [TestClass]
     public class LogsTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
         [TestMethod]
         public void GetLogs()
         {

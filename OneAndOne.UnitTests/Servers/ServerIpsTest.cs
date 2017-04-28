@@ -2,6 +2,7 @@
 using OneAndOne.Client;
 using OneAndOne.POCO.Requests.Servers;
 using OneAndOne.POCO.Response;
+using OneAndOne.POCO.Response.LoadBalancers;
 using OneAndOne.POCO.Response.Servers;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,85 @@ namespace OneAndOne.UnitTests
     [TestClass]
     public class ServerIpsTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
         Random random = new Random();
+        static ServerResponse server = null;
+        static LoadBalancerResponse loadBalancer = null;
+        static POCO.Response.FirewallPolicyResponse firewallPolicy = null;
 
+        [ClassInitialize]
+        static public void ServerInit(TestContext context)
+        {
+            int vcore = 4;
+            int CoresPerProcessor = 2;
+            var appliances = client.ServerAppliances.Get(null, null, null, "ubuntu", null);
+            POCO.Response.ServerAppliances.ServerAppliancesResponse appliance = null;
+            if (appliances == null || appliances.Count() == 0)
+            {
+                appliance = client.ServerAppliances.Get().FirstOrDefault();
+            }
+            else
+            {
+                appliance = appliances.FirstOrDefault();
+            }
+            var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
+            {
+                ApplianceId = appliance != null ? appliance.Id : null,
+                Name = "server ip test .net",
+                Description = "desc",
+                Hardware = new POCO.Requests.Servers.HardwareRequest()
+                {
+                    CoresPerProcessor = CoresPerProcessor,
+                    Hdds = new List<POCO.Requests.Servers.HddRequest>()
+                        {
+                            {new POCO.Requests.Servers.HddRequest()
+                            {
+                                IsMain=true,
+                                Size=20,
+                            }},
+                            {new POCO.Requests.Servers.HddRequest()
+                            {
+                                IsMain=false,
+                                Size=20,
+                            }}
+                        },
+                    Ram = 4,
+                    Vcore = vcore
+                },
+                PowerOn = true,
+            });
+
+            Config.waitServerReady(result.Id);
+            server = client.Servers.Show(result.Id);
+        }
+
+        [ClassCleanup]
+        static public void ServerClean()
+        {
+            Config.waitServerReady(server.Id);
+            DeleteIP();
+            Thread.Sleep(400000);
+            Config.waitServerReady(server.Id);
+            client.Servers.Delete(server.Id, false);
+
+            if (loadBalancer != null)
+            {
+                Config.waitLoadBalancerReady(loadBalancer.Id);
+                client.LoadBalancer.Delete(loadBalancer.Id);
+            }
+
+            if (firewallPolicy != null)
+            {
+                Config.waitFirewallPolicyReady(firewallPolicy.Id);
+                client.FirewallPolicies.Delete(firewallPolicy.Id);
+
+            }
+
+        }
         [TestMethod]
         public void GetServerIPList()
         {
-            var servers = client.Servers.Get();
-            var server = servers[random.Next(servers.Count - 1)];
-            if (server.Status.State == ServerState.DEPLOYING || server.Status.State == ServerState.REMOVING)
-            {
-                return;
-            }
+            Config.waitServerReady(server.Id);
             var result = client.ServerIps.Get(server.Id);
 
             Assert.IsNotNull(result);
@@ -36,30 +104,18 @@ namespace OneAndOne.UnitTests
         [TestMethod]
         public void AddServerIP()
         {
-            var servers = client.Servers.Get(null, null, null, "ServerTest");
-            var server = servers[random.Next(servers.Count - 1)];
             int previousIpCount = 0;
-            foreach (var item in servers)
-            {
-                if (item.Status.State == ServerState.DEPLOYING || item.Status.State == ServerState.REMOVING || item.Ips.Count >= 5)
-                {
-                    return;
-                }
-                else
-                {
-                    server = item;
-                    previousIpCount = item.Ips.Count;
-                    break;
-                }
-            }
+            Config.waitServerReady(server.Id);
 
             var result = client.ServerIps.Create(new POCO.Requests.Servers.CreateServerIPRequest()
-                {
-                    Type = IPType.IPV4
-                }, server.Id);
+            {
+                Type = IPType.IPV4
+            }, server.Id);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
+
+            Config.waitServerReady(server.Id);
             //give the server time to update
             var resultserver = client.Servers.Show(result.Id);
             while (resultserver.Ips.Count == previousIpCount)
@@ -68,136 +124,97 @@ namespace OneAndOne.UnitTests
                 resultserver = client.Servers.Show(result.Id);
             }
             Assert.IsNotNull(resultserver.Ips.Count > previousIpCount);
+
+            Config.waitServerReady(server.Id);
         }
 
         [TestMethod]
         public void ShowIP()
         {
-            var servers = client.Servers.Get();
-            var server = servers[random.Next(servers.Count - 1)];
-            if (server.Status.State == ServerState.DEPLOYING || server.Status.State == ServerState.REMOVING)
-            {
-                return;
-            }
+            Config.waitServerReady(server.Id);
             var result = client.ServerIps.Show(server.Id, server.Ips[0].Id);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
         }
 
-        [TestMethod]
-        public void DeleteIP()
+        static public void DeleteIP()
         {
-            var servers = client.Servers.Get(null, null, null, "ServerTest");
-            var server = servers[random.Next(servers.Count - 1)];
-            int previousIpCount = 0;
-
-            foreach (var item in servers)
+            var serverWithips = client.Servers.Show(server.Id);
+            if (serverWithips.Ips != null && serverWithips.Ips.Count > 1)
             {
-                if (item.Ips.Count > 1)
-                {
-                    server = item;
-                    previousIpCount = item.Ips.Count;
-                    break;
-                }
+                Config.waitServerReady(server.Id);
+                var result = client.ServerIps.Delete(server.Id, server.Ips[1].Id, true);
+                Config.waitIpRemoved(server.Ips[1].Id);
+                Assert.IsNotNull(result);
+                Assert.IsNotNull(result.Id);
             }
-            if (server.Status.State == ServerState.DEPLOYING || server.Status.State == ServerState.REMOVING || server.Ips.Count == 1)
-            {
-                return;
-            }
-            var result = client.ServerIps.Delete(server.Id, server.Ips[new Random().Next(0, server.Ips.Count - 1)].Id, true);
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Id);
-            //give the server time to update
-            var resultserver = client.Servers.Show(result.Id);
-            while (resultserver.Ips.Count == previousIpCount)
-            {
-                Thread.Sleep(2000);
-                resultserver = client.Servers.Show(result.Id);
-            }
-            Assert.IsNotNull(resultserver.Ips.Count < previousIpCount);
         }
 
         #region Firewall policy
 
-        [TestMethod]
         public void GetFirewallPolicyTest()
         {
 
-            var servers = client.Servers.Get();
-            List<OneAndOne.POCO.Response.Servers.FirewallPolicyResponse> result = null;
-            foreach (var item in servers)
-            {
-                Thread.Sleep(1000);
-                var server = client.Servers.Show(item.Id);
-                if (server.Ips.Any(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0))
-                {
-                    var curIP = server.Ips.FirstOrDefault(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0);
-                    result = client.ServerIps.GetFirewallPolicies(item.Id, curIP.Id);
-                    Assert.IsNotNull(result);
-                    Assert.IsNotNull(result.Count > 0);
-                    break;
-
-                }
-            }
+            var curIP = server.Ips.FirstOrDefault(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0);
+            var result = client.ServerIps.GetFirewallPolicies(server.Id, curIP.Id);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Count > 0);
         }
 
-        [TestMethod]
         public void DeleteFirewallPolicy()
         {
-            var servers = client.Servers.Get();
-            foreach (var item in servers)
-            {
-                Thread.Sleep(1000);
-                var server = client.Servers.Show(item.Id);
-                if (server.Ips.Any(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0))
-                {
-                    var curIP = server.Ips.FirstOrDefault(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0);
-
-                    var result = client.ServerIps.DeleteFirewallPolicy(item.Id, curIP.Id);
-                    Assert.IsNotNull(result);
-                    break;
-                }
-            }
+            var curIP = server.Ips.FirstOrDefault(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0);
+            var result = client.ServerIps.DeleteFirewallPolicy(server.Id, curIP.Id);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
         public void UpdateFirewallPolicy()
         {
-            var random = new Random();
             int prevCount = 0;
-            var servers = client.Servers.Get().Where(ser => ser.Name.Contains("ServerTest") || ser.Name.Contains("Updated")).ToList(); ;
-            var firewallPolicies = client.FirewallPolicies.Get();
-            foreach (var item in servers)
+            var newRules = new System.Collections.Generic.List<POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule>();
+            newRules.Add(new POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule()
             {
-                Thread.Sleep(1000);
-                var server = client.Servers.Show(item.Id);
-                var policyToAdd = firewallPolicies[random.Next(0, firewallPolicies.Count - 1)].Id;
-                var curIP = server.Ips.FirstOrDefault();
-                foreach (var ip in server.Ips)
-                {
-                    //check the policy does not exist
-                    if (ip.FirewallPolicy != null && ip.FirewallPolicy.Any(po => po.Id == policyToAdd))
-                        continue;
-                    else
-                    {
-                        curIP = ip;
-                        break;
-                    }
-                }
+                PortTo = 80,
+                PortFrom = 80,
+                Protocol = RuleProtocol.TCP,
+                Source = "0.0.0.0"
+
+            });
+            firewallPolicy = client.FirewallPolicies.Create(new POCO.Requests.FirewallPolicies.CreateFirewallPolicyRequest
+            {
+                Description = ".netTestFirewall" + random.Next(10, 30),
+                Name = ".netFW" + random.Next(10, 30),
+                Rules = newRules
+            });
+            Config.waitFirewallPolicyReady(firewallPolicy.Id);
+            var curIP = server.Ips.FirstOrDefault();
+            foreach (var ip in server.Ips)
+            {
                 //check the policy does not exist
-                if (curIP.FirewallPolicy != null && curIP.FirewallPolicy.Any(po => po.Id == policyToAdd))
+                if (ip.FirewallPolicy != null && ip.FirewallPolicy.Any(po => po.Id == firewallPolicy.Id))
                     continue;
-                if (curIP.FirewallPolicy != null)
-                    prevCount = curIP.FirewallPolicy.Count;
-                var result = client.ServerIps.UpdateFirewallPolicy(item.Id, curIP.Id, policyToAdd);
-                Assert.IsNotNull(result);
-                //give the server time to update
-                var resultserver = client.Servers.Show(result.Id);
-                var resultIP = result.Ips.FirstOrDefault(ip => ip.Id == curIP.Id);
-                Assert.IsTrue(resultIP.FirewallPolicy.Any(fp => fp.Id == policyToAdd));
-                break;
+                else
+                {
+                    curIP = ip;
+                    break;
+                }
             }
+            if (curIP.FirewallPolicy != null)
+                prevCount = curIP.FirewallPolicy.Count;
+            var result = client.ServerIps.UpdateFirewallPolicy(server.Id, curIP.Id, firewallPolicy.Id);
+            Assert.IsNotNull(result);
+            Config.waitServerReady(server.Id);
+            //give the server time to update
+            var resultserver = client.Servers.Show(result.Id);
+            var resultIP = result.Ips.FirstOrDefault(ip => ip.Id == curIP.Id);
+            Assert.IsTrue(resultIP.FirewallPolicy.Any(fp => fp.Id == firewallPolicy.Id));
+
+            Config.waitServerReady(server.Id);
+
+            GetFirewallPolicyTest();
+            DeleteFirewallPolicy();
         }
 
         #endregion
@@ -207,64 +224,69 @@ namespace OneAndOne.UnitTests
         public void CreateLoadBalancer()
         {
             Random random = new Random();
-            var servers = client.Servers.Get();
-            var loadBalancer = client.LoadBalancer.Get();
-            foreach (var item in servers)
+            loadBalancer = client.LoadBalancer.Create(new POCO.Requests.LoadBalancer.CreateLoadBalancerRequest
             {
-                var currentIp = item.Ips[random.Next(0, item.Ips.Count - 1)];
-                var currentloadBalancer = loadBalancer[random.Next(0, loadBalancer.Count - 1)];
-                var result = client.ServerIps.CreateLoadBalancer(item.Id, currentIp.Id, currentloadBalancer.Id);
-                var updatedLoadBalancer = client.LoadBalancer.GetLoadBalancerServerIps(currentloadBalancer.Id);
-                Assert.IsNotNull(result);
-                //check if loadbalancer does have the server IP
-                Assert.IsTrue(updatedLoadBalancer.Any(ip => ip.Id == currentIp.Id));
-                break;
-            }
+                Name = "LBTest",
+                Description = "LBdesc",
+                HealthCheckInterval = 1,
+                Persistence = true,
+                PersistenceTime = 30,
+                HealthCheckTest = HealthCheckTestTypes.NONE,
+                Method = LoadBalancerMethod.ROUND_ROBIN,
+                Rules = new System.Collections.Generic.List<POCO.Requests.LoadBalancer.LoadBalancerRuleRequest>()
+                    {
+                        {new POCO.Requests.LoadBalancer.LoadBalancerRuleRequest()
+                        {
+                            PortBalancer=80,
+                            Protocol=LBRuleProtocol.TCP,
+                            Source="0.0.0.0",
+                            PortServer=80
+                        }
+                        }
+                    }
+            });
+            Config.waitLoadBalancerReady(loadBalancer.Id);
+            var serverWithIps = client.Servers.Show(server.Id);
+            var currentIp = serverWithIps.Ips[random.Next(0, serverWithIps.Ips.Count - 1)];
+
+            var result = client.ServerIps.CreateLoadBalancer(serverWithIps.Id, currentIp.Id, loadBalancer.Id);
+            Config.waitServerReady(server.Id);
+            var updatedLoadBalancer = client.LoadBalancer.GetLoadBalancerServerIps(loadBalancer.Id);
+
+            Assert.IsNotNull(result);
+            //check if loadbalancer does have the server IP
+            Assert.IsTrue(updatedLoadBalancer.Any(ip => ip.Id == currentIp.Id));
         }
 
         [TestMethod]
         public void GetLoadBalancer()
         {
-            var servers = client.Servers.Get();
             List<OneAndOne.POCO.Response.Servers.LoadBalancers> loadbalancer = null;
-            foreach (var item in servers)
+            var serverWithIps = client.Servers.Show(server.Id);
+            if (serverWithIps.Ips.Any(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0))
             {
-                Thread.Sleep(1000);
-                var server = client.Servers.Show(item.Id);
-                if (server.Ips.Any(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0))
-                {
-                    var curIP = server.Ips.FirstOrDefault(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0);
-                    loadbalancer = client.ServerIps.GetLoadBalancer(item.Id, curIP.Id);
-                    Assert.IsNotNull(loadbalancer);
-                    Assert.IsNotNull(loadbalancer.Count > 0);
-                    break;
-                }
+                var curIP = serverWithIps.Ips.FirstOrDefault(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0);
+                loadbalancer = client.ServerIps.GetLoadBalancer(server.Id, curIP.Id);
+                Assert.IsNotNull(loadbalancer);
+                Assert.IsNotNull(loadbalancer.Count > 0);
             }
-
-
         }
 
         [TestMethod]
         public void DeleteLoadBalancer()
         {
-            var servers = client.Servers.Get();
-            foreach (var item in servers)
+            var serverWithIps = client.Servers.Show(server.Id);
+            Thread.Sleep(1000);
+            if (server.Ips.Any(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0))
             {
-                var server = client.Servers.Show(item.Id);
-                Thread.Sleep(1000);
-                if (server.Ips.Any(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0))
-                {
-                    var curIP = server.Ips.FirstOrDefault(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0);
-                    var result = client.ServerIps.DeleteLoadBalancer(item.Id, curIP.Id, curIP.LoadBalancers[0].Id);
-                    Assert.IsNotNull(result);
-                    var updatedLoadBalancer = client.LoadBalancer.GetLoadBalancerServerIps(curIP.LoadBalancers[0].Id);
-                    Assert.IsNotNull(result);
-                    //check if loadbalancer does notk have the server IP
-                    Assert.IsTrue(!updatedLoadBalancer.Any(ip => ip.Id == curIP.Id));
-                    break;
-                }
+                var curIP = server.Ips.FirstOrDefault(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0);
+                var result = client.ServerIps.DeleteLoadBalancer(server.Id, curIP.Id, curIP.LoadBalancers[0].Id);
+                Assert.IsNotNull(result);
+                var updatedLoadBalancer = client.LoadBalancer.GetLoadBalancerServerIps(curIP.LoadBalancers[0].Id);
+                Assert.IsNotNull(result);
+                //check if loadbalancer does notk have the server IP
+                Assert.IsTrue(!updatedLoadBalancer.Any(ip => ip.Id == curIP.Id));
             }
-
         }
 
         #endregion

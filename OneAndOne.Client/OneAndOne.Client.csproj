@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\Common\Common.cs" />
+    <Compile Include="Endpoints\DataCenter\DataCenters.cs" />
     <Compile Include="Endpoints\DVDs\DVDs.cs" />
     <Compile Include="Endpoints\FirewallPolicies\FirewallPolicies.cs" />
     <Compile Include="Endpoints\FirewallPolicies\FirewallPoliciesRules.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Endpoints\PrivateNetworks\PrivateNetworksServers.cs" />
     <Compile Include="Endpoints\PublicIPs\PublicIPs.cs" />
     <Compile Include="Endpoints\ResourceBase .cs" />
+    <Compile Include="Endpoints\Roles\Roles.cs" />
     <Compile Include="Endpoints\ServerAppliances\ServerAppliances.cs" />
     <Compile Include="Endpoints\Servers\HardDiskDrives.cs" />
     <Compile Include="Endpoints\Servers\Image.cs" />
@@ -78,9 +81,11 @@
     <Compile Include="Endpoints\Usages\Usages.cs" />
     <Compile Include="Endpoints\Users\UserAPIKeys.cs" />
     <Compile Include="Endpoints\Users\Users.cs" />
+    <Compile Include="Endpoints\Vpn\Vpn.cs" />
     <Compile Include="OneAndOneClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Endpoints\Servers\Servers.cs" />
+    <Compile Include="RESTHelpers\Configuration.cs" />
     <Compile Include="RESTHelpers\JsonSerializer.cs" />
     <Compile Include="RESTHelpers\OneAndOneAuthenticator.cs" />
     <Compile Include="RESTHelpers\SingleValueArrayConverter.cs" />

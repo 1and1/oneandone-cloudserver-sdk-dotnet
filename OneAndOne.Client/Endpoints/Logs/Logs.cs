@@ -75,7 +75,7 @@ namespace OneAndOne.Client.Endpoints.Logs
         /// <summary>
         /// Returns information about a log
         /// </summary>
-        /// <param name="log_id">Unique monitoring policy's identifier.</param>
+        /// <param name="log_id">Unique log's identifier.</param>
         /// 
         public LogsResponse Show(string log_id)
         {

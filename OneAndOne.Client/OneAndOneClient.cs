@@ -1,4 +1,6 @@
 ﻿using OneAndOne.Client.Endpoints;
+using OneAndOne.Client.Endpoints.Common;
+using OneAndOne.Client.Endpoints.DataCenter;
 using OneAndOne.Client.Endpoints.DVDs;
 using OneAndOne.Client.Endpoints.FirewallPolicies;
 using OneAndOne.Client.Endpoints.Images;
@@ -8,11 +10,14 @@ using OneAndOne.Client.Endpoints.MonitoringCenter;
 using OneAndOne.Client.Endpoints.MonitoringPolicies;
 using OneAndOne.Client.Endpoints.PrivateNetworks;
 using OneAndOne.Client.Endpoints.PublicIPs;
+using OneAndOne.Client.Endpoints.Roles;
 using OneAndOne.Client.Endpoints.ServerAppliances;
 using OneAndOne.Client.Endpoints.Servers;
 using OneAndOne.Client.Endpoints.SharedStorages;
 using OneAndOne.Client.Endpoints.Usages;
 using OneAndOne.Client.Endpoints.Users;
+using OneAndOne.Client.Endpoints.Vpn;
+using OneAndOne.Client.RESTHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,32 +30,34 @@ namespace OneAndOne.Client
     public class OneAndOneClient
     {
 
-        object[] args = new object[2];
-        string AssemblyName;
-        private OneAndOneClient(string apiUrl = null, string apiKey = null)
+        static String Endpoint = "https://cloudpanel-api.1and1.com/v1";
+        static Configuration configuration;
+        private OneAndOneClient(Configuration config)
         {
-            args[0] = apiUrl;
-            args[1] = apiKey;
-            AssemblyName = typeof(OneAndOneClient).Assembly.GetName().Name;
+            configuration = config;
+            if (config.ApiUrl == null)
+            {
+                config.ApiUrl = Endpoint;
+            }
         }
 
         /// <summary>
         /// Singleton instance.
         /// </summary>
-        public static OneAndOneClient Instance(string apiUrl = null, string apiKey = null)
+        public static OneAndOneClient Instance(Configuration config)
         {
             if (instance == null)
             {
                 lock (syncRoot)
                 {
                     if (instance == null)
-                        instance = new OneAndOneClient(apiUrl, apiKey);
+                        instance = new OneAndOneClient(config);
                 }
             }
 
             return instance;
         }
-       
+
 
         /// <summary>
         /// singleton instance.
@@ -69,7 +76,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new Servers(args[0], args[1]);
+                return new Servers(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -80,7 +87,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new ServersHardware(args[0], args[1]);
+                return new ServersHardware(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -91,7 +98,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new ServerHdds(args[0], args[1]);
+                return new ServerHdds(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -102,7 +109,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new ServerImage(args[0], args[1]);
+                return new ServerImage(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -113,7 +120,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new ServerIps(args[0], args[1]);
+                return new ServerIps(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -124,7 +131,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new LoadBalancer(args[0], args[1]);
+                return new LoadBalancer(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -135,7 +142,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new DVDs(args[0], args[1]);
+                return new DVDs(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -146,7 +153,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new PrivateNetworks(args[0], args[1]);
+                return new PrivateNetworks(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -157,7 +164,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new Images(args[0], args[1]);
+                return new Images(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -168,7 +175,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new SharedStorages(args[0], args[1]);
+                return new SharedStorages(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -179,7 +186,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new FirewallPolicies(args[0], args[1]);
+                return new FirewallPolicies(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -190,7 +197,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new PublicIPs(args[0], args[1]);
+                return new PublicIPs(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -201,7 +208,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new MonitoringCenter(args[0], args[1]);
+                return new MonitoringCenter(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -212,7 +219,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new MonitoringPolicies(args[0], args[1]);
+                return new MonitoringPolicies(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -223,7 +230,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new MonitoringPoliciesPorts(args[0], args[1]);
+                return new MonitoringPoliciesPorts(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -234,7 +241,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new MonitoringPoliciesProcesses(args[0], args[1]);
+                return new MonitoringPoliciesProcesses(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -245,7 +252,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new MonitoringPoliciesServers(args[0], args[1]);
+                return new MonitoringPoliciesServers(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -256,7 +263,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new Logs(args[0], args[1]);
+                return new Logs(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -267,7 +274,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new Users(args[0], args[1]);
+                return new Users(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -278,7 +285,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new UserAPI(args[0], args[1]);
+                return new UserAPI(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -289,7 +296,7 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new Usages(args[0], args[1]);
+                return new Usages(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 
@@ -300,7 +307,51 @@ namespace OneAndOne.Client
         {
             get
             {
-                return new ServerAppliances(args[0], args[1]);
+                return new ServerAppliances(configuration.ApiUrl, configuration.ApiKey);
+            }
+        }
+
+        /// <summary>
+        /// DataCenters client
+        /// </summary>
+        public DataCenters DataCenters
+        {
+            get
+            {
+                return new DataCenters(configuration.ApiUrl, configuration.ApiKey);
+            }
+        }
+
+        /// <summary>
+        /// Vpn client
+        /// </summary>
+        public Vpn Vpn
+        {
+            get
+            {
+                return new Vpn(configuration.ApiUrl, configuration.ApiKey);
+            }
+        }
+
+        /// <summary>
+        /// Role client
+        /// </summary>
+        public Roles Roles
+        {
+            get
+            {
+                return new Roles(configuration.ApiUrl, configuration.ApiKey);
+            }
+        }
+
+        /// <summary>
+        /// Common operations like ping and pricing client
+        /// </summary>
+        public Common Common
+        {
+            get
+            {
+                return new Common(configuration.ApiUrl, configuration.ApiKey);
             }
         }
     }

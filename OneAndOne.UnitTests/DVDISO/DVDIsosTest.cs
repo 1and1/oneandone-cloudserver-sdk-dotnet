@@ -7,7 +7,7 @@ namespace OneAndOne.UnitTests.DVDISO
     [TestClass]
     public class DVDIsosTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
         [TestMethod]
         public void GetDVDISOs()
         {

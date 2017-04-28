@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using OneAndOne.POCO.Response.DataCenters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -127,6 +128,14 @@ namespace OneAndOne.POCO.Response.LoadBalancers
         {
             get { return cloudpanel_id; }
             set { cloudpanel_id = value; }
+        }
+
+        private DataCenterResponse datacenter;
+        public DataCenterResponse Datacenter
+        {
+            get { return datacenter; }
+
+            set { datacenter = value; }
         }
     }
     public class LoadBalancerRule
