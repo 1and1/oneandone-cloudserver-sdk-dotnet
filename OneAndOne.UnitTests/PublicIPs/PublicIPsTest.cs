@@ -3,13 +3,48 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
 using OneAndOne.POCO.Requests.Servers;
+using OneAndOne.POCO.Response.PublicIPs;
 
 namespace OneAndOne.UnitTests.PublicIPs
 {
     [TestClass]
     public class PublicIPsTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
+        static PublicIPsResponse ip = null;
+
+
+        [ClassInitialize]
+        static public void TestInit(TestContext context)
+        {
+            var datacenters = client.DataCenters.Get();
+            var dc = datacenters.FirstOrDefault();
+            Random random = new Random();
+            var randomValue = random.Next(10, 99) + "netTest.net";
+            var result = client.PublicIPs.Create(new POCO.Requests.PublicIPs.CreatePublicIPRequest()
+            {
+                ReverseDns = randomValue,
+                Type = IPType.IPV4
+            });
+
+            ip = result;
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
+            //check if the public ip was created
+            var ipResult = client.PublicIPs.Show(result.Id);
+            Assert.IsNotNull(ipResult.Id);
+            Assert.AreEqual(ipResult.ReverseDns, randomValue);
+        }
+
+        [ClassCleanup]
+        static public void TestClean()
+        {
+            if (ip != null)
+            {
+                DeletePublicIP();
+            }
+        }
+
         [TestMethod]
         public void GetPublicIPs()
         {
@@ -22,35 +57,10 @@ namespace OneAndOne.UnitTests.PublicIPs
         [TestMethod]
         public void ShowPublicIP()
         {
-            Random random = new Random();
-
-            var publicIps = client.PublicIPs.Get();
-            var publicIp = publicIps[random.Next(publicIps.Count - 1)];
-
-            var result = client.PublicIPs.Show(publicIp.Id);
+            var result = client.PublicIPs.Show(ip.Id);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
-        }
-
-        [TestMethod]
-        public void CreatePublicIP()
-        {
-            Random random = new Random();
-            var randomValue = random.Next(10, 99) + "netTest.net";
-            var result = client.PublicIPs.Create(new POCO.Requests.PublicIPs.CreatePublicIPRequest()
-                {
-                    ReverseDns = randomValue,
-                    Type = IPType.IPV4
-                });
-
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Id);
-            //check if the public ip was created
-            var ipResult = client.PublicIPs.Show(result.Id);
-            Assert.IsNotNull(ipResult.Id);
-            Assert.AreEqual(ipResult.ReverseDns, randomValue);
-
         }
 
         [TestMethod]
@@ -58,9 +68,7 @@ namespace OneAndOne.UnitTests.PublicIPs
         {
             Random random = new Random();
             var randomValue = random.Next(10, 99) + "updateTest.net";
-            var publicIps = client.PublicIPs.Get().Where(str => str.ReverseDns != null && str.ReverseDns.Contains("netTest")).ToList();
-            var publicIp = publicIps[random.Next(publicIps.Count - 1)];
-            var result = client.PublicIPs.Update(randomValue, publicIp.Id);
+            var result = client.PublicIPs.Update(randomValue, ip.Id);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
@@ -70,29 +78,12 @@ namespace OneAndOne.UnitTests.PublicIPs
             Assert.AreEqual(ipResult.ReverseDns, randomValue);
         }
 
-        [TestMethod]
-        public void DeletePublicIP()
+        static public void DeletePublicIP()
         {
-            Random random = new Random();
-            var publicIps = client.PublicIPs.Get().Where(str => str.ReverseDns != null && (str.ReverseDns.Contains("netTest") || str.ReverseDns.Contains("updateTest"))).ToList();
-            var publicIp = publicIps[random.Next(publicIps.Count - 1)];
-            var result = client.PublicIPs.Delete(publicIp.Id);
+            var result = client.PublicIPs.Delete(ip.Id);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
-        }
-
-        [TestMethod]
-        public void DeleteAllTESTPublicIP()
-        {
-            Random random = new Random();
-            var publicIps = client.PublicIPs.Get().Where(str => str.ReverseDns != null && (str.ReverseDns.Contains("netTest") || str.ReverseDns.Contains("updateTest"))).ToList();
-            foreach (var item in publicIps)
-            {
-                var result = client.PublicIPs.Delete(item.Id);
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
-            }
         }
     }
 }

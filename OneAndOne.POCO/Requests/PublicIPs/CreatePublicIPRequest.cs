@@ -29,5 +29,20 @@ namespace OneAndOne.POCO.Requests.PublicIPs
                 type = ((IPType)value).ToString();
             }
         }
+
+        ///<summary>
+        //datacenter_id 
+        //</summary>
+        private string datacenter_id;
+        [JsonProperty(PropertyName = "datacenter_id")]
+
+        public string DatacenterId
+        {
+            get
+            { return datacenter_id; }
+
+            set
+            { datacenter_id = value; }
+        }
     }
 }

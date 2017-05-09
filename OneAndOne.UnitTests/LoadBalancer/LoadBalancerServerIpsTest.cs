@@ -3,19 +3,83 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OneAndOne.Client;
 using System.Collections.Generic;
+using OneAndOne.POCO.Response.Servers;
+using OneAndOne.POCO.Response.LoadBalancers;
 
 namespace OneAndOne.UnitTests.LoadBalancer
 {
     [TestClass]
     public class LoadBalancerServerIpsTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
+        static ServerResponse server = null;
+        static LoadBalancerResponse loadBalancer = null;
+
+        [ClassInitialize]
+        static public void TestInit(TestContext context)
+        {
+            Random random = new Random();
+            server = Config.CreateTestServer("loadbalancer servers test");
+
+            Config.waitServerReady(server.Id);
+            server = client.Servers.Show(server.Id);
+            //create loadbalancer
+            var result = client.LoadBalancer.Create(new POCO.Requests.LoadBalancer.CreateLoadBalancerRequest()
+            {
+                Name = "LBTest" + random.Next(100, 999),
+                Description = "LBdesc",
+                HealthCheckInterval = 1,
+                Persistence = true,
+                PersistenceTime = 30,
+                HealthCheckTest = HealthCheckTestTypes.NONE,
+                Method = LoadBalancerMethod.ROUND_ROBIN,
+                Rules = new System.Collections.Generic.List<POCO.Requests.LoadBalancer.LoadBalancerRuleRequest>()
+                    {
+                        {new POCO.Requests.LoadBalancer.LoadBalancerRuleRequest()
+                        {
+                            PortBalancer=80,
+                            Protocol=LBRuleProtocol.TCP,
+                            Source="0.0.0.0",
+                            PortServer=80
+                        }
+                        }
+                    }
+            });
+
+            loadBalancer = result;
+            //add server ip to load balancer
+            var iptoAdd = new List<string>();
+            iptoAdd.Add(server.Ips[0].Id);
+            var lbIps = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.LoadBalancer.AssignLoadBalancerServerIpsRequest()
+            {
+                ServerIps = iptoAdd
+            }, loadBalancer.Id);
+
+            Assert.IsNotNull(lbIps);
+            Assert.IsNotNull(lbIps.Id);
+            Config.waitLoadBalancerReady(loadBalancer.Id);
+            var updatedLoadBalancer = client.LoadBalancer.Show(loadBalancer.Id);
+            //check the ip is added
+            Assert.IsNotNull(updatedLoadBalancer);
+            Assert.IsTrue(updatedLoadBalancer.ServerIps.Any(ip => ip.Id == server.Ips[0].Id));
+        }
+
+        [ClassCleanup]
+        static public void TestClean()
+        {
+            if (loadBalancer != null)
+            {
+                UnassignLoadBalancerServerIp();
+                Config.waitLoadBalancerReady(loadBalancer.Id);
+                client.LoadBalancer.Delete(loadBalancer.Id);
+            }
+            Config.waitServerReady(server.Id);
+            client.Servers.Delete(server.Id, false);
+        }
+
         [TestMethod]
         public void GetLoadBalancerServerIps()
         {
-            Random random = new Random();
-            var loadBalancers = client.LoadBalancer.Get();
-            var loadBalancer = loadBalancers[random.Next(loadBalancers.Count - 1)];
             var result = client.LoadBalancer.GetLoadBalancerServerIps(loadBalancer.Id);
 
             Assert.IsNotNull(result);
@@ -24,87 +88,24 @@ namespace OneAndOne.UnitTests.LoadBalancer
         [TestMethod]
         public void ShowLoadBalancerServerIp()
         {
-            var loadBalancers = client.LoadBalancer.Get();
-            var loadBalancer = loadBalancers[0];
-            foreach (var item in loadBalancers)
-            {
-                if (item.ServerIps != null && item.ServerIps.Count > 0)
-                {
-                    loadBalancer = item;
-                    break;
-                }
-            }
-            if (loadBalancer.ServerIps != null && loadBalancer.ServerIps.Count > 0)
-            {
-                var result = client.LoadBalancer.ShowLoadBalancerServerIp(loadBalancer.Id, loadBalancer.ServerIps[0].Id);
+            var lb = client.LoadBalancer.Show(loadBalancer.Id);
+            var result = client.LoadBalancer.ShowLoadBalancerServerIp(lb.Id, lb.ServerIps[0].Id);
 
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
-            }
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
         }
 
-        [TestMethod]
-        public void AssignLoadBalancerServerIp()
+        static public void UnassignLoadBalancerServerIp()
         {
-            Random random = new Random();
-            var servers = client.Servers.Get();
-            var loadBalancers = client.LoadBalancer.Get();
-            var loadBalancer = loadBalancers[random.Next(0, loadBalancers.Count - 1)];
-            OneAndOne.POCO.Response.Servers.IpAddress ipAddress = null;
-            if (servers.Count > 0)
-            {
-                foreach (var server in servers)
-                {
-                    if (server.Ips != null && server.Ips.Count > 0)
-                    {
-                        ipAddress = server.Ips[0];
-                        break;
-                    }
-                }
-                if (ipAddress != null)
-                {
-                    var iptoAdd = new List<string>();
-                    iptoAdd.Add(ipAddress.Id);
-                    var result = client.LoadBalancer.CreateLoadBalancerServerIPs(new POCO.Requests.LoadBalancer.AssignLoadBalancerServerIpsRequest()
-                        {
-                            ServerIps = iptoAdd
-                        }, loadBalancer.Id);
+            var lb = client.LoadBalancer.Show(loadBalancer.Id);
+            var result = client.LoadBalancer.DeleteLoadBalancerServerIP(lb.Id, lb.ServerIps[0].Id);
 
-                    Assert.IsNotNull(result);
-                    Assert.IsNotNull(result.Id);
-                    var updatedLoadBalancer = client.LoadBalancer.Show(loadBalancer.Id);
-                    //check the ip is added
-                    Assert.IsNotNull(updatedLoadBalancer);
-                    Assert.IsTrue(updatedLoadBalancer.ServerIps.Any(ip => ip.Id == ipAddress.Id));
-                }
-            }
-        }
-
-        [TestMethod]
-        public void UnassignLoadBalancerServerIp()
-        {
-            Random random = new Random();
-            var loadBalancers = client.LoadBalancer.Get();
-            OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse loadBalancer = null;
-            foreach (var item in loadBalancers)
-            {
-                if (item.ServerIps != null && item.ServerIps.Count > 0)
-                {
-                    loadBalancer = item;
-                    break;
-                }
-            }
-            if (loadBalancer != null && loadBalancer.ServerIps != null && loadBalancer.ServerIps.Count > 0)
-            {
-                var result = client.LoadBalancer.DeleteLoadBalancerServerIP(loadBalancer.Id, loadBalancer.ServerIps[0].Id);
-
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Id);
-                var updatedLoadBalancer = client.LoadBalancer.Show(loadBalancer.Id);
-                //check the ip is removed
-                Assert.IsNotNull(updatedLoadBalancer);
-                Assert.IsFalse(updatedLoadBalancer.ServerIps.Any(ip => ip.Id == loadBalancer.ServerIps[0].Id));
-            }
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
+            var updatedLoadBalancer = client.LoadBalancer.Show(lb.Id);
+            //check the ip is removed
+            Assert.IsNotNull(updatedLoadBalancer);
+            Assert.IsFalse(updatedLoadBalancer.ServerIps.Any(ip => ip.Id == lb.ServerIps[0].Id));
         }
     }
 }

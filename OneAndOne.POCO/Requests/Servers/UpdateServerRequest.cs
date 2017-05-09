@@ -21,7 +21,7 @@ namespace OneAndOne.POCO.Requests.Servers
             set { name = value; }
         }
 
-        //public string name { get; set; }
+        //public string name;
         /// <summary>
         /// Required: description of your servers.
         /// </summary>

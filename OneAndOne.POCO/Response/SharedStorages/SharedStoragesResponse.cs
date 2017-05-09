@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OneAndOne.POCO.Response.DataCenters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -73,6 +74,14 @@ namespace OneAndOne.POCO.Response.SharedStorages
         {
             get { return servers; }
             set { servers = value; }
+        }
+
+        private DataCenterResponse datacenter;
+        public DataCenterResponse Datacenter
+        {
+            get { return datacenter; }
+
+            set { datacenter = value; }
         }
     }
 

@@ -26,6 +26,22 @@ namespace OneAndOne.POCO.Requests.LoadBalancer
             get { return description; }
             set { description = value; }
         }
+
+        ///<summary>
+        //datacenter_id 
+        //</summary>
+        private string datacenter_id;
+        [JsonProperty(PropertyName = "datacenter_id")]
+
+        public string DatacenterId
+        {
+            get
+            { return datacenter_id; }
+
+            set
+            { datacenter_id = value; }
+        }
+
         /// <summary>
         /// Required: Type of the health check. At the moment, HTTP is not allowed.
         /// </summary>

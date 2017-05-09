@@ -29,7 +29,7 @@ namespace OneAndOne.POCO.Requests.Servers
             set { name = value; }
         }
 
-        //public string name { get; set; }
+        //public string name;
         /// <summary>
         /// Required: description of your servers.
         /// </summary>
@@ -149,8 +149,5 @@ namespace OneAndOne.POCO.Requests.Servers
             get { return monitoring_policy_id; }
             set { monitoring_policy_id = value; }
         }
-
-
-
     }
 }

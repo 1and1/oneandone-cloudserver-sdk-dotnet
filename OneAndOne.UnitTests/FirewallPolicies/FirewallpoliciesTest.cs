@@ -9,43 +9,22 @@ namespace OneAndOne.UnitTests.FirewallPolicies
     [TestClass]
     public class FirewallpoliciesTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
-        [TestMethod]
-        public void GetFirewallpolicies()
-        {
-            var result = client.FirewallPolicies.Get();
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
+        static public FirewallPolicyResponse firewall = null;
 
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Count > 0);
-        }
-
-        [TestMethod]
-        public void ShowFirewallPolicy()
-        {
-            Random random = new Random();
-
-            var firewalls = client.FirewallPolicies.Get();
-            var firewall = firewalls[random.Next(firewalls.Count - 1)];
-
-            var result = client.FirewallPolicies.Show(firewall.Id);
-
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Id);
-        }
-
-        [TestMethod]
-        public void CreateFirewallPolicy()
+        [ClassInitialize]
+        static public void TestInit(TestContext context)
         {
             Random random = new Random();
             var newRules = new System.Collections.Generic.List<POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule>();
             newRules.Add(new POCO.Requests.FirewallPolicies.CreateFirewallPocliyRule()
-                {
-                    PortTo = 80,
-                    PortFrom = 80,
-                    Protocol = RuleProtocol.TCP,
-                    Source = "0.0.0.0"
+            {
+                PortTo = 80,
+                PortFrom = 80,
+                Protocol = RuleProtocol.TCP,
+                Source = "0.0.0.0"
 
-                });
+            });
             var result = client.FirewallPolicies.Create(new POCO.Requests.FirewallPolicies.CreateFirewallPolicyRequest()
             {
                 Description = ".netTestFirewall" + random.Next(10, 30),
@@ -59,14 +38,41 @@ namespace OneAndOne.UnitTests.FirewallPolicies
             var policyresult = client.FirewallPolicies.Show(result.Id);
             Assert.IsNotNull(policyresult);
             Assert.IsNotNull(result.Id);
+            Config.waitFirewallPolicyReady(result.Id);
+            firewall = result;
+        }
+
+        [ClassCleanup]
+        static public void TestClean()
+        {
+            if (firewall != null)
+            {
+                Config.waitFirewallPolicyReady(firewall.Id);
+                DeleteFirewallPolicy();
+            }
+        }
+
+        [TestMethod]
+        public void GetFirewallpolicies()
+        {
+            var result = client.FirewallPolicies.Get();
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Count > 0);
+        }
+
+        [TestMethod]
+        public void ShowFirewallPolicy()
+        {
+            var result = client.FirewallPolicies.Show(firewall.Id);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Id);
         }
 
         [TestMethod]
         public void UpdateFirewallPolicy()
         {
-            Random random = new Random();
-            var firewalls = client.FirewallPolicies.Get().Where(str => str.Name.Contains(".netFW")).ToList();
-            var firewall = firewalls[random.Next(firewalls.Count - 1)];
             var result = client.FirewallPolicies.Update(new POCO.Requests.FirewallPolicies.UpdateFirewallPolicyRequest()
             {
                 Name = "Updated" + firewall.Name,
@@ -83,12 +89,8 @@ namespace OneAndOne.UnitTests.FirewallPolicies
             Assert.AreEqual(result.Description, policyresult.Description);
         }
 
-        [TestMethod]
-        public void DeleteFirewallPolicy()
+        static public void DeleteFirewallPolicy()
         {
-            Random random = new Random();
-            var firewalls = client.FirewallPolicies.Get().Where(str => str.Name.Contains(".netFW")).ToList();
-            var firewall = firewalls[random.Next(firewalls.Count - 1)];
             var result = client.FirewallPolicies.Delete(firewall.Id);
 
             Assert.IsNotNull(result);

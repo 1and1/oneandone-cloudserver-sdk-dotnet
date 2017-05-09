@@ -7,6 +7,7 @@ using OneAndOne.POCO.Response.ServerAppliances;
 using OneAndOne.POCO.Response.Servers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -16,7 +17,7 @@ namespace OneAndOne.Example
 {
     public class Program
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static OneAndOneClient client = OneAndOneClient.Instance(new Client.RESTHelpers.Configuration { ApiKey= ConfigurationManager.AppSettings["APIToken"] });
         static void Main(string[] args)
         {
             GetServers();

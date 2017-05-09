@@ -1,4 +1,5 @@
-﻿using OneAndOne.Client.RESTHelpers;
+﻿using Newtonsoft.Json;
+using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.FirewallPolicies;
 using OneAndOne.POCO.Response;
 using RestSharp;
@@ -51,12 +52,12 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
                 }
                 var request = new RestRequest(requestUrl, Method.GET);
 
-                var result = restclient.Execute<List<FirewallPolicyResponse>>(request);
+                var result = restclient.Execute(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
                 }
-                return result.Data;
+                return JsonConvert.DeserializeObject<List<FirewallPolicyResponse>>(result.Content);
             }
             catch
             {

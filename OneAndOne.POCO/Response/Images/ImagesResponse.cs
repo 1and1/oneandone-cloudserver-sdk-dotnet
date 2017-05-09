@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using OneAndOne.POCO.Requests.Images;
+using OneAndOne.POCO.Response.DataCenters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -144,6 +145,15 @@ namespace OneAndOne.POCO.Response.Images
             get { return server_id; }
             set { server_id = value; }
         }
+
+        private DataCenterResponse datacenter;
+        public DataCenterResponse Datacenter
+        {
+            get { return datacenter; }
+
+            set { datacenter = value; }
+        }
+
         private string frequency;
         [JsonConverter(typeof(StringEnumConverter))]
         public ImageFrequency Frequency
@@ -175,6 +185,8 @@ namespace OneAndOne.POCO.Response.Images
             get { return creation_date; }
             set { creation_date = value; }
         }
+
+
     }
 
     public class Hdd

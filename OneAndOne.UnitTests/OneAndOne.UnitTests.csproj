@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -45,11 +46,15 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Common\CommonTest.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="DVDISO\DVDIsosTest.cs" />
     <Compile Include="FirewallPolicies\FirewallpoliciesTest.cs" />
     <Compile Include="FirewallPolicies\FirewallpolicyServerIpsTest.cs" />
@@ -64,9 +69,9 @@
     <Compile Include="MonitoringPolicies\MonitoringPoliciesPortsTest.cs" />
     <Compile Include="MonitoringPolicies\MonitoringPoliciesProcessesTest.cs" />
     <Compile Include="MonitoringPolicies\MonitoringPoliciesServerTest.cs" />
-    <Compile Include="PrivateNetworks\PrivateNetworkServerstest.cs" />
     <Compile Include="PrivateNetworks\PrivateNetworkTest.cs" />
     <Compile Include="PublicIPs\PublicIPsTest.cs" />
+    <Compile Include="Roles\RolesTests.cs" />
     <Compile Include="ServerAppliances\ServerAppliancesTest.cs" />
     <Compile Include="Servers\ServerImagesTest.cs" />
     <Compile Include="Servers\ServerIpsTest.cs" />
@@ -78,6 +83,7 @@
     <Compile Include="Usages\UsagesTest.cs" />
     <Compile Include="Users\UserAPITest.cs" />
     <Compile Include="Users\UsersTest.cs" />
+    <Compile Include="Vpn\VpnTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

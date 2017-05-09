@@ -49,5 +49,20 @@ namespace OneAndOne.POCO.Requests.PrivateNetworks
             get { return subnet_mask; }
             set { subnet_mask = value; }
         }
+
+        ///<summary>
+        //datacenter_id 
+        //</summary>
+        private string datacenter_id;
+        [JsonProperty(PropertyName = "datacenter_id")]
+
+        public string DatacenterId
+        {
+            get
+            { return datacenter_id; }
+
+            set
+            { datacenter_id = value; }
+        }
     }
 }

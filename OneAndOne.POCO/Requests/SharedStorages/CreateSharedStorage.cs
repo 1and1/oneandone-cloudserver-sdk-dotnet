@@ -39,5 +39,24 @@ namespace OneAndOne.POCO.Requests.SharedStorages
             get { return size; }
             set { size = value; }
         }
+
+        ///<summary>
+        //datacenter_id of the shared storage
+        //</summary>
+        private string datacenter_id;
+        [JsonProperty(PropertyName = "datacenter_id")]
+
+        public string DatacenterId
+        {
+            get
+            {
+                return datacenter_id;
+            }
+
+            set
+            {
+                datacenter_id = value;
+            }
+        }
     }
 }

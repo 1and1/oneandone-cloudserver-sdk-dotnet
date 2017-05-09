@@ -8,7 +8,7 @@ namespace OneAndOne.UnitTests.Usages
     [TestClass]
     public class UsagesTest
     {
-        static OneAndOneClient client = OneAndOneClient.Instance();
+        static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
         [TestMethod]
         public void GetUsages()
         {

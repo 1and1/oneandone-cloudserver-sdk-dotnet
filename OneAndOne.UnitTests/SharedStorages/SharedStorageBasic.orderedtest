@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <OrderedTest name="sharedstoragebasic" storage="d:\work2\oneandone-cloudserver-sdk-dotnet\oneandone.unittests\sharedstorages\sharedstoragebasic.orderedtest" id="449d2c56-e705-46eb-8000-116a14de27b9" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <TestLinks>
-    <TestLink id="93aa8703-924e-d2a3-04b7-f6b4ec62ee21" name="CreateSharedStorages" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <TestLink id="c5a4f171-65ee-a298-45cc-647e5a21cb22" name="GetSharedStorages" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <TestLink id="a0fc59a3-e5ff-225e-8be5-fb4408a5fa16" name="ShowSharedStorages" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <TestLink id="990a7c6c-bad4-059b-3a0c-10711890c347" name="UpdateSharedStorages" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <TestLink id="f74614cb-266b-24a8-1c20-49488aa35541" name="ShowSharedStorageAccess" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <TestLink id="fd402671-3fad-e860-01d2-e7959cc84188" name="UpdateSharedStorageAccess" storage="..\bin\debug\oneandone.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </TestLinks>
 </OrderedTest>

@@ -40,7 +40,7 @@ namespace OneAndOne.POCO
 
     public enum OSFamliyType
     {
-        Windows, Linux, Others
+        Windows, Linux, Others,NULL
     }
 
     public enum ImageType

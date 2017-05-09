@@ -25,12 +25,12 @@ namespace OneAndOne.POCO.Response.ServerAppliances
             set { name = value; }
         }
 
-        private List<string> available_sites;
+        private List<string> available_datacenters;
 
-        public List<string> AvailableSites
+        public List<string> AvailableDatacenters
         {
-            get { return available_sites; }
-            set { available_sites = value; }
+            get { return available_datacenters; }
+            set { available_datacenters = value; }
         }
 
 
@@ -90,13 +90,13 @@ namespace OneAndOne.POCO.Response.ServerAppliances
             get { return min_hdd_size; }
             set { min_hdd_size = value; }
         }
-        private List<License> licenses;
+        //private List<License> licenses;
 
-        public List<License> Licenses
-        {
-            get { return licenses; }
-            set { licenses = value; }
-        }
+        //public List<License> Licenses
+        //{
+        //    get { return licenses; }
+        //    set { licenses = value; }
+        //}
         private bool automatic_installation;
 
         public bool AutomaticInstallation

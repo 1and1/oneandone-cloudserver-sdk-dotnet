@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OneAndOne.POCO.Requests.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,9 +37,9 @@ namespace OneAndOne.POCO.Response.Users
             get { return email; }
             set { email = value; }
         }
-        private string state;
+        private UserState state;
 
-        public string State
+        public UserState State
         {
             get { return state; }
             set { state = value; }
