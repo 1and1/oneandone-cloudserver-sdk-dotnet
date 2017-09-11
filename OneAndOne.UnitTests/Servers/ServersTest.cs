@@ -28,7 +28,7 @@ namespace OneAndOne.UnitTests
         {
             int vcore = 4;
             int CoresPerProcessor = 2;
-            var appliances = client.ServerAppliances.Get(null, null, null, "centos", null);
+            var appliances = client.ServerAppliances.Get(null, null, null, "coreos", null);
             if (appliances == null || appliances.Count() == 0)
             {
                 appliance = client.ServerAppliances.Get().FirstOrDefault();
@@ -40,7 +40,7 @@ namespace OneAndOne.UnitTests
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
                 ApplianceId = appliance != null ? appliance.Id : null,
-                Name = "main server test .net",
+                Name = "main1 server test .net",
                 Description = "desc",
                 Hardware = new POCO.Requests.Servers.HardwareRequest()
                 {
@@ -104,7 +104,7 @@ namespace OneAndOne.UnitTests
             if (pn != null)
             {
                 Config.waitPrivateNetworkReady(pn.Id);
-                client.PrivateNetworks.Delete(pn.Id);
+                DeletePrivateNetwork();
             }
         }
 
@@ -265,8 +265,7 @@ namespace OneAndOne.UnitTests
             Assert.IsNotNull(spn.Id);
         }
 
-        [TestMethod]
-        public void DeletePrivateNetwork()
+        public static void DeletePrivateNetwork()
         {
             var pnserver = client.Servers.Show(server.Id);
             Config.waitPrivateNetworkReady(pn.Id);
@@ -331,9 +330,9 @@ namespace OneAndOne.UnitTests
         [TestMethod]
         public void CreateClone()
         {
-            Config.waitServerReady(serverIds.Last());
+            Config.waitServerReady(serverIds[1]);
             Random random = new Random();
-            var result = client.Servers.CreateClone(serverIds.Last(), server.Name + "Clone" + random.Next(1000, 9999));
+            var result = client.Servers.CreateClone(serverIds[1], server.Name + "Clone" + random.Next(1000, 9999));
             clone = result;
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);

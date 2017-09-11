@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using OneAndOne.POCO.Converters;
 using OneAndOne.POCO.Requests.Images;
 using OneAndOne.POCO.Response.DataCenters;
 using System;
@@ -155,7 +156,7 @@ namespace OneAndOne.POCO.Response.Images
         }
 
         private string frequency;
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(TolerantEnumConverter))]
         public ImageFrequency Frequency
         {
             get

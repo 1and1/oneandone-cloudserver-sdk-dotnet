@@ -121,7 +121,11 @@ namespace OneAndOne.POCO.Requests.Images
         [JsonConverter(typeof(StringEnumConverter))]
         public ImageType Type
         {
-            get { return (ImageType)Enum.Parse(typeof(ImageType), type); }
+            get
+            {
+                if (type == null) return ImageType.Null;
+                return (ImageType)Enum.Parse(typeof(ImageType), type);
+            }
             set { type = ((ImageType)value).ToString(); }
         }
     }
