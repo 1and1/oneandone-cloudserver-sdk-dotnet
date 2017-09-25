@@ -138,6 +138,14 @@ namespace OneAndOne.UnitTests
             Assert.IsTrue(servers.Count > 0);
         }
         [TestMethod]
+        public void GetBaremetalServers()
+        {
+            var servers = client.Servers.GetBaremetal();
+
+            Assert.IsNotNull(servers);
+            Assert.IsTrue(servers.Count > 0);
+        }
+        [TestMethod]
         public void GetServersWithPaging()
         {
             var servers = client.Servers.Get(1, 3, null);

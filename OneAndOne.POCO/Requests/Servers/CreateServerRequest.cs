@@ -1,5 +1,4 @@
-﻿using OneAndOne.POCO.Response.Servers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +26,21 @@ namespace OneAndOne.POCO.Requests.Servers
         {
             get { return name; }
             set { name = value; }
+        }
+
+        /// <summary>
+        /// Type of the server ["cloud", "baremetal"].
+        /// </summary>
+        /// 
+        private string server_type;
+        [JsonProperty(PropertyName = "server_type")]
+        public ServerType State
+        {
+            get { return (ServerType)Enum.Parse(typeof(ServerType), server_type); }
+            set
+            {
+                server_type = ((ServerType)value).ToString();
+            }
         }
 
         //public string name;

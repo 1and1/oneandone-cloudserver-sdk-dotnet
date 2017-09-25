@@ -10,6 +10,7 @@ using OneAndOne.Client.Endpoints.MonitoringCenter;
 using OneAndOne.Client.Endpoints.MonitoringPolicies;
 using OneAndOne.Client.Endpoints.PrivateNetworks;
 using OneAndOne.Client.Endpoints.PublicIPs;
+using OneAndOne.Client.Endpoints.RecoveryAppliances;
 using OneAndOne.Client.Endpoints.Roles;
 using OneAndOne.Client.Endpoints.ServerAppliances;
 using OneAndOne.Client.Endpoints.Servers;
@@ -310,6 +311,17 @@ namespace OneAndOne.Client
             get
             {
                 return new ServerAppliances(configuration.ApiUrl, configuration.ApiKey);
+            }
+        }
+
+        /// <summary>
+        /// RecoveryAppliances client
+        /// </summary>
+        public RecoveryAppliances RecoveryAppliances
+        {
+            get
+            {
+                return new RecoveryAppliances(configuration.ApiUrl, configuration.ApiKey);
             }
         }
 

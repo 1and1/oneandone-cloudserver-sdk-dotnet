@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 
 namespace OneAndOne.POCO
 {
+    public enum ServerType
+    {
+        [EnumMember(Value = "cloud")]
+        Cloud,
+        [EnumMember(Value = "baremetal")]
+        Baremetal,
+        [EnumMember(Value = "dedicated")]
+        Dedicated
+    }
 
     public enum ServerAction
     {
@@ -16,6 +25,16 @@ namespace OneAndOne.POCO
     public enum ServerActionMethod
     {
         SOFTWARE, HARDWARE
+    }
+
+    public enum ServerTypeCompatibility
+    {
+        [EnumMember(Value = "vps")]
+        Vps,
+        [EnumMember(Value = "cloud")]
+        Cloud,
+        [EnumMember(Value = "baremetal")]
+        Baremetal
     }
 
     public enum OSImageType

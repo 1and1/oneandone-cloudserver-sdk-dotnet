@@ -32,6 +32,20 @@ namespace OneAndOne.POCO.Requests.Servers
                 method = ((ServerActionMethod)value).ToString();
             }
         }
+        private bool recovery_mode;
+        [JsonProperty(PropertyName = "recovery_mode")]
+        public bool RecoveryMode
+        {
+            get { return recovery_mode; }
+            set { recovery_mode = value; }
+        }
+        private string recovery_image_id;
+        [JsonProperty(PropertyName = "recovery_image_id")]
+        public string RecoveryImageId
+        {
+            get { return recovery_image_id; }
+            set { recovery_image_id = value; }
+        }
 
     }
 }

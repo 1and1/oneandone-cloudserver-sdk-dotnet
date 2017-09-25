@@ -6,8 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Converters;
 
 namespace OneAndOne.POCO.Response.Servers
 {
@@ -32,6 +34,19 @@ namespace OneAndOne.POCO.Response.Servers
             get { return name; }
             set { name = value; }
         }
+
+        private string server_type;
+        [JsonProperty(PropertyName = "server_type")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ServerType State
+        {
+            get { return (ServerType)Enum.Parse(typeof(ServerType), server_type); }
+            set
+            {
+                server_type = ((ServerType)value).ToString();
+            }
+        }
+
         private string cloudpanel_id;
         [JsonProperty(PropertyName = "cloudpanel_id")]
 
@@ -65,6 +80,24 @@ namespace OneAndOne.POCO.Response.Servers
         {
             get { return first_password; }
             set { first_password = value; }
+        }
+
+        private string ipv6_range;
+        [JsonProperty(PropertyName = "ipv6_range")]
+
+        public string Ipv6Range
+        {
+            get { return ipv6_range; }
+            set { ipv6_range = value; }
+        }
+
+        private string hostname;
+        [JsonProperty(PropertyName = "hostname")]
+
+        public string Hostname
+        {
+            get { return hostname; }
+            set { hostname = value; }
         }
 
         private Status status;
@@ -167,6 +200,7 @@ namespace OneAndOne.POCO.Response.Servers
     {
         private string state;
         [JsonProperty(PropertyName = "state")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ServerState State
         {
             get { return (ServerState)Enum.Parse(typeof(ServerState), state); }
@@ -192,9 +226,11 @@ namespace OneAndOne.POCO.Response.Servers
         DEPLOYING,
         REBOOTING,
         REMOVING,
-        CONFIGURING
+        CONFIGURING,
+        ON_RECOVERY
 
     }
+
     [JsonArrayAttribute]
     public class Alert
     {

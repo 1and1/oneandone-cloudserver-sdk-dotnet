@@ -16,6 +16,13 @@ namespace OneAndOne.POCO.Response.Servers
             get { return fixed_instance_size_id; }
             set { fixed_instance_size_id = value; }
         }
+        private string baremetal_model_id;
+        [JsonProperty(PropertyName = "baremetal_model_id")]
+        public string BaremetalModelId
+        {
+            get { return baremetal_model_id; }
+            set { baremetal_model_id = value; }
+        }
         private int vcore;
         [JsonProperty(PropertyName = "vcore")]
         public int Vcore
