@@ -19,7 +19,7 @@ namespace OneAndOne.UnitTests.LoadBalancer
         static public void TestInit(TestContext context)
         {
             Random random = new Random();
-            server = Config.CreateTestServer("loadbalancer servers test");
+            server = Config.CreateTestServer("loadbalancer servers test .net");
 
             Config.waitServerReady(server.Id);
             server = client.Servers.Show(server.Id);

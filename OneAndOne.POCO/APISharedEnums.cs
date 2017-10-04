@@ -35,6 +35,7 @@ namespace OneAndOne.POCO
         [EnumMember(Value = "Windows 2012")]
         Windows2012,
         WindowsDatacenter,
+        CoreOS,
         Null
     }
 

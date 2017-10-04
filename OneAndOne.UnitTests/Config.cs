@@ -66,7 +66,7 @@ namespace OneAndOne.UnitTests
             var sharedStorage = client.SharedStorages.Show(shareStorageId);
             while (sharedStorage.State == "CONFIGURING")
             {
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
                 sharedStorage = client.SharedStorages.Show(sharedStorage.Id);
             }
         }
@@ -77,8 +77,19 @@ namespace OneAndOne.UnitTests
             var fw = client.FirewallPolicies.Show(fwId);
             while (fw.State == "CONFIGURING")
             {
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
                 fw = client.FirewallPolicies.Show(fw.Id);
+            }
+        }
+
+        public static void waitImageReady(string imgId)
+        {
+            var client = OneAndOneClient.Instance(Configuration);
+            var img = client.Images.Show(imgId);
+            while (img.State != "ACTIVE" && img.State!= "ENABLED")
+            {
+                Thread.Sleep(5000);
+                img = client.Images.Show(img.Id);
             }
         }
 
@@ -88,7 +99,7 @@ namespace OneAndOne.UnitTests
             var lb = client.LoadBalancer.Show(lbId);
             while (lb.State == "CONFIGURING")
             {
-                Thread.Sleep(2000);
+                Thread.Sleep(8000);
                 lb = client.LoadBalancer.Show(lb.Id);
             }
         }
@@ -99,7 +110,7 @@ namespace OneAndOne.UnitTests
             var mp = client.MonitoringPolicies.Show(mpId);
             while (mp.State != "ACTIVE")
             {
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
                 mp = client.MonitoringPolicies.Show(mp.Id);
             }
         }
@@ -113,7 +124,7 @@ namespace OneAndOne.UnitTests
                 var publicIP = client.PublicIPs.Show(ipId);
                 while (publicIP != null && publicIP.State == "REMOVING")
                 {
-                    Thread.Sleep(2000);
+                    Thread.Sleep(5000);
                     publicIP = client.PublicIPs.Show(publicIP.Id);
                 }
             }
@@ -131,7 +142,7 @@ namespace OneAndOne.UnitTests
             var client = OneAndOneClient.Instance(Configuration);
             int vcore = 4;
             int CoresPerProcessor = 2;
-            var appliances = client.ServerAppliances.Get(null, null, null, "ubuntu", null);
+            var appliances = client.ServerAppliances.Get(null, null, null, "coreos", null);
             POCO.Response.ServerAppliances.ServerAppliancesResponse appliance = null;
             if (appliances == null || appliances.Count() == 0)
             {

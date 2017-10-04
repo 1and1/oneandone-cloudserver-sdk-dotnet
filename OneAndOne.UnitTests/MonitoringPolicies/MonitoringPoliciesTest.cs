@@ -281,7 +281,7 @@ namespace OneAndOne.UnitTests.MonitoringPolicies
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Id);
             //check if the monitoring policy is removed
-            var monitoringPoliciesResult = client.MonitoringPolicies.Get().Where(pn => pn.Name.Contains("netMP")).ToList();
+            var monitoringPoliciesResult = client.MonitoringPolicies.Get();
             Assert.IsFalse(monitoringPoliciesResult.Any(mp => mp.Id == result.Id));
         }
     }

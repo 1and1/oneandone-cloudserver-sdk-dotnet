@@ -15,7 +15,7 @@ namespace OneAndOne.UnitTests.Images
     public class ImagesTest
     {
         static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
-        public ImagesResponse response = null;
+        static ImagesResponse response = null;
         static ServerResponse server = null;
         static ImagesResponse image = null;
         static DataCenterResponse dc = null;
@@ -24,9 +24,10 @@ namespace OneAndOne.UnitTests.Images
         static public void ServerInit(TestContext context)
         {
             dc = client.DataCenters.Get().FirstOrDefault();
-            server = Config.CreateTestServer("image test .net");
+            server = Config.CreateTestServer("image1 test .net");
             Config.waitServerReady(server.Id);
             server = client.Servers.Show(server.Id);
+            CreateImage();
         }
 
         [ClassCleanup]
@@ -61,9 +62,9 @@ namespace OneAndOne.UnitTests.Images
             Assert.IsNotNull(image.Id);
         }
 
-        [TestMethod]
-        public void CreateImage()
+        public static void CreateImage()
         {
+            Config.waitServerReady(server.Id);
             var random = new Random();
             image = client.Images.Create(new POCO.Requests.Images.CreateImageRequest()
             {
@@ -74,6 +75,7 @@ namespace OneAndOne.UnitTests.Images
                 Name = random.Next(100, 999) + "testImage",
                 NumIimages = random.Next(1, 50),
                 DatacetnerId = dc.Id,
+                Type =ImageType.os,
                 Source = ImageSource.server
             });
 
@@ -89,6 +91,7 @@ namespace OneAndOne.UnitTests.Images
         [TestMethod]
         public void UpdateImage()
         {
+            Config.waitImageReady(image.Id);
             var random = new Random();
             var result = client.Images.Update(new UpdateImageRequest()
             {

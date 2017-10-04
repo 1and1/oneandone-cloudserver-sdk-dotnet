@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Converters\SingleValueArrayConverter.cs" />
     <Compile Include="APISharedEnums.cs" />
+    <Compile Include="Converters\TolerantEnumConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\FirewallPolicies\AddFirewallPolicyRuleRequest.cs" />
     <Compile Include="Requests\FirewallPolicies\AssignFirewallServerIPRequest.cs" />

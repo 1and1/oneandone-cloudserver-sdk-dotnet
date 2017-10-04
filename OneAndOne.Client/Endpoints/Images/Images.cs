@@ -79,12 +79,12 @@ namespace OneAndOne.Client.Endpoints.Images
                 };
                 request.AddBody(image);
 
-                var result = restclient.Execute<ImagesResponse>(request);
+                var result = restclient.Execute(request);
                 if (result.StatusCode != HttpStatusCode.Accepted)
                 {
                     throw new Exception(result.Content);
                 }
-                return result.Data;
+                return JsonConvert.DeserializeObject<ImagesResponse>(result.Content);
             }
             catch
             {

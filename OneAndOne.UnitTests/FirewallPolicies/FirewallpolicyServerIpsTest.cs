@@ -19,7 +19,7 @@ namespace OneAndOne.UnitTests.FirewallPolicies
         static public void TestInit(TestContext context)
         {
             Random random = new Random();
-            server = Config.CreateTestServer("firewall servers test");
+            server = Config.CreateTestServer("firewall servers test .net");
 
             Config.waitServerReady(server.Id);
             server = client.Servers.Show(server.Id);

@@ -27,7 +27,7 @@ namespace OneAndOne.UnitTests
         {
             int vcore = 4;
             int CoresPerProcessor = 2;
-            var appliances = client.ServerAppliances.Get(null, null, null, "ubuntu", null);
+            var appliances = client.ServerAppliances.Get(null, null, null, "coreos", null);
             POCO.Response.ServerAppliances.ServerAppliancesResponse appliance = null;
             if (appliances == null || appliances.Count() == 0)
             {
