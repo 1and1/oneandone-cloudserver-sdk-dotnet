@@ -62,6 +62,7 @@ namespace OneAndOne.UnitTests
                     Vcore = vcore
                 },
                 PowerOn = false,
+                ServerType = ServerType.cloud
             });
 
             Config.waitServerReady(result.Id);
@@ -155,7 +156,7 @@ namespace OneAndOne.UnitTests
         }
 
         [TestMethod]
-        public void GetAvailableServerFalvours()
+        public void GetAvailableServerFlavours()
         {
             var servers = client.Servers.GetAvailableFixedServers();
 

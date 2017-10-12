@@ -53,15 +53,12 @@ namespace OneAndOne.POCO.Response.ServerAppliances
 
         private List<string> server_type_compatibility;
         [JsonProperty(PropertyName = "server_type_compatibility")]
-        [JsonConverter(typeof(StringEnumConverter))]
         public List<ServerTypeCompatibility> ServerTypeCompatibility
         {
             get
             {
-                return server_type_compatibility.ConvertAll(delegate (string x)
-                {
-                    return (ServerTypeCompatibility)Enum.Parse(typeof(ServerTypeCompatibility), x);
-                });
+                return server_type_compatibility?.ConvertAll(x =>
+                    (ServerTypeCompatibility) Enum.Parse(typeof(ServerTypeCompatibility), x));
             }
             set
             {

@@ -5,11 +5,11 @@ namespace OneAndOne.POCO
     public enum ServerType
     {
         [EnumMember(Value = "cloud")]
-        Cloud,
+        cloud,
         [EnumMember(Value = "baremetal")]
-        Baremetal,
+        baremetal,
         [EnumMember(Value = "dedicated")]
-        Dedicated
+        dedicated
     }
 
     public enum ServerAction
@@ -25,11 +25,11 @@ namespace OneAndOne.POCO
     public enum ServerTypeCompatibility
     {
         [EnumMember(Value = "vps")]
-        Vps,
+        vps,
         [EnumMember(Value = "cloud")]
-        Cloud,
+        cloud,
         [EnumMember(Value = "baremetal")]
-        Baremetal
+        baremetal
     }
 
     public enum OSImageType

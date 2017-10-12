@@ -34,12 +34,12 @@ namespace OneAndOne.POCO.Requests.Servers
         /// 
         private string server_type;
         [JsonProperty(PropertyName = "server_type")]
-        public ServerType State
+        public ServerType ServerType
         {
             get { return (ServerType)Enum.Parse(typeof(ServerType), server_type); }
             set
             {
-                server_type = ((ServerType)value).ToString();
+                server_type = ((ServerType)value).ToString("F");
             }
         }
 
