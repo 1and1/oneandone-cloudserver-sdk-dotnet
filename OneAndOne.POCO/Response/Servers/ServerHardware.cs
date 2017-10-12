@@ -1,55 +1,16 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OneAndOne.POCO.Response.Servers
 {
-    public class Hardware
+    public class ServerHardware : HardwareBase
     {
-        private string fixed_instance_size_id;
         [JsonProperty(PropertyName = "fixed_instance_size_id")]
-        public string FixedInstanceSizeId
-        {
-            get { return fixed_instance_size_id; }
-            set { fixed_instance_size_id = value; }
-        }
-        private string baremetal_model_id;
+        public string FixedInstanceSizeId { get; set; }
+
         [JsonProperty(PropertyName = "baremetal_model_id")]
-        public string BaremetalModelId
-        {
-            get { return baremetal_model_id; }
-            set { baremetal_model_id = value; }
-        }
-        private int vcore;
+        public string BaremetalModelId { get; set; }
+
         [JsonProperty(PropertyName = "vcore")]
-        public int Vcore
-        {
-            get { return vcore; }
-            set { vcore = value; }
-        }
-        private int cores_per_processor;
-        [JsonProperty(PropertyName = "cores_per_processor")]
-        public int CoresPerProcessor
-        {
-            get { return cores_per_processor; }
-            set { cores_per_processor = value; }
-        }
-        private float ram;
-        [JsonProperty(PropertyName = "ram")]
-        public float Ram
-        {
-            get { return ram; }
-            set { ram = value; }
-        }
-        private List<Hdd> hdds;
-        [JsonProperty(PropertyName = "hdds")]
-        public List<Hdd> Hdds
-        {
-            get { return hdds; }
-            set { hdds = value; }
-        }
+        public int Vcore { get; set; }
     }
 }

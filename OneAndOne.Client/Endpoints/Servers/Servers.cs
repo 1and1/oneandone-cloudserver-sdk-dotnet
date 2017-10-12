@@ -70,14 +70,14 @@ namespace OneAndOne.Client
         }
 
         /// <summary>
-        /// Returns a list of your baremetal servers.
+        /// Returns a list of baremetal models.
         /// </summary>
-        /// <param name="page">Allows to use pagination. Sets the number of servers that will be shown in each page.</param>
+        /// <param name="page">Allows to use pagination. Sets the number of baremetal models that will be shown in each page.</param>
         /// <param name="perPage">Current page to show.</param>
-        /// <param name="sort">Allows to sort the result by priority:sort=name retrieves a list of elements ordered by their names.sort=-creation_date retrieves a list of elements ordered according to their creation date in descending order of priority.</param>
-        /// <param name="query">Allows to search one string in the response and return the elements that contain it. In order to specify the string use parameter q:    q=My server</param>
-        /// <param name="fields">Returns only the parameters requested: fields=id,name,description,hardware.ram</param>
-        public List<ServerResponse> GetBaremetal(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
+        /// <param name="sort">Allows to sort the result by priority:sort=name retrieves a list of elements ordered by their names.</param>
+        /// <param name="query">Allows to search one string in the response and return the elements that contain it. In order to specify the string use parameter q: q=My baremetal model</param>
+        /// <param name="fields">Returns only the parameters requested: fields=id,name,hardware.ram</param>
+        public List<BaremetalResponse> GetBaremetal(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace OneAndOne.Client
                     requestUrl += string.Format("&fields={0}", fields);
                 }
                 var request = new RestRequest(requestUrl, Method.GET);
-                var result = restclient.Execute<List<ServerResponse>>(request);
+                var result = restclient.Execute<List<BaremetalResponse>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -231,16 +231,16 @@ namespace OneAndOne.Client
         /// <summary>
         /// Returns baremetal server's information.
         /// </summary>
-        /// <param name="server_id">Unique server's identifier.</param>
+        /// <param name="baremetal_model_id">Unique baremetal model's identifier.</param>
         /// 
-        public ServerResponse ShowBaremetal(string server_id)
+        public BaremetalResponse ShowBaremetal(string baremetal_model_id)
         {
             try
             {
-                var request = new RestRequest("/servers/baremetal_models/{server_id}", Method.GET);
-                request.AddUrlSegment("server_id", server_id);
+                var request = new RestRequest("/servers/baremetal_models/{baremetal_model_id}", Method.GET);
+                request.AddUrlSegment("baremetal_model_id", baremetal_model_id);
 
-                var result = restclient.Execute<ServerResponse>(request);
+                var result = restclient.Execute<BaremetalResponse>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);

@@ -116,9 +116,12 @@
     <Compile Include="Response\Servers\FirewallPolicyResponse.cs" />
     <Compile Include="Response\Servers\HardDiskDrives.cs" />
     <Compile Include="Response\Servers\LoadBalancers.cs" />
+    <Compile Include="Response\Servers\HardwareBase.cs" />
+    <Compile Include="Response\Servers\BaremetalModelHardware.cs" />
     <Compile Include="Response\Servers\ServerHardware.cs" />
     <Compile Include="Response\Servers\ServerImage.cs" />
     <Compile Include="Response\Servers\ServerIPS.cs" />
+    <Compile Include="Response\Servers\BaremetalResponse.cs" />
     <Compile Include="Response\Servers\ServerResponse.cs" />
     <Compile Include="Response\Servers\Snapshots.cs" />
     <Compile Include="Response\Servers\UpdateServerResponse.cs" />

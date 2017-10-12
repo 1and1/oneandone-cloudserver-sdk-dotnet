@@ -109,7 +109,7 @@ namespace OneAndOne.UnitTests
 
             var result = client.ServerIps.Create(new POCO.Requests.Servers.CreateServerIPRequest()
             {
-                Type = IPType.IPV4
+                Type = IPType.Ipv4
             }, server.Id);
 
             Assert.IsNotNull(result);

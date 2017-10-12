@@ -51,15 +51,21 @@ namespace OneAndOne.POCO.Response.ServerAppliances
             set { os_version = value; }
         }
 
-        private string server_type_compatibility;
+        private List<string> server_type_compatibility;
         [JsonProperty(PropertyName = "server_type_compatibility")]
         [JsonConverter(typeof(StringEnumConverter))]
-        public ServerTypeCompatibility ServerTypeCompatibility
+        public List<ServerTypeCompatibility> ServerTypeCompatibility
         {
-            get { return (ServerTypeCompatibility)Enum.Parse(typeof(ServerTypeCompatibility), server_type_compatibility); }
+            get
+            {
+                return server_type_compatibility.ConvertAll(delegate (string x)
+                {
+                    return (ServerTypeCompatibility)Enum.Parse(typeof(ServerTypeCompatibility), x);
+                });
+            }
             set
             {
-                server_type_compatibility = ((ServerTypeCompatibility)value).ToString();
+                server_type_compatibility = ((List<ServerTypeCompatibility>)value).Select(x => ((ServerTypeCompatibility)x).ToString()).ToList();
             }
         }
 
