@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace OneAndOne.POCO.Requests.Servers
 {
@@ -34,6 +35,7 @@ namespace OneAndOne.POCO.Requests.Servers
         /// 
         private string server_type;
         [JsonProperty(PropertyName = "server_type")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ServerType ServerType
         {
             get { return (ServerType)Enum.Parse(typeof(ServerType), server_type); }

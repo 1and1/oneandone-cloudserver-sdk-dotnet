@@ -1,7 +1,7 @@
 ﻿using OneAndOne.Client.Endpoints;
 using OneAndOne.Client.RESTHelpers;
-using OneAndOne.POCO.Requests.Servers;
 using OneAndOne.POCO.Response.Servers;
+using OneAndOne.POCO.Requests.Servers;
 using RestSharp;
 using System;
 using System.Collections.Generic;

@@ -1,9 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace OneAndOne.POCO.Response.Servers
 {
     /// <summary>
-    /// Server Main data 
+    /// Baremetal server data 
     /// </summary>
     public class BaremetalResponse
     {
@@ -16,5 +21,4 @@ namespace OneAndOne.POCO.Response.Servers
         [JsonProperty(PropertyName = "hardware")]
         public BaremetalModelHardware Hardware { get; set; }
     }
-
 }
