@@ -66,12 +66,12 @@ namespace OneAndOne.POCO.Response.ServerAppliances
             }
         }
 
-        private int architecture;
+        private int os_architecture;
 
-        public int Architecture
+        public int OsArchitecture
         {
-            get { return architecture; }
-            set { architecture = value; }
+            get { return os_architecture; }
+            set { os_architecture = value; }
         }
         private string os_image_type;
         [JsonConverter(typeof(StringEnumConverter))]
