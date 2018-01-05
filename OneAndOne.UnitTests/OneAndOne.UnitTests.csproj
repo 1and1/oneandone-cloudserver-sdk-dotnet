@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BlockStorage\BlockStoragesTest.cs" />
     <Compile Include="Common\CommonTest.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DVDISO\DVDIsosTest.cs" />
