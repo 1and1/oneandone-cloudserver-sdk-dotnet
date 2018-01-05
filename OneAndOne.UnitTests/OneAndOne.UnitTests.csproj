@@ -80,6 +80,7 @@
     <Compile Include="Servers\ServerHardwareTest.cs" />
     <Compile Include="SharedStorages\SharedStoragesTest.cs" />
     <Compile Include="SharedStorages\ServersSharedStorageTest.cs" />
+    <Compile Include="SshKeys\SshKeysTest.cs" />
     <Compile Include="Usages\UsagesTest.cs" />
     <Compile Include="Users\UserAPITest.cs" />
     <Compile Include="Users\UsersTest.cs" />
