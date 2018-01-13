@@ -31,6 +31,7 @@ For more information on the 1&1 .NET SDK see the [1&1 Community Portal](https://
   * [Ping](#ping)
   * [Pricing](#pricing)
   * [Datacenters](#datacenters)
+  * [SSH Keys](#ssh-keys)
 
 
 ## Overview
@@ -100,6 +101,7 @@ You can engage with us in the community and we'll be more than happy to answer a
 - [Ping](#ping)
 - [Pricing](#pricing)
 - [Datacenters](#datacenters)
+- [SSH Keys](#ssh-keys)
   
 
 There are two ways to initialize the 1&1 client. You can either have the API URL and token key in your app/web config, or you can pass the values in the constructor of the 1&1 client.
@@ -1205,6 +1207,37 @@ var removed = client.Roles.DeleteRoleUser(roleId, userId);
 **Returns information about a datacenter:**
 
 `var result = client.DataCenters.Show(dcId);`
+
+## SSH Keys
+
+**List ssh keys:**
+
+`var result = client.SshKeys.Get();`
+
+**Get a single ssh key:**
+
+`var result = client.SshKeys.Show(sshKeyId);`
+
+**Create an ssh key:**
+
+    var result = client.SshKeys.Create(new POCO.Requests.SshKeys.CreateSshKeyRequest()
+                {
+                    Description = "test description",
+                    Name = "TestSshKey",
+                    PublicKey = "ssh-rsa AAAAB3Nz..."
+                });
+				
+**Update an ssh key:**
+
+    var result = client.SshKeys.Update(new POCO.Requests.SshKeys.UpdateSshKeyRequest()
+            {
+                Description = "test description updated",
+                Name = "TestSshKeyUpdated"
+            }, sshKeyId);
+			
+**Remove an ssh key:**
+
+`var result = client.SshKeys.Delete(sshKeyId);`
 
 
 
