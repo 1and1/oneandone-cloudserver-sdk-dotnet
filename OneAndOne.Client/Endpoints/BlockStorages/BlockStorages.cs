@@ -234,7 +234,7 @@ namespace OneAndOne.Client.Endpoints.BlockStorages
         /// </summary>
         /// <param name="blockStorageId">Unique block storage's identifier.</param>
         /// 
-        public BlockStoragesResponse DeleteBlockStorageServer(BlockStorageServerRequest serverBlockStorage, string blockStorageId)
+        public BlockStoragesResponse DeleteBlockStorageServer(string blockStorageId)
         {
             try
             {
@@ -244,7 +244,6 @@ namespace OneAndOne.Client.Endpoints.BlockStorages
                     JsonSerializer = new CustomSerializer()
                 };
                 request.AddUrlSegment("block_storage_id", blockStorageId);
-                request.AddBody(serverBlockStorage);
                 request.AddHeader("Content-Type", "application/json");
 
                 var result = restclient.Execute<BlockStoragesResponse>(request);

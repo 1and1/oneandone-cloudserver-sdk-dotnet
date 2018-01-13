@@ -31,6 +31,7 @@ For more information on the 1&1 .NET SDK see the [1&1 Community Portal](https://
   * [Ping](#ping)
   * [Pricing](#pricing)
   * [Datacenters](#datacenters)
+  * [Block Storages](#block-storages)
   * [SSH Keys](#ssh-keys)
 
 
@@ -101,6 +102,7 @@ You can engage with us in the community and we'll be more than happy to answer a
 - [Ping](#ping)
 - [Pricing](#pricing)
 - [Datacenters](#datacenters)
+- [Block Storages](#block-storages)
 - [SSH Keys](#ssh-keys)
   
 
@@ -1238,6 +1240,57 @@ var removed = client.Roles.DeleteRoleUser(roleId, userId);
 **Remove an ssh key:**
 
 `var result = client.SshKeys.Delete(sshKeyId);`
+
+
+## Block Storages
+
+**List block storages:**
+
+`var result = client.BlockStorages.Get();`
+
+**Get a single block storage:**
+
+`var result = client.BlockStorages.Show(blockStorageId);`
+
+**Create a block storage:**
+
+    var result = client.BlockStorages.Create(new POCO.Requests.BlockStorages.CreateBlockStorageRequest()
+                {
+                    Description = "TestBlockStorage description",
+                    Name = "TestBlockStorage",
+                    Size = 60,
+                    DatacenterId = datacenterId
+                });
+				
+**Update a block storage:**
+
+    var result = client.BlockStorages.Update(new POCO.Requests.BlockStorages.UpdateBlockStorageRequest()
+            {
+                Description = "TestBlockStorage description updated",
+                Name = "TestBlockStorageUpdated",
+                Size = 70
+            }, blockStorageId);
+			
+**Remove a block storage:**
+
+`var result = client.BlockStorages.Delete(blockStorageId);`
+
+**Attach a servers to a block storage:**
+
+    var serverBlockStorage = new BlockStorageServerRequest()
+            {
+                ServerId = serverId
+            };
+
+    var result = client.BlockStorages.CreateServerBlockStorage(serverBlockStorage, blockStorageId);
+
+**Get the attached server from a block storage:**
+
+`var result = client.BlockStorages.GetBlockStorageServer(blockStorageId);`
+				
+**Detach a server from a block storage:**
+
+`var result = client.BlockStorages.DeleteBlockStorageServer(blockStorageId);`
 
 
 
