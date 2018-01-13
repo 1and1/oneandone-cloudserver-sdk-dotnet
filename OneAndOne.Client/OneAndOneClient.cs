@@ -17,6 +17,7 @@ using OneAndOne.Client.Endpoints.SharedStorages;
 using OneAndOne.Client.Endpoints.Usages;
 using OneAndOne.Client.Endpoints.Users;
 using OneAndOne.Client.Endpoints.Vpn;
+using OneAndOne.Client.Endpoints.SshKeys;
 using OneAndOne.Client.RESTHelpers;
 using System;
 using System.Collections.Generic;
@@ -352,6 +353,17 @@ namespace OneAndOne.Client
             get
             {
                 return new Common(configuration.ApiUrl, configuration.ApiKey);
+            }
+        }
+
+        /// <summary>
+        /// Vpn client
+        /// </summary>
+        public SshKeys SshKeys
+        {
+            get
+            {
+                return new SshKeys(configuration.ApiUrl, configuration.ApiKey);
             }
         }
     }

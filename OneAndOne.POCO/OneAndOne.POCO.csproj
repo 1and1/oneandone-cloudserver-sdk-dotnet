@@ -79,6 +79,8 @@
     <Compile Include="Requests\SharedStorages\AttachSharedStorageServerRequest.cs" />
     <Compile Include="Requests\SharedStorages\CreateSharedStorage.cs" />
     <Compile Include="Requests\SharedStorages\UpdateSharedStorage.cs" />
+    <Compile Include="Requests\SshKeys\UpdateSshKeyRequest.cs" />
+    <Compile Include="Requests\SshKeys\CreateSshKeyRequest.cs" />
     <Compile Include="Requests\Users\CreateUserRequest.cs" />
     <Compile Include="Requests\Users\UpdateUserRequest.cs" />
     <Compile Include="Requests\Vpn\CreateVpnRequest.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Response\SharedStorages\SharedStorageServerResponse.cs" />
     <Compile Include="Response\SharedStorages\SharedStoragesResponse.cs" />
     <Compile Include="Response\SharedStorages\ShareStorageAccessResponse.cs" />
+    <Compile Include="Response\SshKeys\SshKeyResponse.cs" />
     <Compile Include="Response\Usages\UsageResponse.cs" />
     <Compile Include="Response\Users\UserAPIKeyResponse.cs" />
     <Compile Include="Response\Users\UserResponse.cs" />
