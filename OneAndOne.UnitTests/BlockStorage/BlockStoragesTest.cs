@@ -131,5 +131,13 @@ namespace OneAndOne.UnitTests.BlockStorage
             Assert.IsNotNull(blockStorageServer);
             Assert.IsNotNull(blockStorageServer.Id);
         }
+
+        [TestMethod]
+        public void DetachBlockStorageFromServer()
+        {
+            var response = client.BlockStorages.DeleteBlockStorageServer(blockStorage.Id);
+
+            Assert.IsNotNull(response);
+        }
     }
 }
