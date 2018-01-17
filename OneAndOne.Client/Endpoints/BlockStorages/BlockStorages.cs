@@ -131,7 +131,8 @@ namespace OneAndOne.Client.Endpoints.BlockStorages
                 request.AddBody(blockStorage);
 
                 var result = restclient.Execute<BlockStoragesResponse>(request);
-                if (result.StatusCode != HttpStatusCode.Accepted)
+                if (result.StatusCode != HttpStatusCode.Accepted
+                    && result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
                 }
@@ -147,7 +148,7 @@ namespace OneAndOne.Client.Endpoints.BlockStorages
         /// Removes a block storage.
         /// </summary>
         /// <param name="blockStorageId">Unique block storage's identifier.</param>
-        public BlockStoragesResponse Delete(string blockStorageId)
+        public Object Delete(string blockStorageId)
         {
             try
             {
@@ -159,8 +160,9 @@ namespace OneAndOne.Client.Endpoints.BlockStorages
                 request.AddUrlSegment("block_storage_id", blockStorageId);
                 request.AddHeader("Content-Type", "application/json");
 
-                var result = restclient.Execute<BlockStoragesResponse>(request);
-                if (result.StatusCode != HttpStatusCode.Accepted)
+                var result = restclient.Execute<Object>(request);
+                if (result.StatusCode != HttpStatusCode.Accepted
+                    && result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
                 }
@@ -213,7 +215,10 @@ namespace OneAndOne.Client.Endpoints.BlockStorages
         {
             try
             {
-                var request = new RestRequest("/block_storages/{block_storage_id}/server", Method.GET);
+                var request = new RestRequest("/block_storages/{block_storage_id}/server", Method.GET){
+                    RequestFormat = DataFormat.Json,
+                    JsonSerializer = new CustomSerializer()
+                };
                 request.AddUrlSegment("block_storage_id", blockStorageId);
 
                 var result = restclient.Execute<Server>(request);
@@ -238,16 +243,12 @@ namespace OneAndOne.Client.Endpoints.BlockStorages
         {
             try
             {
-                var request = new RestRequest("/block_storages/{block_storage_id}/server", Method.DELETE)
-                {
-                    RequestFormat = DataFormat.Json,
-                    JsonSerializer = new CustomSerializer()
-                };
+                var request = new RestRequest("/block_storages/{block_storage_id}/server", Method.DELETE);
                 request.AddUrlSegment("block_storage_id", blockStorageId);
                 request.AddHeader("Content-Type", "application/json");
 
                 var result = restclient.Execute<BlockStoragesResponse>(request);
-                if (result.StatusCode != HttpStatusCode.Accepted)
+                if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
                 }

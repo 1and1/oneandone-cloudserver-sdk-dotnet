@@ -29,7 +29,7 @@ namespace OneAndOne.UnitTests
         {
             var client = OneAndOneClient.Instance(Configuration);
             var blockStorage = client.BlockStorages.Show(blockStorageId);
-            while (blockStorage != null && blockStorage.State == "CONFIGURING")
+            while (blockStorage != null && blockStorage.State != "POWERED_ON")
             {
                 Thread.Sleep(5000);
                 blockStorage = client.BlockStorages.Show(blockStorageId);
