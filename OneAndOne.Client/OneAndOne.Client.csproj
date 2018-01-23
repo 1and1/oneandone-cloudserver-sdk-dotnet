@@ -78,6 +78,7 @@
     <Compile Include="Endpoints\Servers\IPs.cs" />
     <Compile Include="Endpoints\SharedStorages\SharedStorages.cs" />
     <Compile Include="Endpoints\SharedStorages\SharedStorageServers.cs" />
+    <Compile Include="Endpoints\SshKeys\SshKeys.cs" />
     <Compile Include="Endpoints\Usages\Usages.cs" />
     <Compile Include="Endpoints\Users\UserAPIKeys.cs" />
     <Compile Include="Endpoints\Users\Users.cs" />
