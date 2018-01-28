@@ -18,6 +18,7 @@ using OneAndOne.Client.Endpoints.Usages;
 using OneAndOne.Client.Endpoints.Users;
 using OneAndOne.Client.Endpoints.Vpn;
 using OneAndOne.Client.Endpoints.SshKeys;
+using OneAndOne.Client.Endpoints.BlockStorages;
 using OneAndOne.Client.RESTHelpers;
 using System;
 using System.Collections.Generic;
@@ -364,6 +365,17 @@ namespace OneAndOne.Client
             get
             {
                 return new SshKeys(configuration.ApiUrl, configuration.ApiKey);
+            }
+        }
+
+        /// <summary>
+        /// BlockStorages client
+        /// </summary>
+        public BlockStorages BlockStorages
+        {
+            get
+            {
+                return new BlockStorages(configuration.ApiUrl, configuration.ApiKey);
             }
         }
     }

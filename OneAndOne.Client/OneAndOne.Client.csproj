@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\BlockStorages\BlockStorages.cs" />
     <Compile Include="Endpoints\Common\Common.cs" />
     <Compile Include="Endpoints\DataCenter\DataCenters.cs" />
     <Compile Include="Endpoints\DVDs\DVDs.cs" />
