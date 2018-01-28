@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\BlockStorages\BlockStorages.cs" />
     <Compile Include="Endpoints\Common\Common.cs" />
     <Compile Include="Endpoints\DataCenter\DataCenters.cs" />
     <Compile Include="Endpoints\DVDs\DVDs.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Endpoints\Servers\IPs.cs" />
     <Compile Include="Endpoints\SharedStorages\SharedStorages.cs" />
     <Compile Include="Endpoints\SharedStorages\SharedStorageServers.cs" />
+    <Compile Include="Endpoints\SshKeys\SshKeys.cs" />
     <Compile Include="Endpoints\Usages\Usages.cs" />
     <Compile Include="Endpoints\Users\UserAPIKeys.cs" />
     <Compile Include="Endpoints\Users\Users.cs" />

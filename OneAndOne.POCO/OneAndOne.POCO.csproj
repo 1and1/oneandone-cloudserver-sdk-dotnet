@@ -48,6 +48,9 @@
     <Compile Include="APISharedEnums.cs" />
     <Compile Include="Converters\TolerantEnumConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\BlockStorages\BlockStorageServerRequest.cs" />
+    <Compile Include="Requests\BlockStorages\UpdateBlockStorageRequest.cs" />
+    <Compile Include="Requests\BlockStorages\CreateBlockStorageRequest.cs" />
     <Compile Include="Requests\FirewallPolicies\AddFirewallPolicyRuleRequest.cs" />
     <Compile Include="Requests\FirewallPolicies\AssignFirewallServerIPRequest.cs" />
     <Compile Include="Requests\FirewallPolicies\CreateFirewallPolicyRequest.cs" />
@@ -79,10 +82,13 @@
     <Compile Include="Requests\SharedStorages\AttachSharedStorageServerRequest.cs" />
     <Compile Include="Requests\SharedStorages\CreateSharedStorage.cs" />
     <Compile Include="Requests\SharedStorages\UpdateSharedStorage.cs" />
+    <Compile Include="Requests\SshKeys\UpdateSshKeyRequest.cs" />
+    <Compile Include="Requests\SshKeys\CreateSshKeyRequest.cs" />
     <Compile Include="Requests\Users\CreateUserRequest.cs" />
     <Compile Include="Requests\Users\UpdateUserRequest.cs" />
     <Compile Include="Requests\Vpn\CreateVpnRequest.cs" />
     <Compile Include="Requests\Vpn\UpdateVpnRequest.cs" />
+    <Compile Include="Response\BlockStorages\BlockStoragesResponse.cs" />
     <Compile Include="Response\Common\PricingResponse.cs" />
     <Compile Include="Response\DataCenters\DataCenterResponse.cs" />
     <Compile Include="Response\DVDS\DVDResponse.cs" />
@@ -117,6 +123,7 @@
     <Compile Include="Response\SharedStorages\SharedStorageServerResponse.cs" />
     <Compile Include="Response\SharedStorages\SharedStoragesResponse.cs" />
     <Compile Include="Response\SharedStorages\ShareStorageAccessResponse.cs" />
+    <Compile Include="Response\SshKeys\SshKeyResponse.cs" />
     <Compile Include="Response\Usages\UsageResponse.cs" />
     <Compile Include="Response\Users\UserAPIKeyResponse.cs" />
     <Compile Include="Response\Users\UserResponse.cs" />

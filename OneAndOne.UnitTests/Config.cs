@@ -25,6 +25,17 @@ namespace OneAndOne.UnitTests
             }
         }
 
+        public static void WaitBlockStorageReady(string blockStorageId)
+        {
+            var client = OneAndOneClient.Instance(Configuration);
+            var blockStorage = client.BlockStorages.Show(blockStorageId);
+            while (blockStorage != null && blockStorage.State != "POWERED_ON")
+            {
+                Thread.Sleep(5000);
+                blockStorage = client.BlockStorages.Show(blockStorageId);
+            }
+        }
+
         public static void waitServerReady(string ServerId)
         {
             Thread.Sleep(5000);
