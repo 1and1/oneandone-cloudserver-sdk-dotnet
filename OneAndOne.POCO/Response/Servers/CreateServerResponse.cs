@@ -59,9 +59,9 @@ namespace OneAndOne.POCO.Response.Servers
             get { return status; }
             set { status = value; }
         }
-        private Hardware hardware;
+        private ServerHardware hardware;
         [JsonProperty(PropertyName = "hardware")]
-        public Hardware Hardware
+        public ServerHardware Hardware
         {
             get { return hardware; }
             set { hardware = value; }

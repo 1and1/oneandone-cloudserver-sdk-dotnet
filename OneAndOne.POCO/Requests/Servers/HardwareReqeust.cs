@@ -21,6 +21,18 @@ namespace OneAndOne.POCO.Requests.Servers
             set { fixed_instance_size_id = value; }
         }
         /// <summary>
+        /// Required: ID of the desired baremetal model
+        /// (if server_type is set to "baremetal")
+        /// </summary>
+        /// 
+        private string baremetal_model_id;
+        [JsonProperty(PropertyName = "baremetal_model_id")]
+        public string BaremetalModelId
+        {
+            get { return baremetal_model_id; }
+            set { baremetal_model_id = value; }
+        }
+        /// <summary>
         /// Required: Total amount of processors minimum: "1",maximum: "16",multipleOf: "1",.
         /// </summary>
         /// 

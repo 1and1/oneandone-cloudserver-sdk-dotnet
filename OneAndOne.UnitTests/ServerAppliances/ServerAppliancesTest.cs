@@ -11,7 +11,7 @@ namespace OneAndOne.UnitTests.ServerAppliances
         [TestMethod]
         public void GetServerAppliances()
         {
-            var result = client.ServerAppliances.Get();
+            var result = client.ServerAppliances.Get(null, null, null, "ubuntu", null);
 
             Assert.IsNotNull(result);
         }

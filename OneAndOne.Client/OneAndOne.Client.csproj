@@ -72,6 +72,7 @@
     <Compile Include="Endpoints\PublicIPs\PublicIPs.cs" />
     <Compile Include="Endpoints\ResourceBase .cs" />
     <Compile Include="Endpoints\Roles\Roles.cs" />
+    <Compile Include="Endpoints\RecoveryAppliances\RecoveryAppliances.cs" />
     <Compile Include="Endpoints\ServerAppliances\ServerAppliances.cs" />
     <Compile Include="Endpoints\Servers\HardDiskDrives.cs" />
     <Compile Include="Endpoints\Servers\Image.cs" />

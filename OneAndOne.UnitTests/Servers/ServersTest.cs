@@ -17,6 +17,7 @@ namespace OneAndOne.UnitTests
     {
         static OneAndOneClient client = OneAndOneClient.Instance(Config.Configuration);
         static ServerResponse server = null;
+        static BaremetalResponse baremetalServer = null;
         static ServerResponse clone = null;
         static ServerResponse flavoredServer = null;
         static POCO.Response.ServerAppliances.ServerAppliancesResponse appliance = null;
@@ -24,44 +25,87 @@ namespace OneAndOne.UnitTests
         static List<string> serverIds = new List<string>();
 
         [ClassInitialize]
-        static public void ServerHardwareInit(TestContext context)
+        public static void ServerHardwareInit(TestContext context)
         {
-            int vcore = 4;
-            int CoresPerProcessor = 2;
-            var appliances = client.ServerAppliances.Get(null, null, null, "coreos", null);
-            if (appliances == null || appliances.Count() == 0)
+            InitCloudServer();
+            InitBaremetalServer();
+        }
+
+        private static void InitBaremetalServer()
+        {
+            var baremetalModels = client.Servers.GetBaremetal();
+
+            var appliances = client.ServerAppliances.Get(null, null, null, "centos", null);
+            if (appliances == null || !appliances.Any())
             {
-                appliance = client.ServerAppliances.Get().FirstOrDefault();
+                appliance = client.ServerAppliances.Get().FirstOrDefault(a => a.ServerTypeCompatibility.Contains(ServerTypeCompatibility.baremetal));
             }
             else
             {
-                appliance = appliances.FirstOrDefault();
+                appliance = appliances.FirstOrDefault(a => a.ServerTypeCompatibility.Contains(ServerTypeCompatibility.baremetal));
+            }
+
+            var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
+            {
+                ApplianceId = appliance?.Id,
+                Name = "baremetal .net",
+                Description = "baremetal server test .net",
+                Hardware = new POCO.Requests.Servers.HardwareRequest()
+                {
+                    BaremetalModelId = baremetalModels.FirstOrDefault()?.Id
+                },
+                PowerOn = false,
+                ServerType = ServerType.baremetal
+            });
+
+            Config.waitServerReady(result.Id);
+            baremetalServer = client.Servers.ShowBaremetal(result.Id);
+            serverIds.Add(baremetalServer.Id);
+        }
+
+        private static void InitCloudServer()
+        {
+            int vcore = 4;
+            int CoresPerProcessor = 2;
+            var appliances = client.ServerAppliances.Get(null, null, null, "centos", null);
+            if (appliances == null || !appliances.Any())
+            {
+                appliance = client.ServerAppliances.Get().FirstOrDefault(a => a.ServerTypeCompatibility.Contains(ServerTypeCompatibility.cloud));
+            }
+            else
+            {
+                appliance = appliances.FirstOrDefault(a => a.ServerTypeCompatibility.Contains(ServerTypeCompatibility.cloud));
             }
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
                 ApplianceId = appliance != null ? appliance.Id : null,
-                Name = "main1 server test .net",
+                Name = "main server test .net2",
                 Description = "desc",
                 Hardware = new POCO.Requests.Servers.HardwareRequest()
                 {
                     CoresPerProcessor = CoresPerProcessor,
                     Hdds = new List<POCO.Requests.Servers.HddRequest>()
+                    {
                         {
-                            {new POCO.Requests.Servers.HddRequest()
+                            new POCO.Requests.Servers.HddRequest()
                             {
-                                IsMain=true,
-                                Size=20,
-                            }},
-                            {new POCO.Requests.Servers.HddRequest()
-                            {
-                                IsMain=false,
-                                Size=20,
-                            }}
+                                IsMain = true,
+                                Size = 20,
+                            }
                         },
+                        {
+                            new POCO.Requests.Servers.HddRequest()
+                            {
+                                IsMain = false,
+                                Size = 20,
+                            }
+                        }
+                    },
                     Ram = 4,
                     Vcore = vcore
                 },
                 PowerOn = false,
+                ServerType = ServerType.cloud
             });
 
             Config.waitServerReady(result.Id);
@@ -79,7 +123,7 @@ namespace OneAndOne.UnitTests
         }
 
         [ClassCleanup]
-        static public void ServerHardwareClean()
+        public static void ServerHardwareClean()
         {
             foreach (var id in serverIds)
             {
@@ -138,6 +182,14 @@ namespace OneAndOne.UnitTests
             Assert.IsTrue(servers.Count > 0);
         }
         [TestMethod]
+        public void GetBaremetalServers()
+        {
+            var servers = client.Servers.GetBaremetal();
+
+            Assert.IsNotNull(servers);
+            Assert.IsTrue(servers.Count > 0);
+        }
+        [TestMethod]
         public void GetServersWithPaging()
         {
             var servers = client.Servers.Get(1, 3, null);
@@ -147,7 +199,7 @@ namespace OneAndOne.UnitTests
         }
 
         [TestMethod]
-        public void GetAvailableServerFalvours()
+        public void GetAvailableServerFlavours()
         {
             var servers = client.Servers.GetAvailableFixedServers();
 

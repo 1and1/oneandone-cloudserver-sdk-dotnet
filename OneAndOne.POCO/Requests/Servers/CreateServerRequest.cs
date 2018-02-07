@@ -1,11 +1,11 @@
-﻿using OneAndOne.POCO.Response.Servers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace OneAndOne.POCO.Requests.Servers
 {
@@ -27,6 +27,22 @@ namespace OneAndOne.POCO.Requests.Servers
         {
             get { return name; }
             set { name = value; }
+        }
+
+        /// <summary>
+        /// Type of the server ["cloud", "baremetal"].
+        /// </summary>
+        /// 
+        private string server_type;
+        [JsonProperty(PropertyName = "server_type")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ServerType ServerType
+        {
+            get { return (ServerType)Enum.Parse(typeof(ServerType), server_type); }
+            set
+            {
+                server_type = ((ServerType)value).ToString("F");
+            }
         }
 
         //public string name;

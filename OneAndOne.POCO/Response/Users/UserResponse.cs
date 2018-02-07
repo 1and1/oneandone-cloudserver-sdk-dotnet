@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using OneAndOne.POCO.Response.Roles;
 
 namespace OneAndOne.POCO.Response.Users
 {
@@ -58,6 +60,16 @@ namespace OneAndOne.POCO.Response.Users
             get { return api; }
             set { api = value; }
         }
+
+        [JsonProperty("role")]
+        public UserRoleResponse Role { get; set; }
+
+        //[JsonProperty("role")]
+        //public UserRoleResponse Role
+        //{
+        //    get { return role; }
+        //    set { role = value; }
+        //}
     }
 
     public class ApiResponse
@@ -82,6 +94,23 @@ namespace OneAndOne.POCO.Response.Users
         {
             get { return allowed_ips; }
             set { allowed_ips = value; }
+        }
+    }
+
+    public class UserRoleResponse
+    {
+        private string id;
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
         }
     }
 }
