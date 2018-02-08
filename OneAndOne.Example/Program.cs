@@ -115,7 +115,7 @@ namespace OneAndOne.Example
             //create a public IP and use it for the server creation
             var publicIp = client.PublicIPs.Create(new POCO.Requests.PublicIPs.CreatePublicIPRequest()
             {
-                Type = IPType.IPV4,
+                Type = IPType.Ipv4,
             });
 
             Console.WriteLine("Creating Server with name 'Example Server .net'");

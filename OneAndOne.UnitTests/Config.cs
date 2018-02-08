@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using OneAndOne.POCO;
 
 namespace OneAndOne.UnitTests
 {
@@ -155,13 +156,13 @@ namespace OneAndOne.UnitTests
             int CoresPerProcessor = 2;
             var appliances = client.ServerAppliances.Get(null, null, null, "coreos", null);
             POCO.Response.ServerAppliances.ServerAppliancesResponse appliance = null;
-            if (appliances == null || appliances.Count() == 0)
+            if (appliances == null || !appliances.Any())
             {
-                appliance = client.ServerAppliances.Get().FirstOrDefault();
+                appliance = client.ServerAppliances.Get().FirstOrDefault(a => a.ServerTypeCompatibility.Contains(ServerTypeCompatibility.cloud));
             }
             else
             {
-                appliance = appliances.FirstOrDefault();
+                appliance = appliances.FirstOrDefault(a => a.ServerTypeCompatibility.Contains(ServerTypeCompatibility.cloud));
             }
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
@@ -182,6 +183,7 @@ namespace OneAndOne.UnitTests
                     Ram = 4,
                     Vcore = vcore
                 },
+                ServerType = ServerType.cloud,
                 PowerOn = powerON,
             });
             return client.Servers.Show(result.Id);
