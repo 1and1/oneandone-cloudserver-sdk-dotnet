@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace OneAndOne.POCO
 {
+    public enum ServerType
+    {
+        [EnumMember(Value = "cloud")]
+        cloud,
+        [EnumMember(Value = "baremetal")]
+        baremetal,
+        [EnumMember(Value = "dedicated")]
+        dedicated
+    }
 
     public enum ServerAction
     {
@@ -16,6 +20,16 @@ namespace OneAndOne.POCO
     public enum ServerActionMethod
     {
         SOFTWARE, HARDWARE
+    }
+
+    public enum ServerTypeCompatibility
+    {
+        [EnumMember(Value = "vps")]
+        vps,
+        [EnumMember(Value = "cloud")]
+        cloud,
+        [EnumMember(Value = "baremetal")]
+        baremetal
     }
 
     public enum OSImageType

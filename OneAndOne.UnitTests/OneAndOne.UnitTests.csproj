@@ -73,6 +73,7 @@
     <Compile Include="PrivateNetworks\PrivateNetworkTest.cs" />
     <Compile Include="PublicIPs\PublicIPsTest.cs" />
     <Compile Include="Roles\RolesTests.cs" />
+    <Compile Include="RecoveryAppliances\RecoveryAppliancesTest.cs" />
     <Compile Include="ServerAppliances\ServerAppliancesTest.cs" />
     <Compile Include="Servers\ServerImagesTest.cs" />
     <Compile Include="Servers\ServerIpsTest.cs" />
@@ -125,6 +126,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="PublicIPs\PublicIPs.orderedtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RecoveryAppliances\RecoveryAppliances.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ServerAppliances\ServerAppliances.orderedtest">

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OneAndOne.POCO.Converters;
+using OneAndOne.POCO.Response.Servers;
 
 namespace OneAndOne.POCO.Response.ServerAppliances
 {
@@ -26,13 +28,13 @@ namespace OneAndOne.POCO.Response.ServerAppliances
         }
 
         private List<string> available_datacenters;
-
+        [JsonConverter(typeof(SingleValueArrayConverter<string>))]
+        [JsonProperty(PropertyName = "available_datacenters")]
         public List<string> AvailableDatacenters
         {
             get { return available_datacenters; }
             set { available_datacenters = value; }
         }
-
 
         private string os;
 
@@ -48,12 +50,28 @@ namespace OneAndOne.POCO.Response.ServerAppliances
             get { return os_version; }
             set { os_version = value; }
         }
-        private int architecture;
 
-        public int Architecture
+        private List<string> server_type_compatibility;
+        [JsonProperty(PropertyName = "server_type_compatibility")]
+        public List<ServerTypeCompatibility> ServerTypeCompatibility
         {
-            get { return architecture; }
-            set { architecture = value; }
+            get
+            {
+                return server_type_compatibility?.ConvertAll(x =>
+                    (ServerTypeCompatibility) Enum.Parse(typeof(ServerTypeCompatibility), x));
+            }
+            set
+            {
+                server_type_compatibility = ((List<ServerTypeCompatibility>)value).Select(x => ((ServerTypeCompatibility)x).ToString()).ToList();
+            }
+        }
+
+        private int os_architecture;
+
+        public int OsArchitecture
+        {
+            get { return os_architecture; }
+            set { os_architecture = value; }
         }
         private string os_image_type;
         [JsonConverter(typeof(StringEnumConverter))]

@@ -24,7 +24,7 @@ namespace OneAndOne.UnitTests.PublicIPs
             var result = client.PublicIPs.Create(new POCO.Requests.PublicIPs.CreatePublicIPRequest()
             {
                 ReverseDns = randomValue,
-                Type = IPType.IPV4
+                Type = IPType.Ipv4
             });
 
             ip = result;

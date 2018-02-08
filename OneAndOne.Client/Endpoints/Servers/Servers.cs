@@ -1,7 +1,7 @@
 ﻿using OneAndOne.Client.Endpoints;
 using OneAndOne.Client.RESTHelpers;
-using OneAndOne.POCO.Requests.Servers;
 using OneAndOne.POCO.Response.Servers;
+using OneAndOne.POCO.Requests.Servers;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -57,6 +57,55 @@ namespace OneAndOne.Client
                 }
                 var request = new RestRequest(requestUrl, Method.GET);
                 var result = restclient.Execute<List<ServerResponse>>(request);
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of baremetal models.
+        /// </summary>
+        /// <param name="page">Allows to use pagination. Sets the number of baremetal models that will be shown in each page.</param>
+        /// <param name="perPage">Current page to show.</param>
+        /// <param name="sort">Allows to sort the result by priority:sort=name retrieves a list of elements ordered by their names.</param>
+        /// <param name="query">Allows to search one string in the response and return the elements that contain it. In order to specify the string use parameter q: q=My baremetal model</param>
+        /// <param name="fields">Returns only the parameters requested: fields=id,name,hardware.ram</param>
+        public List<BaremetalResponse> GetBaremetal(int? page = null, int? perPage = null, string sort = null, string query = null, string fields = null)
+        {
+            try
+            {
+
+                string requestUrl = "/servers/baremetal_models?";
+
+                if (page != null)
+                {
+                    requestUrl += string.Format("&page={0}", page);
+                }
+                if (perPage != null)
+                {
+                    requestUrl += string.Format("&per_page={0}", perPage);
+                }
+                if (!string.IsNullOrEmpty(sort))
+                {
+                    requestUrl += string.Format("&sort={0}", sort);
+                }
+                if (!string.IsNullOrEmpty(query))
+                {
+                    requestUrl += string.Format("&q={0}", query);
+                }
+                if (!string.IsNullOrEmpty(fields))
+                {
+                    requestUrl += string.Format("&fields={0}", fields);
+                }
+                var request = new RestRequest(requestUrl, Method.GET);
+                var result = restclient.Execute<List<BaremetalResponse>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
@@ -167,6 +216,31 @@ namespace OneAndOne.Client
                 request.AddUrlSegment("server_id", server_id);
 
                 var result = restclient.Execute<ServerResponse>(request);
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(result.Content);
+                }
+                return result.Data;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns baremetal server's information.
+        /// </summary>
+        /// <param name="baremetal_model_id">Unique baremetal model's identifier.</param>
+        /// 
+        public BaremetalResponse ShowBaremetal(string baremetal_model_id)
+        {
+            try
+            {
+                var request = new RestRequest("/servers/baremetal_models/{baremetal_model_id}", Method.GET);
+                request.AddUrlSegment("baremetal_model_id", baremetal_model_id);
+
+                var result = restclient.Execute<BaremetalResponse>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);

@@ -26,6 +26,7 @@ For more information on the 1&1 .NET SDK see the [1&1 Community Portal](https://
   * [Users](#users)
   * [Roles](#roles)
   * [Usages](#usages)
+  * [Recovery Appliances](#recovery-appliances)
   * [Server Appliances](#server-appliances)
   * [DVD ISO](#dvd-iso)
   * [Ping](#ping)
@@ -97,6 +98,7 @@ You can engage with us in the community and we'll be more than happy to answer a
 - [Users](#users)
 - [Roles](#roles)
 - [Usages](#usages)
+- [Recovery Appliances](#recovery-appliances)
 - [Server Appliances](#server-appliances)
 - [DVD ISO](#dvd-iso)
 - [Ping](#ping)
@@ -1160,6 +1162,17 @@ var removed = client.Roles.DeleteRoleUser(roleId, userId);
 **Return a list of your usages:**
 
 `var result = client.Usages.Get(PeriodType.LAST_24H);`
+
+
+## Recovery Appliances
+
+**Returns a list of all the appliances that you can use for recovering purposes:**
+
+`var result = client.RecoveryAppliances.Get();`
+
+**Return Information about specific recovery appliance:**
+
+`var result = client.RecoveryAppliances.Show(appliancesId);`
 
 
 ## Server Appliances

@@ -16,6 +16,7 @@ namespace OneAndOne.POCO.Response.Servers
             get { return id; }
             set { id = value; }
         }
+
         private int size;
         [JsonProperty(PropertyName = "size")]
         public int Size
@@ -23,6 +24,7 @@ namespace OneAndOne.POCO.Response.Servers
             get { return size; }
             set { size = value; }
         }
+
         private bool is_main;
         [JsonProperty(PropertyName = "is_main")]
         public bool IsMain
@@ -30,5 +32,8 @@ namespace OneAndOne.POCO.Response.Servers
             get { return is_main; }
             set { is_main = value; }
         }
+
+        [JsonProperty(PropertyName = "unit")]
+        public string Unit { get; set; }
     }
 }

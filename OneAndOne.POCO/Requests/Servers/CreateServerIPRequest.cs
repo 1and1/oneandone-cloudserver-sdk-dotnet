@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace OneAndOne.POCO.Requests.Servers
 {
@@ -24,7 +21,9 @@ namespace OneAndOne.POCO.Requests.Servers
     [JsonConverter(typeof(StringEnumConverter))]
     public enum IPType
     {
-        IPV4,
-        IPV6
+        [EnumMember(Value = "IPV4")]
+        Ipv4,
+        [EnumMember(Value = "IPV6")]
+        Ipv6
     }
 }
