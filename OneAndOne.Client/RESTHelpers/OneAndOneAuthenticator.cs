@@ -3,6 +3,7 @@ using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,8 @@ namespace OneAndOne.Client.RESTAuth
 
         public OneAndOneAuthenticator(string apiToken)
         {
+            System.Net.ServicePointManager.SecurityProtocol =
+SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             _apiToken = apiToken;
         }
 

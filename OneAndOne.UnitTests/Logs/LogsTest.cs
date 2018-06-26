@@ -22,7 +22,7 @@ namespace OneAndOne.UnitTests.Logs
         public void ShowLog()
         {
             Random random = new Random();
-            var logs = client.Logs.Get(PeriodType.LAST_24H);
+            var logs = client.Logs.Get(PeriodType.LAST_7D);
             var log = logs[random.Next(logs.Count - 1)];
 
             var result = client.Logs.Show(log.Id);
