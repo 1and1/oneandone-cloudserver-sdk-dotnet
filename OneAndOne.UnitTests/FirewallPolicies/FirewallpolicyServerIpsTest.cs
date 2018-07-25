@@ -55,14 +55,14 @@ namespace OneAndOne.UnitTests.FirewallPolicies
         [ClassCleanup]
         static public void TestClean()
         {
+            Config.waitServerReady(server.Id);
+            client.Servers.Delete(server.Id, false);
+            Config.waitServerDeleted(server.Id);
             if (firewall != null)
             {
-                UnassignFirewallPolicyServerIp();
                 Config.waitFirewallPolicyReady(firewall.Id);
                 client.FirewallPolicies.Delete(firewall.Id);
             }
-            Config.waitServerReady(server.Id);
-            client.Servers.Delete(server.Id, false);
         }
         [TestMethod]
         public void GetFirewallPolicyServerIps()
@@ -82,15 +82,5 @@ namespace OneAndOne.UnitTests.FirewallPolicies
             Assert.IsNotNull(result.Id);
         }
 
-        static public void UnassignFirewallPolicyServerIp()
-        {
-            var result = client.FirewallPolicies.DeleteFirewallPolicyServerIP(firewall.Id, server.Ips[0].Id);
-
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Id);
-            Config.waitFirewallPolicyReady(firewall.Id);
-            var updatedpolicy = client.FirewallPolicies.Show(firewall.Id);
-            Assert.IsTrue(!updatedpolicy.ServerIps.Any(ip => ip.Id == firewall.ServerIps[0].Id));
-        }
     }
 }

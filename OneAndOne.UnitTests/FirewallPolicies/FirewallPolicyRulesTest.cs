@@ -45,10 +45,10 @@ namespace OneAndOne.UnitTests.FirewallPolicies
                 {
                     {new OneAndOne.POCO.Requests.FirewallPolicies.RuleRequest()
                     {
-                        PortFrom =randomPort,
-                    PortTo = randomPort,
-                    Protocol = RuleProtocol.TCP,
-                    Source = "0.0.0.0"
+                        Port=randomPort.ToString(),
+                        Action=RuleAction.allow,
+                        Protocol = RuleProtocol.TCP,
+                        Source = "0.0.0.0"
                     }}
                 }
             };

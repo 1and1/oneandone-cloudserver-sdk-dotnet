@@ -54,7 +54,6 @@ namespace OneAndOne.POCO.Response.LoadBalancers
             set { ip = value; }
         }
         private string health_check_test;
-        [JsonConverter(typeof(StringEnumConverter))]
         public HealthCheckTestTypes HealthCheckTest
         {
             get { return (HealthCheckTestTypes)Enum.Parse(typeof(HealthCheckTestTypes), health_check_test); }
@@ -99,7 +98,6 @@ namespace OneAndOne.POCO.Response.LoadBalancers
             set { persistence_time = value; }
         }
         private string method;
-        [JsonConverter(typeof(StringEnumConverter))]
         public LoadBalancerMethod Method
         {
             get { return (LoadBalancerMethod)Enum.Parse(typeof(LoadBalancerMethod), method); }
@@ -148,7 +146,6 @@ namespace OneAndOne.POCO.Response.LoadBalancers
             set { id = value; }
         }
         private string protocol;
-        [JsonConverter(typeof(StringEnumConverter))]
         public LBRuleProtocol Protocol
         {
             get { return (LBRuleProtocol)Enum.Parse(typeof(LBRuleProtocol), protocol); }

@@ -105,7 +105,12 @@ namespace OneAndOne.POCO.Response
     {
         TCP, UDP, ICMP, AH, ESP, GRE,
         [EnumMember(Value = "TCP/UDP")]
-        TCPUDP, NULL
+        TCPUDP,ANY, NULL
+    }
+
+    public enum RuleAction
+    {
+        [EnumMember(Value = "allow")] allow, [EnumMember(Value = "deny")] deny, NULL
     }
     public class FirewallRule
     {
@@ -153,6 +158,39 @@ namespace OneAndOne.POCO.Response
         {
             get { return source; }
             set { source = value; }
+        }
+
+        private string port;
+
+        public string Port
+        {
+            get { return port; }
+            set { port = value; }
+        }
+
+        private string action;
+        [JsonConverter(typeof(StringEnumConverter))]
+        public RuleAction Action
+        {
+            get
+            {
+                if (action != null)
+                    return (RuleAction)Enum.Parse(typeof(RuleAction), action);
+                else
+                    return RuleAction.NULL;
+            }
+            set
+            {
+                action = ((RuleAction)value).ToString();
+            }
+        }
+
+        private string description;
+
+        public string Descriptoin
+        {
+            get { return description; }
+            set { description = value; }
         }
     }
 }
