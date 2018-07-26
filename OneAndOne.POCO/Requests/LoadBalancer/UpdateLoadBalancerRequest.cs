@@ -54,10 +54,7 @@ namespace OneAndOne.POCO.Requests.LoadBalancer
         }
 
         private bool persistence;
-        /// <summary>
-        /// Required:Persistence time in seconds. Required if persistence is enabled."minimum": "30","maximum": "1200", "multipleOf": "1",
-        /// </summary>
-        /// 
+       
         [JsonProperty(PropertyName = "persistence")]
         public bool Persistence
         {
@@ -66,6 +63,10 @@ namespace OneAndOne.POCO.Requests.LoadBalancer
         }
         private int persistence_time;
 
+        /// <summary>
+        /// Required:Persistence time in seconds. Required if persistence is enabled."minimum": "30","maximum": "1200", "multipleOf": "1",
+        /// </summary>
+        /// 
         [JsonProperty(PropertyName = "persistence_time")]
         public int PersistenceTime
         {

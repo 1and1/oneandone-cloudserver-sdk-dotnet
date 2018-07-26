@@ -49,16 +49,16 @@ namespace OneAndOne.POCO.Requests.FirewallPolicies
             }
         }
 
-        private int port_from;
+        private int? port_from;
         [JsonProperty(PropertyName = "port_from")]
-        public int PortFrom
+        public int? PortFrom
         {
             get { return port_from; }
             set { port_from = value; }
         }
-        private int port_to;
+        private int? port_to;
         [JsonProperty(PropertyName = "port_to")]
-        public int PortTo
+        public int? PortTo
         {
             get { return port_to; }
             set { port_to = value; }
@@ -69,6 +69,40 @@ namespace OneAndOne.POCO.Requests.FirewallPolicies
         {
             get { return source; }
             set { source = value; }
+        }
+
+        private string port;
+        [JsonProperty(PropertyName = "port")]
+        public string Port
+        {
+            get { return port; }
+            set { port = value; }
+        }
+
+        private string action = "allow";
+        [JsonProperty(PropertyName = "action")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public RuleAction Action
+        {
+            get
+            {
+                if (action != null)
+                    return (RuleAction)Enum.Parse(typeof(RuleAction), action);
+                else
+                    return RuleAction.NULL;
+            }
+            set
+            {
+                action = ((RuleAction)value).ToString();
+            }
+        }
+
+        private string description;
+        [JsonProperty(PropertyName = "description")]
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
         }
     }
 }

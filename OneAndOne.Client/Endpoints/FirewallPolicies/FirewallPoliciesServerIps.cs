@@ -97,37 +97,7 @@ namespace OneAndOne.Client.Endpoints.FirewallPolicies
             }
         }
 
-        /// <summary>
-        /// Unassigns a server/IP from a firewall policy.
-        /// </summary>
-        /// <param name="firewall_id">Unique firewall's identifier.</param>
-        /// <param name="server_ip"> Unique IP's identifier.</param>
-        /// 
-        public FirewallPolicyResponse DeleteFirewallPolicyServerIP(string firewall_id, string server_ip)
-        {
-            try
-            {
-                var request = new RestRequest("/firewall_policies/{firewall_id}/server_ips/{server_ip}", Method.DELETE)
-                {
-                    RequestFormat = DataFormat.Json,
-                    JsonSerializer = new CustomSerializer()
-                };
-                request.AddUrlSegment("firewall_id", firewall_id);
-                request.AddUrlSegment("server_ip", server_ip);
-                request.AddHeader("Content-Type", "application/json");
-
-                var result = restclient.Execute<FirewallPolicyResponse>(request);
-                if (result.StatusCode != HttpStatusCode.Accepted)
-                {
-                    throw new Exception(result.Content);
-                }
-                return result.Data;
-            }
-            catch
-            {
-                throw;
-            }
-        }
+        
         #endregion
     }
 }

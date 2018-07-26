@@ -42,10 +42,28 @@ namespace OneAndOne.UnitTests
             Thread.Sleep(5000);
             var client = OneAndOneClient.Instance(Configuration);
             var server = client.Servers.Show(ServerId);
-            while (server != null && ((server.Status.State != POCO.Response.Servers.ServerState.POWERED_ON && server.Status.State != POCO.Response.Servers.ServerState.POWERED_OFF) || (server.Status.Percent != 0 && server.Status.Percent != 99)))
+            while (server != null && ((server.Status.State != POCO.Response.Servers.ServerState.POWERED_ON && server.Status.State != POCO.Response.Servers.ServerState.POWERED_OFF) 
+                || (server.Status.Percent != 0)))
             {
                 Thread.Sleep(10000);
                 server = client.Servers.Show(ServerId);
+            }
+        }
+
+        public static void waitServerDeleted(string ServerId)
+        {
+            Thread.Sleep(5000);
+            var client = OneAndOneClient.Instance(Configuration);
+            while (true)
+            {
+                try
+                {
+                    var server = client.Servers.Show(ServerId);
+                }
+                catch (Exception ex)
+                {
+                    return;
+                }
             }
         }
 
@@ -98,7 +116,7 @@ namespace OneAndOne.UnitTests
         {
             var client = OneAndOneClient.Instance(Configuration);
             var img = client.Images.Show(imgId);
-            while (img.State != "ACTIVE" && img.State!= "ENABLED")
+            while (img.State != "ACTIVE" && img.State != "ENABLED")
             {
                 Thread.Sleep(5000);
                 img = client.Images.Show(img.Id);
@@ -142,14 +160,23 @@ namespace OneAndOne.UnitTests
             }
             catch (Exception ex)
             {
-                if (ex.Message != "{\"type\":\"ELEMENT_NOT_FOUND\",\"message\":\"\",\"errors\":null}")
-                {
-                    throw ex;
-                }
+                return;
             }
         }
 
-        public static ServerResponse CreateTestServer(string serverName, bool powerON=true)
+        public static void waitIpReady(string ipId)
+        {
+
+            var client = OneAndOneClient.Instance(Configuration);
+            var publicIP = client.PublicIPs.Show(ipId);
+            while (publicIP.State != "ACTIVE")
+            {
+                Thread.Sleep(5000);
+                publicIP = client.PublicIPs.Show(publicIP.Id);
+            }
+        }
+
+        public static ServerResponse CreateTestServer(string serverName, bool powerON = true)
         {
             var client = OneAndOneClient.Instance(Configuration);
             int vcore = 4;

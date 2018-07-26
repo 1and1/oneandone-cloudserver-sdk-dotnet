@@ -24,6 +24,14 @@ namespace OneAndOne.POCO.Requests.Servers
             set { name = value; }
         }
 
+        private string serverIp;
+        [JsonProperty(PropertyName = "server_ip")]
+        public string ServerIp
+        {
+            get { return serverIp; }
+            set { serverIp = value; }
+        }
+
         private string public_name;
         [JsonProperty(PropertyName = "public_name")]
         public string PublicName
