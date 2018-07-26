@@ -33,7 +33,7 @@ namespace OneAndOne.POCO.Requests.Servers
         /// Type of the server ["cloud", "baremetal"].
         /// </summary>
         /// 
-        private string server_type;
+        private string server_type="cloud";
         [JsonProperty(PropertyName = "server_type")]
         [JsonConverter(typeof(StringEnumConverter))]
         public ServerType ServerType

@@ -27,7 +27,7 @@ namespace OneAndOne.UnitTests
         {
             int vcore = 4;
             int CoresPerProcessor = 2;
-            var appliances = client.ServerAppliances.Get(null, null, null, "coreos", null);
+            var appliances = client.ServerAppliances.Get(null, null, null, "ubuntu", null);
             POCO.Response.ServerAppliances.ServerAppliancesResponse appliance = null;
             if (appliances == null || appliances.Count() == 0)
             {
@@ -35,12 +35,12 @@ namespace OneAndOne.UnitTests
             }
             else
             {
-                appliance = appliances.FirstOrDefault();
+                appliance = appliances.FirstOrDefault(ap=>ap.Type=="IMAGE");
             }
             var result = client.Servers.Create(new POCO.Requests.Servers.CreateServerRequest()
             {
                 ApplianceId = appliance != null ? appliance.Id : null,
-                Name = "server ip test .net",
+                Name = "server ip test .net1",
                 Description = "desc",
                 Hardware = new POCO.Requests.Servers.HardwareRequest()
                 {
@@ -50,11 +50,6 @@ namespace OneAndOne.UnitTests
                             {new POCO.Requests.Servers.HddRequest()
                             {
                                 IsMain=true,
-                                Size=20,
-                            }},
-                            {new POCO.Requests.Servers.HddRequest()
-                            {
-                                IsMain=false,
                                 Size=20,
                             }}
                         },
@@ -73,9 +68,9 @@ namespace OneAndOne.UnitTests
         {
             Config.waitServerReady(server.Id);
             DeleteIP();
-            Thread.Sleep(400000);
             Config.waitServerReady(server.Id);
             client.Servers.Delete(server.Id, false);
+            Config.waitServerDeleted(server.Id);
 
             if (loadBalancer != null)
             {
@@ -144,8 +139,9 @@ namespace OneAndOne.UnitTests
             if (serverWithips.Ips != null && serverWithips.Ips.Count > 1)
             {
                 Config.waitServerReady(server.Id);
-                var result = client.ServerIps.Delete(server.Id, server.Ips[1].Id, true);
-                Config.waitIpRemoved(server.Ips[1].Id);
+                Config.waitIpReady(serverWithips.Ips[1].Id);
+                var result = client.ServerIps.Delete(server.Id, serverWithips.Ips[1].Id, true);
+                Config.waitIpRemoved(serverWithips.Ips[1].Id);
                 Assert.IsNotNull(result);
                 Assert.IsNotNull(result.Id);
             }
@@ -160,13 +156,6 @@ namespace OneAndOne.UnitTests
             var result = client.ServerIps.GetFirewallPolicies(server.Id, curIP.Id);
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Count > 0);
-        }
-
-        public void DeleteFirewallPolicy()
-        {
-            var curIP = server.Ips.FirstOrDefault(ip => ip.FirewallPolicy != null && ip.FirewallPolicy.Count > 0);
-            var result = client.ServerIps.DeleteFirewallPolicy(server.Id, curIP.Id);
-            Assert.IsNotNull(result);
         }
 
         [TestMethod]
@@ -214,7 +203,6 @@ namespace OneAndOne.UnitTests
             Config.waitServerReady(server.Id);
 
             GetFirewallPolicyTest();
-            DeleteFirewallPolicy();
         }
 
         #endregion
@@ -231,7 +219,7 @@ namespace OneAndOne.UnitTests
                 HealthCheckInterval = 1,
                 Persistence = true,
                 PersistenceTime = 30,
-                HealthCheckTest = HealthCheckTestTypes.NONE,
+                HealthCheckTest = HealthCheckTestTypes.TCP,
                 Method = LoadBalancerMethod.ROUND_ROBIN,
                 Rules = new System.Collections.Generic.List<POCO.Requests.LoadBalancer.LoadBalancerRuleRequest>()
                     {
@@ -269,23 +257,6 @@ namespace OneAndOne.UnitTests
                 loadbalancer = client.ServerIps.GetLoadBalancer(server.Id, curIP.Id);
                 Assert.IsNotNull(loadbalancer);
                 Assert.IsNotNull(loadbalancer.Count > 0);
-            }
-        }
-
-        [TestMethod]
-        public void DeleteLoadBalancer()
-        {
-            var serverWithIps = client.Servers.Show(server.Id);
-            Thread.Sleep(1000);
-            if (server.Ips.Any(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0))
-            {
-                var curIP = server.Ips.FirstOrDefault(ip => ip.LoadBalancers != null && ip.LoadBalancers.Count > 0);
-                var result = client.ServerIps.DeleteLoadBalancer(server.Id, curIP.Id, curIP.LoadBalancers[0].Id);
-                Assert.IsNotNull(result);
-                var updatedLoadBalancer = client.LoadBalancer.GetLoadBalancerServerIps(curIP.LoadBalancers[0].Id);
-                Assert.IsNotNull(result);
-                //check if loadbalancer does notk have the server IP
-                Assert.IsTrue(!updatedLoadBalancer.Any(ip => ip.Id == curIP.Id));
             }
         }
 

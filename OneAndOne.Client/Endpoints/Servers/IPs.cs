@@ -207,38 +207,6 @@ namespace OneAndOne.Client.Endpoints.Servers
             }
         }
 
-        /// <summary>
-        /// Removes firewall policy from the IP
-        /// </summary>
-        /// <param name="server_id">Unique server's identifier.</param>
-        /// <param name="ip_id">ip_id: required (string ) Unique IP's identifier.</param>
-        /// 
-        public ServerResponse DeleteFirewallPolicy(string server_id, string ip_id)
-        {
-            try
-            {
-                var request = new RestRequest("/servers/{server_id}/ips/{ip_id}/firewall_policy", Method.DELETE)
-                {
-                    RequestFormat = DataFormat.Json,
-                    JsonSerializer = new CustomSerializer()
-                };
-                request.AddUrlSegment("server_id", server_id);
-                request.AddUrlSegment("ip_id", ip_id);
-                request.AddHeader("Content-Type", "application/json");
-
-                var result = restclient.Execute<ServerResponse>(request);
-                if (result.StatusCode != HttpStatusCode.Accepted)
-                {
-                    throw new Exception(result.Content);
-                }
-                return result.Data;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
         #endregion
 
         #region Load Balancers

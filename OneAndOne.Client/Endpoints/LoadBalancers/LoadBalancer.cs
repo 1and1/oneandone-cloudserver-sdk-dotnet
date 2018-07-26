@@ -1,4 +1,5 @@
-﻿using OneAndOne.Client.RESTHelpers;
+﻿using Newtonsoft.Json;
+using OneAndOne.Client.RESTHelpers;
 using OneAndOne.POCO.Requests.LoadBalancer;
 using RestSharp;
 using System;
@@ -53,12 +54,13 @@ namespace OneAndOne.Client.Endpoints.LoadBalancers
                 }
                 var request = new RestRequest(requestUrl, Method.GET);
 
-                var result = restclient.Execute<List<OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse>>(request);
+                var result = restclient.Execute(request);
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(result.Content);
                 }
-                return result.Data;
+                return JsonConvert.DeserializeObject<List<OneAndOne.POCO.Response.LoadBalancers.LoadBalancerResponse>>(result.Content);
+
             }
             catch
             {
