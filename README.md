@@ -1,8 +1,6 @@
 # .NET SDK
 This guide will show you how to programmatically perform common management tasks using the .NET SDK for the 1&1 REST API.
 
-For more information on the 1&1 .NET SDK see the [1&1 Community Portal](https://www.1and1.com/cloud-community/).
-
 ## Table of Contents
 
 * [Overview](#overview)
