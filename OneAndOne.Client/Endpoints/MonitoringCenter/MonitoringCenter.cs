@@ -28,28 +28,28 @@ namespace OneAndOne.Client.Endpoints.MonitoringCenter
         {
             try
             {
-                string requestUrl = "/monitoring_center?";
+                StringBuilder requestUrl = new StringBuilder("/monitoring_center?");
                 if (page != null)
                 {
-                    requestUrl += string.Format("&page={0}", page);
+                    requestUrl.AppendFormat("&page={0}", page);
                 }
                 if (perPage != null)
                 {
-                    requestUrl += string.Format("&per_page={0}", perPage);
+                    requestUrl.AppendFormat("&per_page={0}", perPage);
                 }
                 if (!string.IsNullOrEmpty(sort))
                 {
-                    requestUrl += string.Format("&sort={0}", sort);
+                    requestUrl.AppendFormat("&sort={0}", sort);
                 }
                 if (!string.IsNullOrEmpty(query))
                 {
-                    requestUrl += string.Format("&q={0}", query);
+                    requestUrl.AppendFormat("&q={0}", query);
                 }
                 if (!string.IsNullOrEmpty(fields))
                 {
-                    requestUrl += string.Format("&fields={0}", fields);
+                    requestUrl.AppendFormat("&fields={0}", fields);
                 }
-                var request = new RestRequest(requestUrl, Method.GET);
+                var request = new RestRequest(requestUrl.ToString(), Method.GET);
 
                 var result = restclient.Execute<List<MonitoringCenterResponse>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
@@ -76,15 +76,15 @@ namespace OneAndOne.Client.Endpoints.MonitoringCenter
         {
             try
             {
-                string requestUrl = "/monitoring_center/{server_id}?";
-                requestUrl += string.Format("&period={0}", period);
+                StringBuilder requestUrl = new StringBuilder("/monitoring_center/{server_id}?");
+                requestUrl.AppendFormat("&period={0}", period);
                 if (period ==PeriodType.CUSTOM)
                 {
-                    requestUrl += string.Format("&start_date={0}", start_date.Value.ToString("s") + "Z");
-                    requestUrl += string.Format("&end_date={0}", end_date.Value.ToString("s") + "Z");
+                    requestUrl.AppendFormat("&start_date={0}", start_date.Value.ToString("s") + "Z");
+                    requestUrl.AppendFormat("&end_date={0}", end_date.Value.ToString("s") + "Z");
                 }
 
-                var request = new RestRequest(requestUrl, Method.GET);
+                var request = new RestRequest(requestUrl.ToString(), Method.GET);
                 request.AddUrlSegment("server_id", server_id);
 
                 var result = restclient.Execute<ServerMonitoringCenterResponse>(request);

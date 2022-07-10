@@ -30,28 +30,28 @@ namespace OneAndOne.Client.Endpoints.Vpn
         {
             try
             {
-                string requestUrl = "/vpns?";
+                StringBuilder requestUrl = new StringBuilder("/vpns?");
                 if (page != null)
                 {
-                    requestUrl += string.Format("&page={0}", page);
+                    requestUrl.AppendFormat("&page={0}", page);
                 }
                 if (perPage != null)
                 {
-                    requestUrl += string.Format("&per_page={0}", perPage);
+                    requestUrl.AppendFormat("&per_page={0}", perPage);
                 }
                 if (!string.IsNullOrEmpty(sort))
                 {
-                    requestUrl += string.Format("&sort={0}", sort);
+                    requestUrl.AppendFormat("&sort={0}", sort);
                 }
                 if (!string.IsNullOrEmpty(query))
                 {
-                    requestUrl += string.Format("&q={0}", query);
+                    requestUrl.AppendFormat("&q={0}", query);
                 }
                 if (!string.IsNullOrEmpty(fields))
                 {
-                    requestUrl += string.Format("&fields={0}", fields);
+                    requestUrl.AppendFormat("&fields={0}", fields);
                 }
-                var request = new RestRequest(requestUrl, Method.GET);
+                var request = new RestRequest(requestUrl.ToString(), Method.GET);
 
                 var result = restclient.Execute<List<VpnResponse>>(request);
                 if (result.StatusCode != HttpStatusCode.OK)
