@@ -1,4 +1,5 @@
-﻿using OneAndOne.Client.Endpoints;
+﻿#define NEW_ENDPOINT
+using OneAndOne.Client.Endpoints;
 using OneAndOne.Client.Endpoints.Common;
 using OneAndOne.Client.Endpoints.DataCenter;
 using OneAndOne.Client.Endpoints.DVDs;
@@ -33,7 +34,17 @@ namespace OneAndOne.Client
     public class OneAndOneClient
     {
 
+        /**
+         * This endpoint was changed at some point in time and
+         * was never updated. I've preserved the original URL for
+         * historical purposes only. Feel free to remove it and 
+         * replace it out-right if you desire ;).
+         */
+#if NEW_ENDPOINT
+        static string Endpoint = "https://cloudpanel-api.ionos.com/v1";
+#else
         static String Endpoint = "https://cloudpanel-api.1and1.com/v1";
+#endif
         static Configuration configuration;
         private OneAndOneClient(Configuration config)
         {
